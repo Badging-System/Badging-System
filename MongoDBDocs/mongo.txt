@@ -1,4 +1,4 @@
-Steps to take in order to setup MongoDB locally on your computer
+MongoDB Beginner's Guide
 
 Step 1a. Downloading MongoDB locally for Mac Users
 
@@ -40,6 +40,93 @@ Step 1b. Downloading MongoDB locally for Windows Users
     - Connect to MongoDB through the ~bin.mongo.exe shell, open another Command Prompt and execute the following command:
         "C:\Program Files\MongoDB\Server\3.2\bin\mongo.exe
     
-     
+Step 2. Creating a collection
+
+    - A collection is a way to group data values into a specific collection. The equivalent to a collection would be a table in SQL
+    - MongoDB creates a collection implicitly when the collection is first referenced in a command, this method is used primarily for creating new collections that use specific options
+    - Creating a collection will need a name provided as well as options.
+        - name will contain the name of the collection that you want to create
+        - options will contain the keys as well as the value types that the collection accepts
+        - below is the skeleton code for how to instantiate a new collection in MongoDB
+            db.createCollection(<name>, <options>)
+        - Specific example would be this type
+            db.createCollection("Animals", 
+            {
+                "dog": boolean,
+                "cat": boolean,
+                "fish": boolean,
+                "age": int,
+                "name" string
+            } ) 
+    - To understand how collections work in further detail please visit the following link: https://docs.mongodb.com/manual/reference/method/db.createCollection/
+
+Step 3. Inserting a Document(s) 
+
+    - db.collection.insertOne() inserts a single document into a collection
+    - If the document does not specify an _id field, MongoDB adds the _id field for you with an ObjectId value at the top of each document in the collection
+        This id value acts as a primary key to uniquely identify a document
+    - Following example inserts a new document into the inventory collection. 
+        db.inventory.insertOne(
+            { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } }
+        )
+    - db.collection.insertMany() inserts multiple documents into a collection at a time
+    - Same logic applies if _id is not specified MongoDB will generate the id for you
+    - Following example inserts multiple documents into the products collection.
+        try {
+            db.products.insertMany( [
+                { item: "card", qty: 15 },
+                { item: "envelope", qty: 20 },
+                { item: "stamps" , qty: 30 }
+            ] );
+        } catch (e) {
+            print (e);
+        }
+    - A response similar to the one below means the documents were succesfully inserted into the collection
+        {
+            "acknowledged" : true,
+            "insertedIds" : [
+                ObjectId("562a94d381cb9f1cd6eb0e1a"),
+                ObjectId("562a94d381cb9f1cd6eb0e1b"),
+                ObjectId("562a94d381cb9f1cd6eb0e1c")
+            ]
+        }
+Step 4. Querying Documents 
+
+    - MongoDB supports querying by Embedded/Nested Documents, Array, and Array of Embedded Documents but 
+        for this purpose I'll provide an example for just querying documents.
+    - The basic structure for querying a document is shown in the example below
+        db.inventory.find({}) 
+    - Which is directly equivalent to using the following SQL statement
+        SELECT * FROM inventory
+    - The following example selects from the inventory collection all documents where the status equals D
+        db.inventory.find({ status: "D" } )
+    - SQL equivalent statement would be 
+        SELECT * FROM inventory WHERE status = "D"
+    - The following example retrieves all documents from the inventory collection where status equals either A or D
+        db.inventory.find( { status: { $in: ["A", "D"] } } )
+    - SQL equivalent statement would be
+        SELECT * FROM inventory WHERE status in ("A", "D")
+    - The following example retrieves all documents in the inventory collection where the status equals A and qty is less than 30
+        db.inventory.find( { status: "A", qty: { $lt: 30 } } )
+    - SQL equivalent statement would be
+        SELECT * FROM inventory WHERE status = "A" AND qty < 30  
+    - The following example retrieves all documents in the collection where the status equals A or qty is less than 30
+        db.inventory.find( { $or: [ { status: "A" }, { qty: {$lt: 30 } } ] } )
+    - SQL equivalent would be
+        SELECT * FROM inventory WHERE status = "A" OR qty < 30
+    - The following example contains a compound query documents which selects all documents in the collection where the status equals 
+        A and either qty is less than 30 or item starts with the character package
+        db.inventory.find( {
+            status: "A",
+            $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
+        } )
+    - SQL equivalent would be
+        SELECT * FROM inventory WHERE status = "A" AND ( qty < 30 OR item LIKE "p%")
+
+    
+
+
+ 
+    
 
            
