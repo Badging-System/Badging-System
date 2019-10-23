@@ -2,7 +2,7 @@ MongoDB Beginner's Guide
 
 Step 1a. Downloading MongoDB locally for Mac Users
 
-    - Install the package manager Homebrew if you do not currently have it(Makes life much easier).Go to this link if you do not have Homebrew https://brew.sh/
+    - Install the package manager Homebrew if you do not currently have it (Makes life much easier). Go to this link if you do not have Homebrew https://brew.sh/
     - After installing homebrew or if you have homebrew already run the following command in terminal, brew update. Running this command will make sure Homebrew is up to date.
     - Then run the command, brew install mongodb. Running this command will configure MongoDB and move the neccesary files in the right place for you. This is the value Homebrew provides Mac users!
     - After this is done, to make sure MongoDB has been successfully installed locally on your machine, run the command mongod. you should get a bunch of 
@@ -42,7 +42,7 @@ Step 1b. Downloading MongoDB locally for Windows Users
     
 Step 2. Creating a collection
 
-    - A collection is a way to group data values into a specific collection. The equivalent to a collection would be a table in SQL
+    - A collection is a way to group documents with specified fields in that collection. The equivalent to a collection would be a table in SQL
     - MongoDB creates a collection implicitly when the collection is first referenced in a command, this method is used primarily for creating new collections that use specific options
     - Creating a collection will need a name provided as well as options.
         - name will contain the name of the collection that you want to create
