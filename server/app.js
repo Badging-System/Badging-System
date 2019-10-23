@@ -5,6 +5,7 @@ var cookieParser = require( 'cookie-parser' );
 var logger = require( 'morgan' );
 
 var router = require( './src/routes/routes' );
+const {Mongo} = require( "./../server/src/database/mongoDB" );
 require( 'dotenv' ).config()
 var app = express();
 
@@ -37,7 +38,9 @@ app.use( function ( err, req, res, next )
 } );
 app.listen( 3000, () =>
 {
-  console.log( 'server is listening on port 3000...' )
+  console.log( 'Server listening on port 3000...' );
+  const mongoDB = new Mongo()
+  mongoDB.connectMongoDB()
 } )
 
 module.exports = app;

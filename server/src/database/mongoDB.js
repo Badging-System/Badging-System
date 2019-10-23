@@ -5,14 +5,14 @@ class Mongo
     var MongoClient = require( 'mongodb' ).MongoClient
 
     var assert = require( 'assert' )
-    // URl that connections to mongoDB
+    // URL to connect to mongoDB locally
     var url = 'mongodb://localhost:27018/badging-system'
 
     // Connection to mongoDB
     MongoClient.connect( url, function ( err, db )
     {
       assert.equal( null, err );
-      console.log( "Connected successfully to server" );
+      console.log( "Successfully connected to MongoDB..." );
 
       db.close();
     } );
