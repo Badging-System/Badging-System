@@ -2,26 +2,35 @@ class Mongo
 {
   connectMongoDB ()
   {
-    var MongoClient = require( 'mongodb' ).MongoClient
+    const MongoClient = require( 'mongodb' ).MongoClient
+    const test = require( 'assert' );
 
-    var assert = require( 'assert' )
     // URL to connect to mongoDB locally
-    var url = 'mongodb://localhost:27018/badging-system'
-
+    const url = 'mongodb://localhost:27018/badging-system';
+    const dbName = 'badging-system'
     // Connection to mongoDB
-    MongoClient.connect( url, function ( err, db )
+    MongoClient.connect( url, function ( err, client )
     {
-      assert.equal( null, err );
+      const col = client.db( dbName ).collection( 'User' );
+      // const collection = db.collection( 'User' );
+      // console.log( "Switched to " + db.databaseName + " database" );
+      if ( err ) throw err;
       console.log( "Successfully connected to MongoDB..." );
       // document to be inserted
-      var doc = {name: "Roshan", age: "22"};
-      db.collection( "User" ).insertOne( doc, function ( err, res )
+      col.insert( [{a: 1, b: 1}
+        , {a: 2, b: 2}, {a: 3, b: 3}
+        , {a: 4, b: 4}], {w: 1}, function ( err, result )
       {
-        if ( err ) throw err;
-        console.log( "Document inserted" );
-        // close the connection to db when you are done with it
-        db.close();
+        test.equal( null, err );
+        // Show that duplicate records got dropped
+        col.aggregation( {}, {cursor: {}} ).toArray( function ( err, items )
+        {
+          test.equal( null, err );
+          test.equal( 4, items.length );
+          client.close();
+        } );
       } );
+
 
     } );
 

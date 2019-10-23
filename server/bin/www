@@ -7,6 +7,7 @@ require( 'dotenv' ).config()
 var app = require( '../app' );
 var debug = require( 'debug' )( 'server:server' );
 var http = require( 'http' );
+const {Mongo} = require( "./../src/database/mongoDB" );
 
 /**
  * Get port from environment and store in Express.
@@ -26,7 +27,7 @@ var server = http.createServer( app );
  */
 if ( process.env.ENV === 'DEV' )
 {
-  console.log( "im in here 2" )
+
   server.listen( port );
   console.log( "Dev server listening on port " + port + "..." );
 }
@@ -49,7 +50,8 @@ function normalizePort ( val )
 
   if ( port >= 0 )
   {
-    console.log( 'this is getting run' )
+    const mongoDB = new Mongo()
+    mongoDB.connectMongoDB()
     // port number
     return port;
   }
