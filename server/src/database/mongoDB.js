@@ -6,7 +6,7 @@ class Mongo
 
     var assert = require( 'assert' )
     // URl that connections to mongoDB
-    var url = 'mongodb://localhost:27017/badging-system'
+    var url = 'mongodb://localhost:27018/badging-system'
 
     // Connection to mongoDB
     MongoClient.connect( url, function ( err, db )
