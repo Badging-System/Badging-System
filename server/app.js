@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+
 
 var router = require('./src/routes/routes');
 require('dotenv').config()
@@ -33,5 +35,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+mongoose.connect('mongodb://localhost:27017/badging-system', {useNewUrlParser: true, useUnifiedTopology: true});
+
 
 module.exports = app;
