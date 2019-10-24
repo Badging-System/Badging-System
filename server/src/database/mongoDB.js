@@ -6,13 +6,12 @@ class Mongo
     const test = require('assert');
 
     // URL to connect to mongoDB locally
-    const url = 'mongodb://localhost:27018/';
-    const dbName = 'badging-system'
+    const url = process.env.HOST;
+    const dbName = process.env.DBNAME;
     // Connection to mongoDB
     MongoClient.connect(url, {useUnifiedTopology: true}, function (err, client)
     {
       // const collection = client.db( dbName ).collection( 'User' );
-      // console.log( "Switched to " + db.databaseName + " database" );
       if (err) throw err;
       console.log("Successfully connected to MongoDB...");
 
