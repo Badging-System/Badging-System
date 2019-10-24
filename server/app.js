@@ -5,7 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var router = require('./src/routes/routes');
+const {Mongo} = require("./../server/src/database/mongoDB");
+
 require('dotenv').config()
+const mongoDB = new Mongo();
 var app = express();
 
 app.use(logger('dev'));
@@ -19,12 +22,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/', router);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next)
+{
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next)
+{
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -34,4 +39,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+mongoDB.connectMongoDB();
 module.exports = app;
