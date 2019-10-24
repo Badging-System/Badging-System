@@ -5,8 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var router = require('./src/routes/routes');
+const {Mongo} = require("./../server/src/database/mongoDB");
 
 require('dotenv').config()
+const mongoDB = new Mongo();
 var app = express();
 
 app.use(logger('dev'));
@@ -38,4 +40,5 @@ app.use(function (err, req, res, next)
 });
 
 
+mongoDB.connectMongoDB();
 module.exports = app;
