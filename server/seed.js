@@ -49,14 +49,12 @@ function seedUsers(callback) {
       Email: "hzhou@gmail.com"
     }
   ];
-
   //use User model to insert/save
   User.deleteMany({}, () => {
     for (user of usersForTeam) {
       let newUser = new User(user);
       newUser.save();
     }
-    console.log('Database has been seeded!');
     callback(); // seeded
   });
 }
