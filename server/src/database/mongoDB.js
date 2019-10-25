@@ -11,15 +11,19 @@ class Mongo
     const url = process.env.HOST;
     const dbName = process.env.DBNAME;
     // Connection to mongoDB
-     mongoose.connect(url + dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, client)
+    mongoose.connect(url + dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, client)
     {
+      // const collection = client.db( dbName ).collection( 'User' );
       if (err) throw err;
       console.log("Successfully connected to MongoDB...");
-      if(process.env.ENV === 'DEV') {
-        seeder.seedUsers(function() { //seed db first
+      if (process.env.ENV === 'DEV')
+      {
+        seeder.seedUsers(function ()
+        { //seed db first
           console.log('Database has been seeded!');
         });
-      } else if (process.env.ENV === 'PROD') {
+      } else if (process.env.ENV === 'PROD')
+      {
         console.log('Database has been not been seeded!');
       }
     });
