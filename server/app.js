@@ -7,7 +7,11 @@ var mongoose = require('mongoose');
 
 
 var router = require('./src/routes/routes');
+
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger-doc.json');
 const {Mongo} = require("./../server/src/database/mongoDB");
+
 
 require('dotenv').config()
 const mongoDB = new Mongo();
@@ -22,6 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/', router);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next)
@@ -43,4 +48,5 @@ app.use(function (err, req, res, next)
 
 
 mongoDB.connectMongoDB();
+
 module.exports = app;
