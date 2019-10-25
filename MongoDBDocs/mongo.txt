@@ -1,0 +1,132 @@
+MongoDB Beginner's Guide
+
+Step 1a. Downloading MongoDB locally for Mac Users
+
+    - Install the package manager Homebrew if you do not currently have it (Makes life much easier). Go to this link if you do not have Homebrew https://brew.sh/
+    - After installing homebrew or if you have homebrew already run the following command in terminal, brew update. Running this command will make sure Homebrew is up to date.
+    - Then run the command, brew install mongodb. Running this command will configure MongoDB and move the neccesary files in the right place for you. This is the value Homebrew provides Mac users!
+    - After this is done, to make sure MongoDB has been successfully installed locally on your machine, run the command mongod. you should get a bunch of 
+        messages with the last message saying "waiting for connection on port 27017". Port 27017 is the default port MongoDB uses. If you already use this port you have the option
+        to change it with the following command mongod --port 27018 or any port of your choosing. You will know if the default port is in use with an error code of 48 on the last line 
+        **SIDE NOTE**
+            You may need to add sudo infront of your mongod command in order to be able to run MongoDB locally
+
+Step 1b. Downloading MongoDB locally for Windows Users
+
+    - First determine which MongoDB build for Windows you will need as the following three are the supported versions: 
+        Windows Server 2008 R2 64-bit and later, with SSL support x64
+        Windows Server 2008 R2 64-bit and later, without SSL support x64
+        Windows Server 2008 64-bit, without SSL support x64
+    - In order to find out which version of Windows you are running, run the following two commands in Command Prompt or Powershell
+        wmic os get caption
+        wmic os get osarchitecture
+    - Download the latest production release of MongoDB from their downloads page which is the following link: https://www.mongodb.com/download-center
+        You will need to create a FREE account in order to access the download links for MongoDB. 
+    - Once the download has completed, locate the .msi file, which is typically located in the default Downloads folder. Double-click the .msi file. A set of screens
+        will appear to guide you through the installation process.   
+    - Setup MongoDB enviornment requires a data directory to store all data. MongoDB's default data directory path is \data\db. Create this folder from Command Prompt
+        md \data\db 
+    - You can specify an alternate path for data files using the --dbpath option to mongod.exe. An example is provided below
+        "C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --dbpath d:\test\mongodb\data
+    - If you path includes spaces, enclose the entire path in double quotes. An example is provided below
+        "C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --dbpath "d:\test\mongo db data"
+    - You can also specify dbpath in a configuration file. The following link will help assist how to do this: https://docs.mongodb.com/v3.2/reference/configuration-options/
+    - To start MongoDB run mongod.exe and execute the following command below
+        "C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe"
+    - This starts the main MongoDB database process. The waiting for connections message in the console output indicates that the mongod.exe process is running successfully
+    - Depending on the security level of your system, Winidows may pop up a Security Alert dialog box about blocking "some features" of C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe
+        from communicating on networks. All users should select Private Networks, such as my home or work network and click Allow access. For additional information on security
+        and MongoDB, please see the Security Documentation which can be found at the following link: https://docs.mongodb.com/v3.2/security/  
+    - Connect to MongoDB through the ~bin.mongo.exe shell, open another Command Prompt and execute the following command:
+        "C:\Program Files\MongoDB\Server\3.2\bin\mongo.exe
+    
+Step 2. Creating a collection
+
+    - A collection is a way to group documents with specified fields in that collection. The equivalent to a collection would be a table in SQL
+    - MongoDB creates a collection implicitly when the collection is first referenced in a command, this method is used primarily for creating new collections that use specific options
+    - Creating a collection will need a name provided as well as options.
+        - name will contain the name of the collection that you want to create
+        - options will contain the keys as well as the value types that the collection accepts
+        - below is the skeleton code for how to instantiate a new collection in MongoDB
+            db.createCollection(<name>, <options>)
+        - Specific example would be this type
+            db.createCollection("Animals", 
+            {
+                "dog": boolean,
+                "cat": boolean,
+                "fish": boolean,
+                "age": int,
+                "name" string
+            } ) 
+    - To understand how collections work in further detail please visit the following link: https://docs.mongodb.com/manual/reference/method/db.createCollection/
+
+Step 3. Inserting a Document(s) 
+
+    - db.collection.insertOne() inserts a single document into a collection
+    - If the document does not specify an _id field, MongoDB adds the _id field for you with an ObjectId value at the top of each document in the collection
+        This id value acts as a primary key to uniquely identify a document
+    - Following example inserts a new document into the inventory collection. 
+        db.inventory.insertOne(
+            { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } }
+        )
+    - db.collection.insertMany() inserts multiple documents into a collection at a time
+    - Same logic applies if _id is not specified MongoDB will generate the id for you
+    - Following example inserts multiple documents into the products collection.
+        try {
+            db.products.insertMany( [
+                { item: "card", qty: 15 },
+                { item: "envelope", qty: 20 },
+                { item: "stamps" , qty: 30 }
+            ] );
+        } catch (e) {
+            print (e);
+        }
+    - A response similar to the one below means the documents were succesfully inserted into the collection
+        {
+            "acknowledged" : true,
+            "insertedIds" : [
+                ObjectId("562a94d381cb9f1cd6eb0e1a"),
+                ObjectId("562a94d381cb9f1cd6eb0e1b"),
+                ObjectId("562a94d381cb9f1cd6eb0e1c")
+            ]
+        }
+Step 4. Querying Documents 
+
+    - MongoDB supports querying by Embedded/Nested Documents, Array, and Array of Embedded Documents but 
+        for this purpose I'll provide an example for just querying documents.
+    - The basic structure for querying a document is shown in the example below
+        db.inventory.find({}) 
+    - Which is directly equivalent to using the following SQL statement
+        SELECT * FROM inventory
+    - The following example selects from the inventory collection all documents where the status equals D
+        db.inventory.find({ status: "D" } )
+    - SQL equivalent statement would be 
+        SELECT * FROM inventory WHERE status = "D"
+    - The following example retrieves all documents from the inventory collection where status equals either A or D
+        db.inventory.find( { status: { $in: ["A", "D"] } } )
+    - SQL equivalent statement would be
+        SELECT * FROM inventory WHERE status in ("A", "D")
+    - The following example retrieves all documents in the inventory collection where the status equals A and qty is less than 30
+        db.inventory.find( { status: "A", qty: { $lt: 30 } } )
+    - SQL equivalent statement would be
+        SELECT * FROM inventory WHERE status = "A" AND qty < 30  
+    - The following example retrieves all documents in the collection where the status equals A or qty is less than 30
+        db.inventory.find( { $or: [ { status: "A" }, { qty: {$lt: 30 } } ] } )
+    - SQL equivalent would be
+        SELECT * FROM inventory WHERE status = "A" OR qty < 30
+    - The following example contains a compound query documents which selects all documents in the collection where the status equals 
+        A and either qty is less than 30 or item starts with the character package
+        db.inventory.find( {
+            status: "A",
+            $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
+        } )
+    - SQL equivalent would be
+        SELECT * FROM inventory WHERE status = "A" AND ( qty < 30 OR item LIKE "p%")
+
+    
+
+
+ 
+    
+
+           
