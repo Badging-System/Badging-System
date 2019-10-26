@@ -1,9 +1,7 @@
 language: node_js
 node_js:
 - "10"
-
 cache: npm
-
 notifications:
   email: false
   slack: capstone-wm61285:rWFy0Lzmxbz2KDM9sOAEnqDh
