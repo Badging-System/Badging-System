@@ -1,7 +1,11 @@
 language: node_js
 node_js:
-- "10"
+- 10
 cache: npm
+install:
+  - npm install
+script:
+  - npm start
 notifications:
   email: false
   slack: capstone-wm61285:rWFy0Lzmxbz2KDM9sOAEnqDh
