@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- "10"
+
+cache:
+  directories:
+    -node_modules
+
+notifications:
+  email: false
+  slack: capstone-wm61285:rWFy0Lzmxbz2KDM9sOAEnqDh
+    if: branch = dev OR master
+    on_success: always
+    on_failure: always
+    on_pull_requests: false
