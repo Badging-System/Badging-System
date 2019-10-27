@@ -1,7 +1,9 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
 const User = require('../../../models/User')
+const {Mongo} = require("../../database/mongoDB");
 
+const mongoDB = new Mongo();
 exports.index = (req, res) =>
 {
   JSONResponse(res, {
@@ -25,8 +27,18 @@ exports.user_id = (req, res) =>
 
 exports.addUser = (req, res) =>
 {
-  console.log(req.body)
+
   let addedUser = new User(req.body)
-  console.log(`this is the first name of the added user: ${addedUser.First_name}`)
-  JSONResponse(res, {message: 'User succesfully added!'}, 201)
+
+  if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
+  {
+    JSONResponse(res, {message: "Invalid Request"}, 400);
+    console.log(`One or more of the JSON key names are invalid`)
+  }
+  else
+  {
+    JSONResponse(res, {message: addedUser}, 400);
+    mongoDB.insertOneDocument(addedUser);
+  }
+
 }; 
