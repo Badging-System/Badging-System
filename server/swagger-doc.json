@@ -48,7 +48,7 @@
         }
       }
     },
-    "/users/addUser": {
+    "/users/adduser": {
       "post": {
         "tags": [
           "User - Catalog"

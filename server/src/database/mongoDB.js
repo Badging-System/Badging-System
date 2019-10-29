@@ -1,19 +1,25 @@
+const mongoose = require('mongoose');
+// const MongoClient = require('mongodb').MongoClient
+const test = require('assert');
+const seeder = require('../../seed');
 
 class Mongo
 {
+  constructor()
+  {
+    this.url = process.env.HOST;
+    this.dbName = process.env.DBNAME;
+  }
 
   connectMongoDB ()
   {
-    const mongoose = require('mongoose');
-    const MongoClient = require('mongodb').MongoClient
-    const test = require('assert');
-    const seeder = require('../../seed');
-    const url = process.env.HOST;
-    const dbName = process.env.DBNAME;
+
+    // const url = process.env.HOST;
+    // const dbName = process.env.DBNAME;
     // URL to connect to mongoDB locally
 
     // Connection to mongoDB
-    mongoose.connect(url + dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
+    mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
     {
       if (err) throw err;
       var db = mongoose.connection;
@@ -31,26 +37,25 @@ class Mongo
       // db.close()
     });
   }
-  insertOneDocument (newUser)
+  insertOneDocument (collectionName, reqObj)
   {
     const mongoose = require('mongoose');
     try
     {
-      const url = process.env.HOST;
-      const dbName = process.env.DBNAME;
-      mongoose.connect(url + dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
+      // const url = process.env.HOST;
+      // const dbName = process.env.DBNAME;
+      mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
       {
         if (err) throw err;
         var db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
 
-        db.collection('users').insertOne(newUser);
-        console.log(`The user ${newUser.First_name} has been inserted into the database`);
+        db.collection(collectionName).insertOne(reqObj);
+        console.log(`One new document has been inserted into the collection ${collectionName}`);
         db.close();
       })
     } catch (e)
     {
-      console.log(`i am throwing an error`);
       console.error(e)
     }
 

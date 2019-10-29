@@ -29,16 +29,17 @@ exports.addUser = (req, res) =>
 {
 
   let addedUser = new User(req.body)
+  let collection = 'users'
 
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
   {
     JSONResponse(res, {message: "Invalid Request"}, 400);
-    console.log(`One or more of the JSON key names are invalid`)
+    console.log(`One or more of the JSON key names are invalid`);
   }
   else
   {
     JSONResponse(res, {message: addedUser}, 201);
-    mongoDB.insertOneDocument(addedUser);
+    mongoDB.insertOneDocument(collection, addedUser);
   }
 
 }; 
