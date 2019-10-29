@@ -37,7 +37,7 @@ exports.addUser = (req, res) =>
   }
   else
   {
-    JSONResponse(res, {message: addedUser}, 400);
+    JSONResponse(res, {message: addedUser}, 201);
     mongoDB.insertOneDocument(addedUser);
   }
 

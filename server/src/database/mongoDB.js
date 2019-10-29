@@ -1,11 +1,6 @@
 
 class Mongo
 {
-  constructor()
-  {
-    this.url = process.env.HOST;
-    this.dbName = process.env.DBNAME;
-  }
 
   connectMongoDB ()
   {
@@ -52,29 +47,12 @@ class Mongo
         db.collection('users').insertOne(newUser);
         console.log(`The user ${newUser.First_name} has been inserted into the database`);
         db.close();
-        // db.collection('users').insertOne(newUser);
-
-        // const collection = client.db(dbName).collection('users');
-        // collection.insertOne(newUser, function (err, res)
-        // {
-
-        //   console.log("1 document inserted")
-
-        // });
-        // client.close()
       })
     } catch (e)
     {
       console.log(`i am throwing an error`);
       console.error(e)
     }
-
-
-    // console.log("im hitting number 1");
-
-    // console.log("im hitting number 2");
-    // const collection = client.db(dbName).collection('users');
-
 
   };
 }
