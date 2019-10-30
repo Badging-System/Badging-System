@@ -7,7 +7,7 @@ install:
 script:
   - npm start
 notifications:
-    slack: capstone-wm61285:rWFy0Lzmxbz2KDM9sOAEnqDh
+    slack: $SLACK
     if: branch = dev OR master
     on_success: always
     on_failure: always
