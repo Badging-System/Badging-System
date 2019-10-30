@@ -60,3 +60,6 @@ typings/
 # next.js build output
 .next
 *.env
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+.vs/Application-layer/v15/.suo
