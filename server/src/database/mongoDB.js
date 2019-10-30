@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const MongoClient = require('mongodb').MongoClient
 const test = require('assert');
 const seeder = require('../../seed');
 var Promise = require('promise');
@@ -63,9 +62,6 @@ class Mongo
   {
     try
     {
-      console.log(reqObj);
-      // const url = process.env.HOST;
-      // const dbName = process.env.DBNAME;
       mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
       {
         if (err) throw err;
@@ -86,34 +82,6 @@ class Mongo
     }
 
   };
-  async validateOneUsername (collectionName, reqObj)
-  {
-    try
-    {
-      await mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
-      {
-        if (err) throw err;
-        var db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'connection error:'));
-        console.log(`this is the reqObj username: ${reqObj.Username}`);
-        var query = {Username: reqObj.Username}
-        let finalResult;
-        db.collection(collectionName).findOne(query).then(function (err, result)
-        {
-          console.log('im inside this find one block');
-          if (err) throw err;
-          db.close();
-          finalResult = result;
-        }).catch(err);
-
-        return Promise.resolve(finalResult);
-      })
-    } catch (e)
-    {
-      console.log('error is thrown here')
-      console.error(e)
-    }
-  }
 
 }
 

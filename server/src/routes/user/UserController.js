@@ -29,13 +29,10 @@ exports.addUser = (req, res) =>
 {
 
   let addedUser = new User(req.body);
-  let collection = 'users'
 
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
   {
-
     JSONResponse(res, {message: "Invalid Request"}, 400);
-    console.log(`One or more of the JSON key names are invalid`);
   }
   else if (addedUser.Status !== 'User')
   {
@@ -43,18 +40,7 @@ exports.addUser = (req, res) =>
   }
   else
   {
-
-    // let result = mongoDB.validateOneUsername(collection, addedUser);
-    console.log(`value of result: ${result}`);
-    // if (result === null)
-    // {
-    //   JSONResponse(res, {message: "username already exists in database "}, 403);
-    // }
-    // else
-    // {
     JSONResponse(res, {message: addedUser}, 201);
-    mongoDB.insertOneDocument(collection, addedUser);
-    // }
 
   }
 
@@ -62,7 +48,6 @@ exports.addUser = (req, res) =>
 
 exports.addedUsers = (req, res) =>
 {
-  // console.log(req.body);
   let addedUsers = req.body;
   let collection = 'users'
 
@@ -84,6 +69,5 @@ exports.addedUsers = (req, res) =>
       }
     }
     JSONResponse(res, {message: addedUsers}, 201);
-    mongoDB.insertManyDocuments(collection, addedUsers);
   }
 }
