@@ -6,6 +6,8 @@ install:
   - npm install
 script:
   - npm start
+services:
+  - mongodb
 notifications:
     slack: $SLACK
     if: branch = dev OR master
