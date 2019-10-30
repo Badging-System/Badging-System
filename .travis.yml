@@ -16,7 +16,4 @@ notifications:
     on_failure: always
     on_pull_requests: false
 env:
-  - ENV=$ENVIRONMENT
-  - PORT=$PORT
-  - HOST=$HOST
-  - DBNAME=$DBNAME
+  - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
