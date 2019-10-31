@@ -1,0 +1,105 @@
+{
+  "info": {
+    "title": "Badging System API Spec",
+    "version": "1.0.0",
+    "description": "API Specification for the Badging System API"
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/",
+  "swagger": "2.0",
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Gets of list of users",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of user data"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Gets a specific user based off their unique id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User data"
+          }
+        }
+      }
+    },
+    "/users/adduser": {
+      "post": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Inserts one new specified user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "Username",
+            "type1": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "First_name",
+            "type1": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "Last_name",
+            "type1": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "Status",
+            "type1": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "Email",
+            "type1": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "New user has been entered"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}
