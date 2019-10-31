@@ -1,20 +1,24 @@
+const mongoose = require('mongoose');
+const test = require('assert');
+const seeder = require('../../seed');
+var Promise = require('promise');
+
 class Mongo
 {
+  constructor()
+  {
+    this.url = process.env.HOST;
+    this.dbName = process.env.DBNAME;
+  }
+
   connectMongoDB ()
   {
-    const mongoose = require('mongoose');
-    const MongoClient = require('mongodb').MongoClient
-    const test = require('assert');
-    const seeder = require('../../seed');
 
-    // URL to connect to mongoDB locally
-    const url = process.env.HOST;
-    const dbName = process.env.DBNAME;
     // Connection to mongoDB
-    mongoose.connect(url + dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, client)
+    mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
     {
-      // const collection = client.db( dbName ).collection( 'User' );
       if (err) throw err;
+      var db = mongoose.connection;
       console.log("Successfully connected to MongoDB...");
       if (process.env.ENV === 'DEV')
       {
@@ -24,10 +28,62 @@ class Mongo
         });
       } else if (process.env.ENV === 'PROD')
       {
-        console.log('Database has been not been seeded!');
+        console.log('Database has not been seeded!');
       }
+      // db.close()
     });
   }
+  insertOneDocument (collectionName, reqObj)
+  {
+    try
+    {
+      mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
+      {
+        if (err) throw err;
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
+
+        db.collection(collectionName).insertOne(reqObj, function (err, res)
+        {
+          if (err) throw err;
+          console.log(`One new document has been inserted into the collection ${collectionName}`);
+          db.close();
+        });
+
+      })
+    } catch (e)
+    {
+      console.error(e)
+    }
+
+  };
+
+  insertManyDocuments (collectionName, reqObj)
+  {
+    try
+    {
+      mongoose.connect(this.url + this.dbName, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, db)
+      {
+        if (err) throw err;
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
+
+        db.collection(collectionName).insertMany(reqObj, function (err, res)
+        {
+          if (err) throw err;
+          console.log(`${res.insertedCount} documents have been inserted into the collection ${collectionName}`);
+          db.close();
+        });
+
+      })
+    } catch (e)
+    {
+      console.error(e)
+    }
+
+  };
+
 }
+
 
 module.exports = {Mongo};
