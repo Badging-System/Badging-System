@@ -3,6 +3,7 @@ const router = express.Router();
 
 const UserRoutes = require("./user/UserRoutes");
 
+
 /* Handles all routes associated the endpoint api */
 router.use('/users', UserRoutes);
 
