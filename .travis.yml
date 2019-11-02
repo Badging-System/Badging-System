@@ -11,7 +11,7 @@ os:
 install:
   - npm install
 script:
-  - npm start
+  - npm start -verbose
   - npm test
 services:
   - mongodb
