@@ -1,8 +1,6 @@
 language: node_js
 node_js:
   - "10"
-cache:
-  npm: true
 os:
   - linux
   - osx
@@ -11,7 +9,6 @@ install:
   - npm install
 script:
   - npm start -verbose
-  - npm test
 services:
   - mongodb
 notifications:
