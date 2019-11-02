@@ -59,39 +59,57 @@
         ],
         "parameters": [
           {
-            "in": "formData",
-            "name": "Username",
-            "type1": "string",
-            "required": true
+            "$ref": "#/components/parameters/username"
           },
           {
-            "in": "formData",
-            "name": "First_name",
-            "type1": "string",
-            "required": true
+            "$ref": "#/components/parameters/firstname"
           },
           {
-            "in": "formData",
-            "name": "Last_name",
-            "type1": "string",
-            "required": true
+            "$ref": "#/components/parameters/lastname"
           },
           {
-            "in": "formData",
-            "name": "Status",
-            "type1": "string",
-            "required": true
+            "$ref": "#/components/parameters/status"
           },
           {
-            "in": "formData",
-            "name": "Email",
-            "type1": "string",
-            "required": true
+            "$ref": "#/components/parameters/email"
           }
         ],
         "responses": {
           "201": {
             "description": "New user has been entered"
+          }
+        }
+      }
+    },
+    "/users/addedusers": {
+      "post": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Inserts multiple new specified users",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/firstname"
+          },
+          {
+            "$ref": "#/components/parameters/lastname"
+          },
+          {
+            "$ref": "#/components/parameters/status"
+          },
+          {
+            "$ref": "#/components/parameters/email"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Multiple new users have been entered"
           }
         }
       }
@@ -101,5 +119,54 @@
   "responses": {},
   "parameters": {},
   "securityDefinitions": {},
-  "tags": []
+  "tags": [],
+  "components": {
+    "parameters": {
+      "username": {
+        "in": "formData",
+        "name": "Username",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "firstname": {
+        "in": "formData",
+        "name": "First_name",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "lastname": {
+        "in": "formData",
+        "name": "Last_name",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "status": {
+        "in": "formData",
+        "name": "Status",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "email": {
+        "in": "formData",
+        "name": "Email",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    }
+  }
 }
