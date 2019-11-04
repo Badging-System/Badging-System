@@ -27,9 +27,10 @@ exports.user_id = (req, res) =>
 
 exports.addUser = (req, res) =>
 {
+  let collection = 'users';
 
   let addedUser = new User(req.body);
- 
+
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
   {
     JSONResponse(res, {message: "Invalid Request"}, 400);
@@ -40,6 +41,7 @@ exports.addUser = (req, res) =>
   }
   else
   {
+    mongoDB.insertOneDocument(collection, addedUser);
     JSONResponse(res, {message: addedUser}, 201);
 
   }
@@ -51,7 +53,7 @@ exports.addedUsers = (req, res) =>
   let addedUser = [];
   let addedUsers = req.body;
   let collection = 'users'
-  console.log(addedUsers);
+  // console.log(addedUsers);
 
   if ((addedUsers.hasOwnProperty('Username')) && (addedUsers.hasOwnProperty('First_name')) && (addedUsers.hasOwnProperty('Last_name')) && (addedUsers.hasOwnProperty('Status')) && (addedUsers.hasOwnProperty('Email')))
   {
@@ -69,6 +71,7 @@ exports.addedUsers = (req, res) =>
         return;
       }
     }
+    mongoDB.insertManyDocuments(collection, addedUsers);
     JSONResponse(res, {message: addedUsers}, 201);
   }
 }
