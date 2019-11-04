@@ -7,19 +7,34 @@ const {
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
-  JSONResponse(res, {
-    message: 'Success'
-  }, 200);
+  //Get all the collection data based off the User model
+  mongoDB.getCollectionData(User).then(async (data) => {
+    JSONResponse(res, {
+      data: data
+    }, 200);
+  }).catch((error) => {
+    JSONResponse(res, {
+      error: error
+    }, 500);
+  });
 };
 
 exports.user_id = (req, res) => {
   let userId = req.params.id;
   if (!userId) {
-    InvalidInput(res, 'Invalid Input');
+    InvalidInput(res, 'No username was provided.');
   } else {
-    JSONResponse(res, {
-      message: 'Success ' + userId
-    }, 200);
+    mongoDB.findOne(User, {
+      Username: userId
+    }).then(async (data) => {
+      JSONResponse(res, {
+        data: data
+      }, 200);
+    }).catch((error) => {
+      JSONResponse(res, {
+        error: error
+      }, 500);
+    });
   }
 };
 
@@ -39,9 +54,7 @@ exports.addUser = (req, res) => {
     JSONResponse(res, {
       message: addedUser
     }, 201);
-
   }
-
 };
 
 exports.addedUsers = (req, res) => {
