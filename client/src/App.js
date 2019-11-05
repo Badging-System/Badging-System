@@ -1,4 +1,5 @@
 import React from "react";
+import Home from "./home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
@@ -6,7 +7,7 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={HomeText} />
+          <Route exact path='/' component={Home} />
         </Switch>
       </Router>
     );
