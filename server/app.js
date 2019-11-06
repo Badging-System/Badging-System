@@ -12,7 +12,7 @@ var swaggerDocument = require('./swagger-doc.json');
 
 
 require('dotenv').config()
-// const mongoDB = new Mongo();
+const mongoDB = new Mongo();
 var app = express();
 
 app.use(logger('dev'));
@@ -46,6 +46,6 @@ app.use(function (err, req, res, next)
 
 
 
-// mongoDB.connectMongoDB();
+mongoDB.connectMongoDB();
 
 module.exports = app;
