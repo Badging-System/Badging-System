@@ -16,7 +16,7 @@ services:
   - mongodb
 notifications:
     slack: $SLACK
-    if: branch = dev OR master
+    if: branch = Task-#52
     on_success: always
     on_failure: false
     on_pull_requests: false
