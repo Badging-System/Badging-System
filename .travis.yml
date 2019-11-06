@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - "12.13"
-  - node
 os:
   - linux
 before_install:
@@ -11,8 +10,8 @@ install:
 script:
   - npm start -verbose
   - ps
-services:
-  - mongodb
+# services:
+#   - mongodb
 notifications:
     slack: $SLACK
     if: branch = Task-#52
