@@ -1,15 +1,13 @@
 language: node_js
 node_js:
   - "12.13"
+  - node
 os:
   - linux
 before_install:
   - npm install -g grunt-cli
 install:
   - npm install -g
-before_deploy:
-  - eval "$(ssh-agent -s)"
-  - ssh-agent -k
 script:
   - npm start -verbose
   - ps
