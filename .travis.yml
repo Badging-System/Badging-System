@@ -12,8 +12,9 @@ before_script:
 install:
   - npm install -g
 script:
-  - npm test
   - ps
+after_script:
+  - npm test
 services:
   - mongodb
 notifications:
