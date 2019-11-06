@@ -5,6 +5,8 @@ os:
   - linux
   - osx
   - windows
+before_install:
+  - ps
 install:
   - npm install -g
 before_deploy:
