@@ -1,5 +1,10 @@
+const chai = require('chai');
 var expect = require('chai').expect;
 var request = require('request');
+const chaiHttp = require('chai-http');
+const async = require('async');
+chai.use(chaiHttp);
+
 require('dotenv').config()
 
 /* This test the main page response to ensure the response is correct */
