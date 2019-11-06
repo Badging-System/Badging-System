@@ -4,7 +4,7 @@ node_js:
 os:
   - linux
 before_install:
-  - npm install —-save-dev mocha
+  - npm install --save-dev mocha
 install:
   - npm install -g
 script:
