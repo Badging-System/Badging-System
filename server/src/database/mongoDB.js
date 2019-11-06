@@ -30,7 +30,7 @@ class Mongo
       {
         console.log('Database has not been seeded!');
       }
-      // db.close()
+      // db.close();
     });
   }
   insertOneDocument (collectionName, reqObj)

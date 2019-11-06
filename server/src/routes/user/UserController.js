@@ -27,6 +27,7 @@ exports.user_id = (req, res) =>
 
 exports.addUser = (req, res) =>
 {
+  let collection = 'users';
 
   let addedUser = new User(req.body);
 
@@ -40,6 +41,7 @@ exports.addUser = (req, res) =>
   }
   else
   {
+    mongoDB.insertOneDocument(collection, addedUser);
     JSONResponse(res, {message: addedUser}, 201);
 
   }
@@ -49,8 +51,6 @@ exports.addUser = (req, res) =>
 exports.addedUsers = (req, res) =>
 {
   let addedUsers = req.body;
-  let collection = 'users'
-
 
   if ((addedUsers.hasOwnProperty('Username')) && (addedUsers.hasOwnProperty('First_name')) && (addedUsers.hasOwnProperty('Last_name')) && (addedUsers.hasOwnProperty('Status')) && (addedUsers.hasOwnProperty('Email')))
   {
@@ -68,6 +68,7 @@ exports.addedUsers = (req, res) =>
         return;
       }
     }
+
     JSONResponse(res, {message: addedUsers}, 201);
   }
 }
