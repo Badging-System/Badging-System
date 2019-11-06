@@ -4,15 +4,15 @@ node_js:
 os:
   - linux
 before_install:
-  - npm install -g grunt-cli
+  - npm install —-save-dev mocha
 install:
   - npm install -g
 script:
   - npm start -verbose &
   - npm test &
   - ps
-# services:
-#   - mongodb
+services:
+  - mongodb
 notifications:
     slack: $SLACK
     if: branch = Task-#52
