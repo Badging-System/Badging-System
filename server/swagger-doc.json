@@ -87,35 +87,52 @@
           "User - Catalog"
         ],
         "description": "Inserts multiple new specified users",
-        "produces": [
+        "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
-          },
-          {
-            "$ref": "#/components/parameters/firstname"
-          },
-          {
-            "$ref": "#/components/parameters/lastname"
-          },
-          {
-            "$ref": "#/components/parameters/status"
-          },
-          {
-            "$ref": "#/components/parameters/email"
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Multiple new users have been entered"
+            "description": "CREATED"
           }
         }
       }
     }
   },
-  "definitions": {},
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "Username"
+      ],
+      "properties": {
+        "Username": {
+          "type": "string"
+        },
+        "First_name": {
+          "type": "string"
+        },
+        "Last_name": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    }
+  },
   "responses": {},
   "parameters": {},
   "securityDefinitions": {},
@@ -123,7 +140,7 @@
   "components": {
     "parameters": {
       "username": {
-        "in": "formData",
+        "in": "body",
         "name": "Username",
         "required": true,
         "schema": {
@@ -132,7 +149,7 @@
         }
       },
       "firstname": {
-        "in": "formData",
+        "in": "body",
         "name": "First_name",
         "required": true,
         "schema": {
@@ -141,7 +158,7 @@
         }
       },
       "lastname": {
-        "in": "formData",
+        "in": "body",
         "name": "Last_name",
         "required": true,
         "schema": {
@@ -150,7 +167,7 @@
         }
       },
       "status": {
-        "in": "formData",
+        "in": "body",
         "name": "Status",
         "required": true,
         "schema": {
@@ -159,7 +176,7 @@
         }
       },
       "email": {
-        "in": "formData",
+        "in": "body",
         "name": "Email",
         "required": true,
         "schema": {

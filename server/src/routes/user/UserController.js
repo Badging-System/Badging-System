@@ -50,10 +50,7 @@ exports.addUser = (req, res) =>
 
 exports.addedUsers = (req, res) =>
 {
-  let addedUser = [];
   let addedUsers = req.body;
-  let collection = 'users'
-  // console.log(addedUsers);
 
   if ((addedUsers.hasOwnProperty('Username')) && (addedUsers.hasOwnProperty('First_name')) && (addedUsers.hasOwnProperty('Last_name')) && (addedUsers.hasOwnProperty('Status')) && (addedUsers.hasOwnProperty('Email')))
   {
@@ -71,7 +68,7 @@ exports.addedUsers = (req, res) =>
         return;
       }
     }
-    mongoDB.insertManyDocuments(collection, addedUsers);
+
     JSONResponse(res, {message: addedUsers}, 201);
   }
 }
