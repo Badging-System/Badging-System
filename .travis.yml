@@ -12,7 +12,7 @@ before_deploy:
   - ssh-agent -k
 script:
   - npm start -verbose
-  - killall -l
+  - ps
 services:
   - mongodb
 notifications:
