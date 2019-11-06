@@ -9,7 +9,7 @@ install:
   - npm install -g
 script:
   - npm start -verbose &
-  - npm test &
+  - npm test
   - ps
 services:
   - mongodb
