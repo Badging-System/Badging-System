@@ -12,7 +12,6 @@ before_deploy:
   - ssh-agent -k
 script:
   - npm start -verbose
-after_script:
   - killall -l
 services:
   - mongodb
