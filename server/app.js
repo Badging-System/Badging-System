@@ -8,7 +8,7 @@ var router = require('./src/routes/routes');
 
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger-doc.json');
-// const {Mongo} = require("./../server/src/database/mongoDB");
+const {Mongo} = require("./../server/src/database/mongoDB");
 
 
 require('dotenv').config()
