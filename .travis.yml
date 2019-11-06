@@ -3,6 +3,8 @@ node_js:
   - "12.13"
 os:
   - linux
+  - windows
+  - osx
 before_install:
   - npm install --save-dev mocha
 before_script:
