@@ -12,9 +12,10 @@ before_script:
 install:
   - npm install -g
 script:
-  - ps
-after_script:
+  - sleep 15
   - npm test
+after_script:
+  - ps
 services:
   - mongodb
 notifications:
