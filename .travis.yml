@@ -6,7 +6,7 @@ os:
   - osx
   - windows
 install:
-  - npm install
+  - npm install -g npm@2
 script:
   - npm start -verbose
 services:
