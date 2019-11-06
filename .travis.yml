@@ -10,6 +10,7 @@ before_script:
 install:
   - npm install -g
   - npm install -g mocha
+  - npm install --save-dev chai
 script:
   - sleep 15
   - npm test
