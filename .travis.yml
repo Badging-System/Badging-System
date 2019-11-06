@@ -5,8 +5,6 @@ os:
   - linux
   - windows
   - osx
-before_install:
-  - npm install --save-dev mocha
 before_script:
   - npm start &
 install:
