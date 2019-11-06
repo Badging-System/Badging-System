@@ -7,8 +7,8 @@ os:
   - windows
 install:
   - npm install -g
-after_script:
-  - eval `ssh-agent -s`
+before_deploy:
+  - eval "$(ssh-agent -s)"
   - ssh-agent -k
 script:
   - npm start -verbose
