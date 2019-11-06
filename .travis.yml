@@ -6,6 +6,7 @@ os:
   - osx
   - windows
 install:
+  - npm install --dotenv-extended
   - npm install -g npm@2
 script:
   - npm start -verbose
