@@ -6,7 +6,7 @@ os:
 before_install:
   - npm install --save-dev mocha
 before_script:
-  - npm start
+  - npm start &
 install:
   - npm install -g
 script:
