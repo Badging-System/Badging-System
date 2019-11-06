@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-
+require('dotenv').config()
 
 var router = require('./src/routes/routes');
 
@@ -13,7 +13,6 @@ var swaggerDocument = require('./swagger-doc.json');
 const {Mongo} = require("./../server/src/database/mongoDB");
 
 
-require('dotenv').config()
 const mongoDB = new Mongo();
 var app = express();
 
