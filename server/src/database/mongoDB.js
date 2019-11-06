@@ -12,13 +12,11 @@ class Mongo {
   }
 
   connectMongoDB() {
-    // Connection to mongoDB
+
     mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
       useUnifiedTopology: true
-    }, function(err) {
-      if (err) throw err;
-      console.log("Successfully connected to MongoDB...");
+    }).then(() => {
       if (process.env.ENV === 'DEV') {
         seeder.seedUsers(function() { //seed db first
           console.log('Database has been seeded!');
@@ -26,9 +24,9 @@ class Mongo {
       } else if (process.env.ENV === 'PROD') {
         console.log('Database has not been seeded!');
       }
-      mongoose.connection.close();
     });
-  }
+  };
+
   insertOneDocument(collectionName, reqObj) {
     try {
       mongoose.connect(this.url + this.dbName, {
@@ -42,7 +40,7 @@ class Mongo {
         db.collection(collectionName).insertOne(reqObj, function(err, res) {
           if (err) throw err;
           console.log(`One new document has been inserted into the collection ${collectionName}`);
-          mongoose.connection.close()
+          db.close();
         });
 
       });
@@ -89,10 +87,8 @@ class Mongo {
         .exec((err, data) => {
           if (err) {
             reject(err);
-            mongoose.connection.close();
           } else {
             resolve(data);
-            mongoose.connection.close();
           }
         })
     });
@@ -113,10 +109,8 @@ class Mongo {
         .exec((err, data) => {
           if (err) {
             reject(err);
-            mongoose.connection.close();
           } else {
             resolve(data);
-            mongoose.connection.close();
           }
         })
     });
