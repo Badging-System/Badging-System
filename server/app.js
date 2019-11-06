@@ -11,7 +11,6 @@ var swaggerDocument = require('./swagger-doc.json');
 const {Mongo} = require("./../server/src/database/mongoDB");
 
 
-require('dotenv').config()
 const mongoDB = new Mongo();
 var app = express();
 
