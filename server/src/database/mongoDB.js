@@ -15,7 +15,8 @@ class Mongo {
 
     mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      connectTimeoutMS: 15000
     }).then(() => {
       if (process.env.ENV === 'DEV') {
         seeder.seedUsers(function() { //seed db first
