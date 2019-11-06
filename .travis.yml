@@ -8,7 +8,7 @@ before_install:
 install:
   - npm install -g
 script:
-  - npm start -verbose
+  - npm start -verbose &
   - ps
 # services:
 #   - mongodb
