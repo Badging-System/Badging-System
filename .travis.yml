@@ -5,10 +5,11 @@ os:
   - linux
 before_install:
   - npm install --save-dev mocha
+before_script:
+  - npm start
 install:
   - npm install -g
 script:
-  - npm start -verbose &
   - npm test
   - ps
 services:
