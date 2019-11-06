@@ -30,6 +30,7 @@ describe('User Endpoints', function() {
     it('should list the seeded database', function(done) {
       this.timeout(15000);
       request('http://localhost:8080/api/users/', function(error, response, body) {
+        console.log(response);
         expect(response.statusCode).to.equal(200);
         let res = JSON.parse(response.body); //parse payload
         expect(res.payload.data).to.have.lengthOf(5);
@@ -44,6 +45,7 @@ describe('User Endpoints', function() {
     it('User Endpoint', function(done) {
       this.timeout(15000);
       request('http://localhost:8080/api/users/msrober', function(error, response, body) {
+        console.log(response);
         expect(response.statusCode).to.equal(200);
         let res = JSON.parse(response.body); //parse payload
         expect(res.payload.data[0])
