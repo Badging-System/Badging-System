@@ -1,12 +1,20 @@
 language: node_js
 node_js:
-  - '12.13'
+  - "12.13"
+os:
+  - linux
 before_install:
   - npm install -g grunt-cli
-before_script:
-  - npm link
+install:
+  - npm install -g
+before_deploy:
+  - eval "$(ssh-agent -s)"
+  - ssh-agent -k
 script:
-  - "grunt --verbose"
+  - npm start -verbose
+  - ps
+services:
+  - mongodb
 notifications:
     slack: $SLACK
     if: branch = Task-#52
