@@ -26,6 +26,11 @@ class Mongo {
         console.log('Database has not been seeded!');
       }
     });
+
+    mongoose.Promise = global.Promise;
+    mongoose.connection.on("error", error => {
+      console.log('Problem connection to the database' + error);
+    });
   };
 
   insertOneDocument(collectionName, reqObj) {
