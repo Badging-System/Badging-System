@@ -38,6 +38,27 @@ exports.user_id = (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+exports.addUser = (req, res) =>
+{
+  let collection = 'users';
+
+  let addedUser = new User(req.body);
+
+  if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
+  {
+    JSONResponse(res, {message: "Invalid Request"}, 400);
+  }
+  else if (addedUser.Status !== 'User')
+  {
+    JSONResponse(res, {message: 'Status needs to be set to User. Document was not inserted.'}, 403);
+  }
+  else
+  {
+    mongoDB.insertOneDocument(collection, addedUser);
+    JSONResponse(res, {message: addedUser}, 201);
+
+=======
 exports.addUser = (req, res) => {
 
   let addedUser = new User(req.body);
@@ -54,13 +75,12 @@ exports.addUser = (req, res) => {
     JSONResponse(res, {
       message: addedUser
     }, 201);
+>>>>>>> dev
   }
 };
 
 exports.addedUsers = (req, res) => {
   let addedUsers = req.body;
-  let collection = 'users'
-
 
   if ((addedUsers.hasOwnProperty('Username')) && (addedUsers.hasOwnProperty('First_name')) && (addedUsers.hasOwnProperty('Last_name')) && (addedUsers.hasOwnProperty('Status')) && (addedUsers.hasOwnProperty('Email'))) {
     JSONResponse(res, {
@@ -76,8 +96,13 @@ exports.addedUsers = (req, res) => {
         return;
       }
     }
+<<<<<<< HEAD
+
+    JSONResponse(res, {message: addedUsers}, 201);
+=======
     JSONResponse(res, {
       message: addedUsers
     }, 201);
+>>>>>>> dev
   }
 }

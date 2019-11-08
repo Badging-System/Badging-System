@@ -25,6 +25,10 @@ class Mongo {
       } else if (process.env.ENV === 'PROD') {
         console.log('Database has not been seeded!');
       }
+<<<<<<< HEAD
+      // db.close();
+=======
+>>>>>>> dev
     });
 
     mongoose.Promise = global.Promise;
