@@ -39,7 +39,6 @@ exports.user_id = (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
-
   let addedUser = new User(req.body);
   let collection = 'users';
 
@@ -50,6 +49,10 @@ exports.addUser = async (req, res) => {
   } else if (addedUser.Status !== 'User') {
     JSONResponse(res, {
       message: 'Status needs to be set to User. Document was not inserted.'
+    }, 403);
+  } else if (!validEmail(addedUser.Email)) { //Validate user email
+    JSONResponse(res, {
+      message: 'Email needs to be in correct format. Document was not inserted.'
     }, 403);
   } else {
     var result = await mongoDB.validateUserNameEmail(User, addedUser);
@@ -63,8 +66,6 @@ exports.addUser = async (req, res) => {
         message: "Username and/or email already exists."
       }, 403);
     }
-
-
   }
 };
 
@@ -98,4 +99,17 @@ exports.addedUsers = async (req, res) => {
     }
 
   }
+}
+/**
+ * Validates email format
+ * @param  {String} email [user email]
+ * @return {boolean}       [true if valid else false]
+ */
+function validEmail(email) {
+  var validate = true;
+  var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (!email.match(emailFormat)) {
+    validate = false;
+  }
+  return validate;
 }
