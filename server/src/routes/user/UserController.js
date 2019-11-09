@@ -50,7 +50,7 @@ exports.addUser = async (req, res) =>
 {
 
   let addedUser = new User(req.body);
-
+  let collection = 'users';
 
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email')))
   {
@@ -67,6 +67,7 @@ exports.addUser = async (req, res) =>
     var result = await mongoDB.validateUserNameEmail(User, addedUser);
     if (result === null)
     {
+      mongoDB.insertOneDocument(collection, addedUser);
       JSONResponse(res, {
         message: addedUser
       }, 201);
