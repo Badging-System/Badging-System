@@ -119,7 +119,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    API.get("/users/12")
+    API.get("/users")
       .then(res => {
         //success
         console.log(res.data);
@@ -129,7 +129,6 @@ export default function Dashboard() {
         console.log(err);
       });
   });
-
   return (
     <div className={classes.root}>
       <CssBaseline />
