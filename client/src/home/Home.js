@@ -119,9 +119,15 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    API.get("/users/12").then(res => {
-      console.log(res.data);
-    });
+    API.get("/users/12")
+      .then(res => {
+        //success
+        console.log(res.data);
+      })
+      .catch(err => {
+        //error
+        console.log(err);
+      });
   });
 
   return (
