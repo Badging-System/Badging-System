@@ -2,6 +2,7 @@ const chai = require('chai');
 var expect = require('chai').expect;
 var request = require('request-promise');
 const async = require('async');
+const axios = require('axios');
 
 require('dotenv').config()
 
@@ -28,6 +29,48 @@ describe('User Endpoints', function() {
     }).catch(done);
   });
 
+  /* This test the user endpoint testing if the api sends the correct response if it fails */
+  it('should fail posting a user to the database', function(done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/adduser', {
+          Username: "dbooker",
+          First_name: "devin",
+          Last_name: "booker",
+          Status: "Baller",
+          Email: "dbook@suns.com",
+      })
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the user endpoint testing if the api sends the correct response if it fails */
+  it('should fail posting a user to the database - Incorrect Email Format', function(done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/adduser', {
+          Username: "dbooker",
+          First_name: "devin",
+          Last_name: "booker",
+          Status: "User",
+          Email: "Incorrect Formatted Email",
+      })
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
   //Only run this test if the enviroment is DEV
   (process.env.ENV === 'DEV' ? it : it.skip)('DEV Environment User Endpoints', () => {
     /* This test that the database is seeded with the correct amount of users in the development enviroment */
@@ -45,7 +88,7 @@ describe('User Endpoints', function() {
   //Only run this test if the enviroment is DEV
   (process.env.ENV === 'DEV' ? it : it.skip)('DEV Environment User Endpoints', () => {
     /* This test that the endpoint returns the correct type of object */
-    it('User Endpoint', function(done) {
+    it('should return the correct type of object (User)', function(done) {
       this.timeout(15000);
       request('http://localhost:8080/api/users/msrober').then((response) => {
         let parsedRes = JSON.parse(response) //parse payload

@@ -8,7 +8,9 @@ var router = require('./src/routes/routes');
 
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger-doc.json');
-const {Mongo} = require("./../server/src/database/mongoDB");
+const {
+  Mongo
+} = require("./../server/src/database/mongoDB");
 
 
 const mongoDB = new Mongo();
@@ -26,14 +28,12 @@ app.use('/api/', router);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next)
-{
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next)
-{
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
