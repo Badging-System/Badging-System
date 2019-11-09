@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,20 +10,18 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import API from "../utils/API";
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Badging System
-      </Link>
+      Badging System
       {new Date().getFullYear()}
     </Typography>
   );
@@ -112,14 +110,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  useEffect(() => {
+    API.get("/users/12").then(res => {
+      console.log(res.data);
+    });
+  });
 
   return (
     <div className={classes.root}>

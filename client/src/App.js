@@ -13,9 +13,4 @@ class App extends React.Component {
     );
   }
 }
-
-function HomeText() {
-  return <h1>Home Page </h1>;
-}
-
 export default App;
