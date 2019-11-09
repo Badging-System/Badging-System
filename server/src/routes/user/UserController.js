@@ -85,7 +85,7 @@ exports.addUser = async (req, res) =>
 exports.addedUsers = async (req, res) =>
 {
   let addedUsers = req.body;
-
+  let collection = 'users';
   if ((addedUsers.hasOwnProperty('Username')) && (addedUsers.hasOwnProperty('First_name')) && (addedUsers.hasOwnProperty('Last_name')) && (addedUsers.hasOwnProperty('Status')) && (addedUsers.hasOwnProperty('Email')))
   {
     JSONResponse(res, {
@@ -107,13 +107,14 @@ exports.addedUsers = async (req, res) =>
     var result = await mongoDB.validateUserNameEmail(User, addedUsers);
     if (result === null)
     {
+      mongoDB.insertManyDocuments(collection, addedUsers);
       JSONResponse(res, {
         message: addedUsers
       }, 201);
     } else
     {
       JSONResponse(res, {
-        message: "Username and/or email already exists for one or more entered users."
+        message: "Username and/or email already exists for one or more entered users. No users were entered into the database."
       }, 403);
     }
 
