@@ -70,6 +70,7 @@ describe('User Endpoints', function () {
         done();
       });
   });
+  /* This tests the user endpoint testing if the api sends the correct response if it passes */
   it('should succesfully post a user to the database', function (done) {
     this.timeout(15000);
     // Post a user object to the database
