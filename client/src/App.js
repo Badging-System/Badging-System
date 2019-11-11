@@ -1,6 +1,7 @@
 import React from "react";
 import Home from "./home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 
 class App extends React.Component {
   render() {
@@ -13,4 +14,4 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default withStyles({ withTheme: true })(App);
