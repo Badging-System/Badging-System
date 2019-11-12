@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const test = require('assert');
 const seeder = require('../../seed');
 var Promise = require('promise');
-
+require('dotenv').config();
 
 class Mongo {
   constructor() {
@@ -11,12 +11,11 @@ class Mongo {
   }
 
   connectMongoDB() {
-
     mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       connectTimeoutMS: 15000
-    }).then(() => {
+        }).then(() => {
       if (process.env.ENV === 'DEV') {
         seeder.seedUsers(function() { //seed db first
           console.log('Database has been seeded!');

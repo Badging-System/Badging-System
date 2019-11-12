@@ -3,12 +3,24 @@ var expect = require('chai').expect;
 var request = require('request-promise');
 const async = require('async');
 const axios = require('axios');
+var app = require('../app');
+var server;
+var http = require('http');
+var debug = require('debug')('server:server');
 
-require('dotenv').config()
+require('dotenv').config();
+
+before(done => {
+  var port = parseInt(process.env.PORT || '3000', 10);
+  app.set('port', port);
+  server = http.createServer(app);
+
+  server.listen(port,"localhost", done);
+});
 
 /* This test the main page response to ensure the response is correct */
-it('Main page content', function (done) {
-  this.timeout(15000);
+it('Main page content', function(done) {
+  //this.timeout(15000);
   request('http://localhost:8080/api/').then((response) => {
     let parsedRes = JSON.parse(response)
     expect(parsedRes.status).to.equal(200);
@@ -18,10 +30,10 @@ it('Main page content', function (done) {
 });
 
 /* This test that the endpoint returns the correct type of object */
-describe('User Endpoints', function () {
+describe('User Endpoints', function() {
   /* This test the user endpoint testing if the it recieve the id poarameter */
-  it('User Query Param', function (done) {
-    this.timeout(15000);
+  it('User Query Param', function(done) {
+    //this.timeout(15000);
     request('http://localhost:8080/api/users/msrober').then((response) => {
       let parsedRes = JSON.parse(response)
       expect(parsedRes.status).to.equal(200);
@@ -30,63 +42,62 @@ describe('User Endpoints', function () {
   });
 
   /* This test the user endpoint testing if the api sends the correct response if it fails */
-  it('should fail posting a user to the database', function (done) {
-    this.timeout(15000);
+  it('should fail posting a user to the database', function(done) {
+    //this.timeout(15000);
     // Post a user object to the database
     axios.post('http://localhost:8080/api/users/adduser', {
-      Username: "dbooker",
-      First_name: "devin",
-      Last_name: "booker",
-      Status: "Baller",
-      Email: "dbook@suns.com",
-    })
-      .then(function (response) {
+        Username: "dbooker",
+        First_name: "devin",
+        Last_name: "booker",
+        Status: "Baller",
+        Email: "dbook@suns.com",
+      })
+      .then(function(response) {
         expect(response.data.status).to.equal(403);
         done();
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
         done();
       });
   });
 
   /* This test the user endpoint testing if the api sends the correct response if it fails */
-  it('should fail posting a user to the database - Incorrect Email Format', function (done) {
-    this.timeout(15000);
+  it('should fail posting a user to the database - Incorrect Email Format', function(done) {
+    //this.timeout(15000);
     // Post a user object to the database
     axios.post('http://localhost:8080/api/users/adduser', {
-      Username: "dbooker",
-      First_name: "devin",
-      Last_name: "booker",
-      Status: "User",
-      Email: "Incorrect Formatted Email",
-    })
-      .then(function (response) {
+        Username: "dbooker",
+        First_name: "devin",
+        Last_name: "booker",
+        Status: "User",
+        Email: "Incorrect Formatted Email",
+      })
+      .then(function(response) {
         expect(response.data.status).to.equal(403);
         done();
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
         done();
       });
   });
   /* This tests the user endpoint testing if the api sends the correct response if it passes */
-  it('should succesfully post a user to the database', function (done) {
-    this.timeout(15000);
+  it('should succesfully post a user to the database', function(done) {
+    //this.timeout(15000);
     // Post a user object to the database
     axios.post('http://localhost:8080/api/users/adduser', {
-      Username: "dbooker",
-      First_name: "devin",
-      Last_name: "booker",
-      Status: "User",
-      Email: "dbook@suns.com"
-    })
-      .then(function (response) {
-        console.log(response);
+        Username: "dbooker",
+        First_name: "devin",
+        Last_name: "booker",
+        Status: "User",
+        Email: "dbook@suns.com"
+      })
+      .then(function(response) {
         expect(response.data.status).to.equal(201);
         done();
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
         done();
       });
@@ -95,8 +106,8 @@ describe('User Endpoints', function () {
   //Only run this test if the enviroment is DEV
   (process.env.ENV === 'DEV' ? it : it.skip)('DEV Environment User Endpoints', () => {
     /* This test that the database is seeded with the correct amount of users in the development enviroment */
-    it('should list the seeded database', function (done) {
-      this.timeout(15000);
+    it('should list the seeded database', function(done) {
+      //this.timeout(15000);
       request('http://localhost:8080/api/users/').then((response) => {
         let parsedRes = JSON.parse(response)
         expect(parsedRes.status).to.equal(200);
@@ -109,8 +120,8 @@ describe('User Endpoints', function () {
   //Only run this test if the enviroment is DEV
   (process.env.ENV === 'DEV' ? it : it.skip)('DEV Environment User Endpoints', () => {
     /* This test that the endpoint returns the correct type of object */
-    it('should return the correct type of object (User)', function (done) {
-      this.timeout(15000);
+    it('should return the correct type of object (User)', function(done) {
+      //this.timeout(15000);
       request('http://localhost:8080/api/users/msrober').then((response) => {
         let parsedRes = JSON.parse(response) //parse payload
         expect(parsedRes.status).to.equal(200);
@@ -128,4 +139,9 @@ describe('User Endpoints', function () {
       }).catch(done);
     });
   });
+});
+
+
+after(done => {
+  server.close(done);
 });
