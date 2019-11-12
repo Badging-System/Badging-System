@@ -110,14 +110,15 @@ class Mongo {
    * @param {*} userObj [Either one user or multiple users defined as a user object]
    * @return {Promise}
    */
-  async validateUserNameEmail (user, userObj) {
-    try {
-      await mongoose.connect(process.env.HOST + process.env.DBNAME, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      });
+  validateUserNameEmail (user, userObj) {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
 
-      return new Promise((resolve, reject) => {
+
         if (userObj.length > 1) {
           var userNameEmailArray = []
           userObj.forEach(function (userInfo) {
@@ -147,12 +148,14 @@ class Mongo {
             } else {
               resolve(result);
             }
-          })
-      })
 
-    } catch (e) {
-      console.error(e)
-    }
+          })
+
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
   }
 }
 
