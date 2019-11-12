@@ -1,4 +1,7 @@
 const User = require('./models/User');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
 
 module.exports = {
   seedUsers: seedUsers
@@ -49,12 +52,30 @@ function seedUsers(callback) {
       Email: "hzhou@gmail.com"
     }
   ];
-  //use User model to insert/save
-  User.deleteMany({}, () => {
-    for (user of usersForTeam) {
-      let newUser = new User(user);
-      newUser.save();
-    }
-    callback(); // seeded
+
+  return new Promise(function(resolve, reject) {
+    mongoose.connect(process.env.HOST + process.env.DBNAME, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }).then(() => {
+      if (process.env.ENV === 'DEV') {
+        //use User model to insert/save
+        User.deleteMany({}, () => {
+          for (user of usersForTeam) {
+            let newUser = new User(user);
+            newUser.save();
+          }
+          resolve('Database has been seeded!'); // seeded
+        });
+      } else if (process.env.ENV === 'PROD') {
+        reject('Database has not been seeded!');
+      }
+    });
+
+    mongoose.Promise = global.Promise;
+    mongoose.connection.on("error", error => {
+      console.log('Problem connection to the database' + error);
+    });
   });
+
 }

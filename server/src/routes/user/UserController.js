@@ -57,10 +57,15 @@ exports.addUser = async (req, res) => {
   } else {
     var result = await mongoDB.validateUserNameEmail(User, addedUser);
     if (result === null) {
-      mongoDB.insertOneDocument(collection, addedUser);
-      JSONResponse(res, {
-        message: addedUser
-      }, 201);
+      mongoDB.insertOneDocument(collection, addedUser).then((response) => {
+        JSONResponse(res, {
+          message: addedUser
+        }, 201);
+      }).catch((err) => {
+        JSONResponse(res, {
+          message: err
+        }, 403);
+      });
     } else {
       JSONResponse(res, {
         message: "Username and/or email already exists."
