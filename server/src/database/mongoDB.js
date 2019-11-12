@@ -10,7 +10,7 @@ class Mongo {
     this.dbName = process.env.DBNAME;
   }
 
-  connectMongoDB() {
+  connectMongoDB () {
 
     mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
@@ -18,7 +18,7 @@ class Mongo {
       connectTimeoutMS: 15000
     }).then(() => {
       if (process.env.ENV === 'DEV') {
-        seeder.seedUsers(function() { //seed db first
+        seeder.seedUsers(function () { //seed db first
           console.log('Database has been seeded!');
         });
       } else if (process.env.ENV === 'PROD') {
@@ -32,40 +32,53 @@ class Mongo {
     });
   };
 
-  insertOneDocument(collectionName, reqObj) {
+  async insertOneDocument (model, reqObj) {
+    // try {
+    //   mongoose.connect(this.url + this.dbName, {
+    //     useNewUrlParser: true,
+    //     useUnifiedTopology: true
+    //   }, function(err, db) {
+    //     if (err) throw err;
+    //     var db = mongoose.connection;
+    //     db.on('error', console.error.bind(console, 'connection error:'));
+
+    //     db.collection(collectionName).insertOne(reqObj, function(err, res) {
+    //       if (err) throw err;
+    //       console.log(`One new document has been inserted into the collection ${collectionName}`);
+    //       db.close();
+    //     });
+
+    //   });
+    // } catch (e) {
+    //   console.error(e)
+    // }
     try {
       mongoose.connect(this.url + this.dbName, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-      }, function(err, db) {
-        if (err) throw err;
-        var db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'connection error:'));
-
-        db.collection(collectionName).insertOne(reqObj, function(err, res) {
-          if (err) throw err;
-          console.log(`One new document has been inserted into the collection ${collectionName}`);
-          db.close();
-        });
-
       });
+      model.watch().
+        on('change', data => data);
+
+      await model.create(reqObj);
+
+
     } catch (e) {
       console.error(e)
     }
-
   };
 
-  insertManyDocuments(collectionName, reqObj) {
+  insertManyDocuments (collectionName, reqObj) {
     try {
       mongoose.connect(this.url + this.dbName, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-      }, function(err, db) {
+      }, function (err, db) {
         if (err) throw err;
         var db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
 
-        db.collection(collectionName).insertMany(reqObj, function(err, res) {
+        db.collection(collectionName).insertMany(reqObj, function (err, res) {
           if (err) throw err;
           console.log(`${res.insertedCount} documents have been inserted into the collection ${collectionName}`);
           db.close();
@@ -82,7 +95,7 @@ class Mongo {
    * @param  {Model} model [Model of collection]
    * @return {Promise}
    */
-  async getCollectionData(model) {
+  async getCollectionData (model) {
     await mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -104,7 +117,7 @@ class Mongo {
    * @param  {Object}  filter [Filter must proved the appropriate attributes based off of model]
    * @return {Promise}
    */
-  async findOne(model, filter) {
+  async findOne (model, filter) {
     await mongoose.connect(this.url + this.dbName, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -127,7 +140,7 @@ class Mongo {
    * @param {*} userObj [Either one user or multiple users defined as a user object]
    * @return {Promise}
    */
-  async validateUserNameEmail(user, userObj) {
+  async validateUserNameEmail (user, userObj) {
     try {
       await mongoose.connect(this.url + this.dbName, {
         useNewUrlParser: true,
@@ -137,7 +150,7 @@ class Mongo {
       return new Promise((resolve, reject) => {
         if (userObj.length > 1) {
           var userNameEmailArray = []
-          userObj.forEach(function(userInfo) {
+          userObj.forEach(function (userInfo) {
             userNameEmailArray.push({
               Username: userInfo.Username
             }, {

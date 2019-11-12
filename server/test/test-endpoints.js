@@ -70,6 +70,29 @@ describe('User Endpoints', function () {
         done();
       });
   });
+
+  /* This tests the user endpoint testing if the api sends the correct response if it passes */
+  it('should succesfully post a user to the database', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/adduser', {
+      Username: "dbook",
+      First_name: "devin",
+      Last_name: "booker",
+      Status: "User",
+      Email: "dbook@gmail.com"
+    })
+      .then(function (response) {
+        expect(response.data.status).to.equal(201);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+
   /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
   it('Should succesfully post an array of users to the database', function (done) {
     this.timeout(15000);
@@ -105,6 +128,8 @@ describe('User Endpoints', function () {
         done();
       });
   });
+
+
 
   //Only run this test if the enviroment is DEV
   (process.env.ENV === 'DEV' ? it : it.skip)('DEV Environment User Endpoints', () => {
