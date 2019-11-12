@@ -40,7 +40,7 @@ exports.user_id = (req, res) => {
 
 exports.addUser = async (req, res) => {
   let addedUser = new User(req.body);
-
+  let collection = 'users';
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email'))) {
     JSONResponse(res, {
       message: "Invalid Request"
@@ -56,10 +56,15 @@ exports.addUser = async (req, res) => {
   } else {
     var result = await mongoDB.validateUserNameEmail(User, addedUser);
     if (result === null) {
-      mongoDB.insertOneDocument(User, addedUser);
-      JSONResponse(res, {
-        message: addedUser
-      }, 201);
+      mongoDB.insertOneDocument(collection, addedUser).then((response) => {
+        JSONResponse(res, {
+          message: addedUser
+        }, 201);
+      }).catch((err) => {
+        JSONResponse(res, {
+          message: err
+        }, 403);
+      });
     } else {
       JSONResponse(res, {
         message: "Username and/or email already exists."
@@ -87,10 +92,15 @@ exports.addedUsers = async (req, res) => {
     }
     var result = await mongoDB.validateUserNameEmail(User, addedUsers);
     if (result === null) {
-      mongoDB.insertManyDocuments(collection, addedUsers);
-      JSONResponse(res, {
-        message: addedUsers
-      }, 201);
+      mongoDB.insertManyDocuments(collection, addedUsers).then(response => {
+        JSONResponse(res, {
+          message: addedUsers
+        }, 201);
+      }).catch((err) => {
+        JSONResponse(res, {
+          message: err
+        }, 403);
+      });
     } else {
       JSONResponse(res, {
         message: "Username and/or email already exists for one or more entered users. No users were entered into the database."
