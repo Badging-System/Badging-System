@@ -3,18 +3,16 @@ node_js:
   - "12"
 os:
   - linux
-before_script:
-  - npm start &
+cache:
+  directories:
+    - node_modules
 install:
   - npm install -g
   - npm install -g mocha
   - npm install --save-dev chai
   - npm update
 script:
-  - sleep 15
   - npm test
-after_script:
-  - ps
 services:
   - mongodb
 notifications:
