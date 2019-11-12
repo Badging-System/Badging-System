@@ -7,34 +7,60 @@ var app = require('../app');
 var server;
 var http = require('http');
 var debug = require('debug')('server:server');
+var seed = require('../seed')
 
 require('dotenv').config();
 
-before(done => {
-  var port = parseInt(process.env.PORT || '3000', 10);
-  app.set('port', port);
-  server = http.createServer(app);
+describe('Main Page content', function() {
+  this.timeout(5000);
+  before(done => {
+    var port = parseInt(process.env.PORT || '3000', 10);
+    app.set('port', port);
+    server = http.createServer(app);
+    server.listen(port,"localhost", function() {
+      seed.seedUsers().then(async (obj) => {
+        done();
+      }).catch((error) => {
+        console.log(error);
+        done();
+      });
+    });
+  });
+  /* This test the main page response to ensure the response is correct */
+  it('should return succesful status 200', function(done) {
+    request('http://localhost:' + process.env.PORT + '/api/').then((response) => {
+      let parsedRes = JSON.parse(response)
+      expect(parsedRes.status).to.equal(200);
+      expect(parsedRes.payload.message).to.equal('Welcome to the Badging System API');
+      done();
+    }).catch(done);
+  });
 
-  server.listen(port,"localhost", done);
-});
-
-/* This test the main page response to ensure the response is correct */
-it('Main page content', function(done) {
-  //this.timeout(15000);
-  request('http://localhost:8080/api/').then((response) => {
-    let parsedRes = JSON.parse(response)
-    expect(parsedRes.status).to.equal(200);
-    expect(parsedRes.payload.message).to.equal('Welcome to the Badging System API');
-    done();
-  }).catch(done);
+  after(done => {
+    server.close(done);
+  });
 });
 
 /* This test that the endpoint returns the correct type of object */
 describe('User Endpoints', function() {
+  this.timeout(5000);
+  before(done => {
+    var port = parseInt(process.env.PORT || '3000', 10);
+    app.set('port', port);
+    server = http.createServer(app);
+    server.listen(port,"localhost", function() {
+      seed.seedUsers().then(async (obj) => {
+        done();
+      }).catch((error) => {
+        console.log(error);
+        done();
+      });
+    });
+  });
   /* This test the user endpoint testing if the it recieve the id poarameter */
   it('User Query Param', function(done) {
     //this.timeout(15000);
-    request('http://localhost:8080/api/users/msrober').then((response) => {
+    request('http://localhost:' + process.env.PORT + '/api/users/msrober').then((response) => {
       let parsedRes = JSON.parse(response)
       expect(parsedRes.status).to.equal(200);
       done();
@@ -45,7 +71,7 @@ describe('User Endpoints', function() {
   it('should fail posting a user to the database', function(done) {
     //this.timeout(15000);
     // Post a user object to the database
-    axios.post('http://localhost:8080/api/users/adduser', {
+    axios.post('http://localhost:' + process.env.PORT + '/api/users/adduser', {
         Username: "dbooker",
         First_name: "devin",
         Last_name: "booker",
@@ -66,7 +92,7 @@ describe('User Endpoints', function() {
   it('should fail posting a user to the database - Incorrect Email Format', function(done) {
     //this.timeout(15000);
     // Post a user object to the database
-    axios.post('http://localhost:8080/api/users/adduser', {
+    axios.post('http://localhost:' + process.env.PORT + '/api/users/adduser', {
         Username: "dbooker",
         First_name: "devin",
         Last_name: "booker",
@@ -86,7 +112,7 @@ describe('User Endpoints', function() {
   it('should succesfully post a user to the database', function(done) {
     //this.timeout(15000);
     // Post a user object to the database
-    axios.post('http://localhost:8080/api/users/adduser', {
+    axios.post('http://localhost:' + process.env.PORT + '/api/users/adduser', {
         Username: "dbooker",
         First_name: "devin",
         Last_name: "booker",
@@ -108,7 +134,7 @@ describe('User Endpoints', function() {
     /* This test that the database is seeded with the correct amount of users in the development enviroment */
     it('should list the seeded database', function(done) {
       //this.timeout(15000);
-      request('http://localhost:8080/api/users/').then((response) => {
+      request('http://localhost:' + process.env.PORT + '/api/users/').then((response) => {
         let parsedRes = JSON.parse(response)
         expect(parsedRes.status).to.equal(200);
         expect(parsedRes.payload.data).to.have.lengthOf(5);
@@ -122,7 +148,7 @@ describe('User Endpoints', function() {
     /* This test that the endpoint returns the correct type of object */
     it('should return the correct type of object (User)', function(done) {
       //this.timeout(15000);
-      request('http://localhost:8080/api/users/msrober').then((response) => {
+      request('http://localhost:' + process.env.PORT + '/api/users/msrober').then((response) => {
         let parsedRes = JSON.parse(response) //parse payload
         expect(parsedRes.status).to.equal(200);
         expect(parsedRes.payload.data[0])
@@ -139,9 +165,8 @@ describe('User Endpoints', function() {
       }).catch(done);
     });
   });
-});
 
-
-after(done => {
-  server.close(done);
+  after(done => {
+    server.close(done);
+  });
 });
