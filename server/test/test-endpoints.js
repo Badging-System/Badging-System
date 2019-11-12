@@ -82,8 +82,150 @@ describe('User Endpoints', function () {
       Email: "dbook@suns.com"
     })
       .then(function (response) {
-        console.log(response);
         expect(response.data.status).to.equal(201);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+  /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
+  it('Should fail to post an array of users to the database due to incorrect status of one user or more users', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/addedusers', [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "dayton",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to incorrect status of one user or more users', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/addedusers', [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "dayton",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to one or more usernames already existing in the database', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/addedusers', [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "gdeshpande",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to one or more emails already existing in the database', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post('http://localhost:8080/api/users/addedusers', [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "Deandre",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "dmaitha@gmail.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
         done();
       })
       .catch(function (error) {
