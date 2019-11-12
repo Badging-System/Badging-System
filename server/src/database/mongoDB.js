@@ -6,21 +6,21 @@ require('dotenv').config();
 class Mongo {
   constructor() {
     this.url = process.env.HOST;
-    process.env.DBNAME = process.env.DBNAME;
+    this.db = process.env.DBNAME;
   }
 
-  insertOneDocument(collectionName, reqObj) {
-    return new Promise(function(resolve, reject) {
+  insertOneDocument (collectionName, reqObj) {
+    return new Promise(function (resolve, reject) {
       try {
         mongoose.connect(process.env.HOST + process.env.DBNAME, {
           useNewUrlParser: true,
           useUnifiedTopology: true
-        }, function(err, db) {
+        }, function (err, db) {
           if (err) throw err;
           var db = mongoose.connection;
           db.on('error', console.error.bind(console, 'connection error:'));
 
-          db.collection(collectionName).insertOne(reqObj, function(err, res) {
+          db.collection(collectionName).insertOne(reqObj, function (err, res) {
             if (err) throw err;
             console.log(`One new document has been inserted into the collection ${collectionName}`);
             db.close();
@@ -35,34 +35,37 @@ class Mongo {
     });
   };
 
-  insertManyDocuments(collectionName, reqObj) {
-    try {
-      mongoose.connect(process.env.HOST + process.env.DBNAME, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      }, function(err, db) {
-        if (err) throw err;
-        var db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'connection error:'));
-
-        db.collection(collectionName).insertMany(reqObj, function(err, res) {
+  insertManyDocuments (collectionName, reqObj) {
+    return new Promise(function (resolve, reject) {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        }, function (err, db) {
           if (err) throw err;
-          console.log(`${res.insertedCount} documents have been inserted into the collection ${collectionName}`);
-          db.close();
+          var db = mongoose.connection;
+          db.on('error', console.error.bind(console, 'connection error:'));
+
+          db.collection(collectionName).insertMany(reqObj, function (err, res) {
+            if (err) throw err;
+            console.log(`${res.insertedCount} documents have been inserted into the collection ${collectionName}`);
+            db.close();
+            resolve();
+          });
+
         });
-
-      })
-    } catch (e) {
-      console.error(e)
-    }
-
+      } catch (e) {
+        console.error(e)
+        reject(e);
+      }
+    });
   };
   /**
    * This function returns a collection of all the data in the database based off the model
    * @param  {Model} model [Model of collection]
    * @return {Promise}
    */
-  async getCollectionData(model) {
+  async getCollectionData (model) {
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -84,7 +87,7 @@ class Mongo {
    * @param  {Object}  filter [Filter must proved the appropriate attributes based off of model]
    * @return {Promise}
    */
-  async findOne(model, filter) {
+  async findOne (model, filter) {
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -107,7 +110,7 @@ class Mongo {
    * @param {*} userObj [Either one user or multiple users defined as a user object]
    * @return {Promise}
    */
-  async validateUserNameEmail(user, userObj) {
+  async validateUserNameEmail (user, userObj) {
     try {
       await mongoose.connect(process.env.HOST + process.env.DBNAME, {
         useNewUrlParser: true,
@@ -117,7 +120,7 @@ class Mongo {
       return new Promise((resolve, reject) => {
         if (userObj.length > 1) {
           var userNameEmailArray = []
-          userObj.forEach(function(userInfo) {
+          userObj.forEach(function (userInfo) {
             userNameEmailArray.push({
               Username: userInfo.Username
             }, {
