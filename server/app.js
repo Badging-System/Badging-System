@@ -42,6 +42,4 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-mongoDB.connectMongoDB();
-
 module.exports = app;
