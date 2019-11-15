@@ -60,7 +60,7 @@ describe('User Endpoints', function () {
   /* This test the user endpoint testing if the it recieve the id poarameter */
   it('User Query Param', function (done) {
     //this.timeout(15000);
-    request('http://localhost:' + process.env.PORT + '/api/users/msrober').then((response) => {
+    request(`http://localhost:${process.env.PORT}/api/users/msrober`).then((response) => {
       let parsedRes = JSON.parse(response)
       expect(parsedRes.status).to.equal(200);
       done();
@@ -129,6 +129,149 @@ describe('User Endpoints', function () {
         done();
       });
   });
+  /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
+  it('Should fail to post an array of users to the database due to incorrect status of one user or more users', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "dayton",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to incorrect status of one user or more users', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "dayton",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to one or more usernames already existing in the database', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "gdeshpande",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "mwilliams@suns.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
+
+  /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+  it('Should fail to post an array of users to the database due to one or more emails already existing in the database', function (done) {
+    this.timeout(15000);
+    // Post a user object to the database
+    axios.post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [{
+      Username: "dbooker",
+      First_name: "Devin",
+      Last_name: "Booker",
+      Status: "User",
+      Email: "dbook@suns.com",
+    },
+    {
+      Username: "Deandre",
+      First_name: "Deandre",
+      Last_name: "Ayton",
+      Status: "Status",
+      Email: "dayton@suns.com",
+    },
+    {
+      Username: "mwilliams",
+      First_name: "Monty",
+      Last_name: "Williams",
+      Status: "Blah",
+      Email: "dmaitha@gmail.com",
+    },
+    ])
+      .then(function (response) {
+        expect(response.data.status).to.equal(403);
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
+      });
+  });
 
 
   /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
@@ -174,7 +317,7 @@ describe('User Endpoints', function () {
     /* This test that the database is seeded with the correct amount of users in the development enviroment */
     it('should list the seeded database', function (done) {
       //this.timeout(15000);
-      request('http://localhost:' + process.env.PORT + '/api/users/').then((response) => {
+      request(`http://localhost:${process.env.PORT}/api/users/`).then((response) => {
         let parsedRes = JSON.parse(response)
         expect(parsedRes.status).to.equal(200);
         expect(parsedRes.payload.data).to.have.lengthOf(5);
@@ -188,7 +331,7 @@ describe('User Endpoints', function () {
     /* This test that the endpoint returns the correct type of object */
     it('should return the correct type of object (User)', function (done) {
       //this.timeout(15000);
-      request('http://localhost:' + process.env.PORT + '/api/users/msrober').then((response) => {
+      request(`http://localhost:${process.env.PORT}/api/users/msrober`).then((response) => {
         let parsedRes = JSON.parse(response) //parse payload
         expect(parsedRes.status).to.equal(200);
         expect(parsedRes.payload.data[0])
