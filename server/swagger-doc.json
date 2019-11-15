@@ -33,12 +33,14 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [{
-          "in": "path",
-          "name": "id",
-          "type": "string",
-          "required": true
-        }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "User data"
@@ -51,29 +53,22 @@
         "tags": [
           "User - Catalog"
         ],
-        "description": "Inserts one new specified user",
-        "produces": [
+        "description": "Inserts new specified user",
+        "consumes": [
           "application/json"
         ],
-        "parameters": [{
-            "$ref": "#/components/parameters/username"
-          },
+        "parameters": [
           {
-            "$ref": "#/components/parameters/firstname"
-          },
-          {
-            "$ref": "#/components/parameters/lastname"
-          },
-          {
-            "$ref": "#/components/parameters/status"
-          },
-          {
-            "$ref": "#/components/parameters/email"
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "New user has been entered"
+            "description": "CREATED"
           }
         }
       }
@@ -87,13 +82,15 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [{
-          "in": "body",
-          "name": "user",
-          "schema": {
-            "$ref": "#/definitions/User"
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
-        }],
+        ],
         "responses": {
           "201": {
             "description": "CREATED"
