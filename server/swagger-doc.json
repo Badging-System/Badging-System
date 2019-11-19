@@ -72,110 +72,11 @@
           }
         }
       }
-    },
-    "/users/addedusers": {
-      "post": {
-        "tags": [
-          "User - Catalog"
-        ],
-        "description": "Inserts multiple new specified users",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "user",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "CREATED"
-          }
-        }
-      }
     }
   },
-  "definitions": {
-    "User": {
-      "type": "object",
-      "required": [
-        "Username"
-      ],
-      "properties": {
-        "Username": {
-          "type": "string"
-        },
-        "First_name": {
-          "type": "string"
-        },
-        "Last_name": {
-          "type": "string"
-        },
-        "Status": {
-          "type": "string"
-        },
-        "Email": {
-          "type": "string",
-          "format": "email"
-        }
-      }
-    }
-  },
+  "definitions": {},
   "responses": {},
   "parameters": {},
   "securityDefinitions": {},
-  "tags": [],
-  "components": {
-    "parameters": {
-      "username": {
-        "in": "body",
-        "name": "Username",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "byte"
-        }
-      },
-      "firstname": {
-        "in": "body",
-        "name": "First_name",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "byte"
-        }
-      },
-      "lastname": {
-        "in": "body",
-        "name": "Last_name",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "byte"
-        }
-      },
-      "status": {
-        "in": "body",
-        "name": "Status",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "byte"
-        }
-      },
-      "email": {
-        "in": "body",
-        "name": "Email",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "email"
-        }
-      }
-    }
-  }
+  "tags": []
 }

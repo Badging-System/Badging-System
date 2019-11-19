@@ -70,7 +70,6 @@ exports.addUser = async (req, res) => {
         message: "Username and/or email already exists."
       }, 403);
     }
-  }
 };
 
 exports.addedUsers = async (req, res) => {
@@ -106,7 +105,6 @@ exports.addedUsers = async (req, res) => {
         message: "Username and/or email already exists for one or more entered users. No users were entered into the database."
       }, 403);
     }
-
   }
 }
 /**
