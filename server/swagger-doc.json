@@ -53,45 +53,22 @@
         "tags": [
           "User - Catalog"
         ],
-        "description": "Inserts one new specified user",
-        "produces": [
+        "description": "Inserts new specified user",
+        "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "formData",
-            "name": "Username",
-            "type1": "string",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "First_name",
-            "type1": "string",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "Last_name",
-            "type1": "string",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "Status",
-            "type1": "string",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "Email",
-            "type1": "string",
-            "required": true
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "New user has been entered"
+            "description": "CREATED"
           }
         }
       }
