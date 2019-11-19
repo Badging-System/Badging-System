@@ -70,6 +70,7 @@ exports.addUser = async (req, res) => {
         message: "Username and/or email already exists."
       }, 403);
     }
+  }
 };
 
 exports.addedUsers = async (req, res) => {
