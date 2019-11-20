@@ -1,9 +1,7 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
 const User = require('../../../models/User')
-const {
-  Mongo
-} = require("../../database/mongoDB");
+const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
