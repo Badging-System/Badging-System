@@ -19,7 +19,7 @@ import API from "../utils/API";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
       Badging System
       {" " + new Date().getFullYear()}
@@ -111,6 +111,7 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
+  const [users, setUsers] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -120,27 +121,22 @@ export default function Dashboard() {
 
   useEffect(() => {
     API.get("/users")
-      .then(res => {
-        //success
-        console.log(res.data);
-      })
-      .catch(err => {
-        //error
-        console.log(err);
-      });
-  });
+      .then(res => setUsers(res.data))
+      .catch(error => console.log(error));
+  }, []);
   return (
     <div className={classes.root}>
+      {console.log(users)}
       <CssBaseline />
       <AppBar
-        position="absolute"
+        position='absolute'
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            edge='start'
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
@@ -150,23 +146,23 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
+            component='h1'
+            variant='h6'
+            color='inherit'
             noWrap
             className={classes.title}
           >
             My View
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
+          <IconButton color='inherit'>
+            <Badge badgeContent={1} color='secondary'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
         }}
@@ -184,7 +180,7 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <List>
           <ListItem>
-            <ListItemText primary="This is a list item, inside a list component" />
+            <ListItemText primary='This is a list item, inside a list component' />
           </ListItem>
         </List>
 
