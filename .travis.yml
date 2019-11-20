@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+  - "12"
+os:
+  - linux
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install -g
+  - npm update
+
+jobs:
+  include:
+    - stage: build
+    - script: npm run-script build 
+    - stage: test
+    - script: npm test
+
+notification:
+  slack: $SLACK
+  if: branch = master
+  on_success: always
+  on_failure: always
+  on_pull_requests: true
+  email: false
+
+env:
+  - HOST=$HOST 
