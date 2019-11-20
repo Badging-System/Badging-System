@@ -1,6 +1,5 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
-const Team = require('../../../models/Team')
 const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
