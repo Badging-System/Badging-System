@@ -2,13 +2,6 @@ const User = require('./models/User');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-
-module.exports = {
-  seedUsers: seedUsers
-}
-
-seedUsers();
-
 //seed our db
 function seedUsers(callback) {
   const usersForTeam = [{
@@ -68,6 +61,7 @@ function seedUsers(callback) {
           } else {
             console.log("User documents inserted to Collection");
             mongoose.connection.close();
+            callback();
           }
         });
       });
@@ -80,3 +74,5 @@ function seedUsers(callback) {
     console.log('Problem connection to the database' + error);
   });
 }
+
+module.exports.seedUsers = seedUsers;
