@@ -16,12 +16,7 @@ describe('Main Page content', function() {
     app.set('port', port);
     server = http.createServer(app);
     server.listen(port, "localhost", function() {
-      seed.seedUsers().then(async (obj) => {
-        done();
-      }).catch((error) => {
-        console.log(error);
-        done();
-      });
+      seed.seedUsers(done);
     });
   });
   /* This test the main page response to ensure the response is correct */

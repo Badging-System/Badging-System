@@ -7,7 +7,7 @@ var app = require('../../../../app');
 var server;
 var http = require('http');
 var debug = require('debug')('server:server');
-var seed = require('../../../../seed')
+var seed = require('../../../../seed');
 
 require('dotenv').config();
 
@@ -17,13 +17,8 @@ describe('Integration Testing', function () {
     var port = parseInt(process.env.PORT || '3000', 10);
     app.set('port', port);
     server = http.createServer(app);
-    server.listen(port, "localhost", function () {
-      seed.seedUsers().then(async (obj) => {
-        done();
-      }).catch((error) => {
-        console.log(error);
-        done();
-      });
+    server.listen(port, "localhost", function() {
+      seed.seedUsers(done);
     });
   });
 
