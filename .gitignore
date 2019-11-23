@@ -5,11 +5,18 @@
 /.pnp
 .pnp.js
 
+# Dependency directories
+node_modules/
+jspm_packages/
+
 # testing
 /coverage
 
 # production
 /build
+
+# dotenv environment variables file
+.env
 
 # misc
 .DS_Store
