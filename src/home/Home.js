@@ -126,7 +126,6 @@ export default function Dashboard() {
   }, []);
   return (
     <div className={classes.root}>
-      {console.log(users)}
       <CssBaseline />
       <AppBar
         position='absolute'
@@ -178,9 +177,11 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+
         <List>
           <ListItem>
-            <ListItemText primary='This is a list item, inside a list component' />
+            <ListItemText primary='' />
+            <p>{JSON.stringify(users.payload)}</p>
           </ListItem>
         </List>
 
