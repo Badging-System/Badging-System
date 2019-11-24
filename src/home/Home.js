@@ -16,6 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import API from "../utils/API";
+import UserRow from "./UserRow";
 
 function Copyright() {
   return (
@@ -121,7 +122,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     API.get("/users")
-      .then(res => setUsers(res.data))
+      .then(res => setUsers(res.data.payload.data))
       .catch(error => console.log(error));
   }, []);
   return (
@@ -179,10 +180,12 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
 
         <List>
-          <ListItem>
-            <ListItemText primary='' />
-            <p>{JSON.stringify(users.payload)}</p>
-          </ListItem>
+          <UserRow userData={users[0]} />
+          {/* <ListItem>
+            {/* <ListItemText primary='' />
+            <p>{JSON.stringify(users)}</p>
+            {console.log(users.payload)}
+          </ListItem> */}
         </List>
 
         <Copyright />
