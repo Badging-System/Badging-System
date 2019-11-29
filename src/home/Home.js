@@ -112,7 +112,7 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const [users, setUsers] = useState(true);
+  const [users, setUsers] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -124,6 +124,7 @@ export default function Dashboard() {
     API.get("/users")
       .then(res => setUsers(res.data.payload.data))
       .catch(error => console.log(error));
+    console.log();
   }, []);
   return (
     <div className={classes.root}>
@@ -180,12 +181,12 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
 
         <List>
-          <UserRow userData={users[0]} />
-          {/* <ListItem>
-            {/* <ListItemText primary='' />
-            <p>{JSON.stringify(users)}</p>
-            {console.log(users.payload)}
-          </ListItem> */}
+          {users.map(user => (
+            <ListItemText key={user._id}>
+              {user.Username + "-" + user.Status}
+            </ListItemText>
+          ))}
+          <ListItem>{console.log(users)}</ListItem>
         </List>
 
         <Copyright />
