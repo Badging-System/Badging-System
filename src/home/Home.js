@@ -179,7 +179,7 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-
+        <Typography>All Members In The Database</Typography>
         <List>
           {users.map(user => (
             <ListItemText key={user._id}>
