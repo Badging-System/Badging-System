@@ -72,9 +72,86 @@
           }
         }
       }
+    },
+    "/users/addedusers": {
+      "post": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Inserts an array of specified users",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/UsersArray"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          }
+        }
+      }
     }
   },
-  "definitions": {},
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "Username"
+      ],
+      "properties": {
+        "Username": {
+          "type": "string"
+        },
+        "First_name": {
+          "type": "string"
+        },
+        "Last_name": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "UsersArray": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "Username"
+        ],
+        "properties": {
+          "Username": {
+            "type": "string"
+          },
+          "First_name": {
+            "type": "string"
+          },
+          "Last_name": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      }
+    }
+  },
   "responses": {},
   "parameters": {},
   "securityDefinitions": {},
