@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./home/Home";
+import Login from "./Login/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -8,7 +9,8 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Login} />
+          <Route exact path='/home' component={Home} />
         </Switch>
       </Router>
     );
