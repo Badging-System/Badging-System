@@ -1,9 +1,7 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
 const User = require('../../../models/User')
-const {
-  Mongo
-} = require("../../database/mongoDB");
+const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
@@ -90,6 +88,15 @@ exports.addedUsers = async (req, res) => {
         return;
       }
     }
+    for (index in addedUsers) {
+      if (!validEmail(addedUsers[index].Email)) {
+        JSONResponse(res, {
+          message: 'One or more emails need to be in a correct format. Documents were not inserted.'
+        }, 403);
+        return;
+      }
+    }
+
     var result = await mongoDB.validateUserNameEmail(User, addedUsers);
     if (result === null) {
       mongoDB.insertManyDocuments(collection, addedUsers).then(response => {
