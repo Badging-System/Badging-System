@@ -48,7 +48,7 @@ export default function SignIn() {
   const classes = useStyles();
   let history = useHistory();
   function navigateHome() {
-    history.push("/home");
+    history.push("/admin");
   }
 
   return (
