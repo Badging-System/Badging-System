@@ -1,23 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import Navigator from './../components/Navigator/Navigator';
-import Content from './../components/Content/Content';
-import Header from './../components/Header/Header';
+import React from "react";
+import PropTypes from "prop-types";
+import {
+  createMuiTheme,
+  ThemeProvider,
+  withStyles
+} from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Hidden from "@material-ui/core/Hidden";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Navigator from "./../components/Navigator/Navigator";
+import Content from "./../components/Content/Content";
+import Header from "../components/Header/CoachHeader";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+    <Typography variant='body2' color='textSecondary' align='center'>
+      {"Copyright © "}
+      <Link color='inherit' href='https://material-ui.com/'>
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -25,31 +29,31 @@ function Copyright() {
 let theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#63ccff',
-      main: '#009be5',
-      dark: '#006db3',
-    },
+      light: "#63ccff",
+      main: "#009be5",
+      dark: "#006db3"
+    }
   },
   typography: {
     h5: {
       fontWeight: 500,
       fontSize: 26,
-      letterSpacing: 0.5,
-    },
+      letterSpacing: 0.5
+    }
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 8
   },
   props: {
     MuiTab: {
-      disableRipple: true,
-    },
+      disableRipple: true
+    }
   },
   mixins: {
     toolbar: {
-      minHeight: 48,
-    },
-  },
+      minHeight: 48
+    }
+  }
 });
 
 theme = {
@@ -57,108 +61,108 @@ theme = {
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: '#18202c',
-      },
+        backgroundColor: "#18202c"
+      }
     },
     MuiButton: {
       label: {
-        textTransform: 'none',
+        textTransform: "none"
       },
       contained: {
-        boxShadow: 'none',
-        '&:active': {
-          boxShadow: 'none',
-        },
-      },
+        boxShadow: "none",
+        "&:active": {
+          boxShadow: "none"
+        }
+      }
     },
     MuiTabs: {
       root: {
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(1)
       },
       indicator: {
         height: 3,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
-        backgroundColor: theme.palette.common.white,
-      },
+        backgroundColor: theme.palette.common.white
+      }
     },
     MuiTab: {
       root: {
-        textTransform: 'none',
-        margin: '0 16px',
+        textTransform: "none",
+        margin: "0 16px",
         minWidth: 0,
         padding: 0,
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up("md")]: {
           padding: 0,
-          minWidth: 0,
-        },
-      },
+          minWidth: 0
+        }
+      }
     },
     MuiIconButton: {
       root: {
-        padding: theme.spacing(1),
-      },
+        padding: theme.spacing(1)
+      }
     },
     MuiTooltip: {
       tooltip: {
-        borderRadius: 4,
-      },
+        borderRadius: 4
+      }
     },
     MuiDivider: {
       root: {
-        backgroundColor: '#404854',
-      },
+        backgroundColor: "#404854"
+      }
     },
     MuiListItemText: {
       primary: {
-        fontWeight: theme.typography.fontWeightMedium,
-      },
+        fontWeight: theme.typography.fontWeightMedium
+      }
     },
     MuiListItemIcon: {
       root: {
-        color: 'inherit',
+        color: "inherit",
         marginRight: 0,
-        '& svg': {
-          fontSize: 20,
-        },
-      },
+        "& svg": {
+          fontSize: 20
+        }
+      }
     },
     MuiAvatar: {
       root: {
         width: 32,
-        height: 32,
-      },
-    },
-  },
+        height: 32
+      }
+    }
+  }
 };
 
 const drawerWidth = 256;
 
 const styles = {
   root: {
-    display: 'flex',
-    minHeight: '100vh',
+    display: "flex",
+    minHeight: "100vh"
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0,
-    },
+      flexShrink: 0
+    }
   },
   app: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column"
   },
   main: {
     flex: 1,
     padding: theme.spacing(6, 4),
-    background: '#eaeff1',
+    background: "#eaeff1"
   },
   footer: {
     padding: theme.spacing(2),
-    background: '#eaeff1',
-  },
+    background: "#eaeff1"
+  }
 };
 
 function Paperbase(props) {
@@ -174,15 +178,15 @@ function Paperbase(props) {
       <div className={classes.root}>
         <CssBaseline />
         <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
+          <Hidden smUp implementation='js'>
             <Navigator
               PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
+              variant='temporary'
               open={mobileOpen}
               onClose={handleDrawerToggle}
             />
           </Hidden>
-          <Hidden xsDown implementation="css">
+          <Hidden xsDown implementation='css'>
             <Navigator PaperProps={{ style: { width: drawerWidth } }} />
           </Hidden>
         </nav>
@@ -201,7 +205,7 @@ function Paperbase(props) {
 }
 
 Paperbase.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Paperbase);

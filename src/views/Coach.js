@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Navigator from "./../components/Navigator/Navigator";
 import Content from "./../components/Content/Content";
-import Header from "./../components/Header/Header";
+import Header from "../components/Header/CoachHeader";
 
 function Copyright() {
   return (
@@ -177,24 +177,9 @@ function Paperbase(props) {
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation='js'>
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant='temporary'
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation='css'>
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
-            <Content />
-          </main>
+          <main className={classes.main}>{/* <Content /> */}</main>
           <footer className={classes.footer}>
             <Copyright />
           </footer>
