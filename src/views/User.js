@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from './../components/Navigator/Navigator';
 import Content from './../components/Content/Content';
-import Header from './../components/Header/Header';
+import Header from './../components/Header/UserHeader';
 
 function Copyright() {
     return (
