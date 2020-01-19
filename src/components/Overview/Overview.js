@@ -36,7 +36,7 @@ const styles = theme => ({
   },
 });
 
-function UserManagement(props) {
+function Overview(props) {
   const {classes} = props;
 
   return (
@@ -79,8 +79,8 @@ function UserManagement(props) {
   );
 }
 
-UserManagement.propTypes = {
+Overview.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(UserManagement);
+export default withStyles(styles)(Overview);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { NavLink } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,16 +13,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupWork from '@material-ui/icons/GroupWork';
 
-import UserManagement from './../Content/UserManagement';
-
-
 const categories = [
   {
     id: 'Admin Panel',
     children: [
-      { id: 'Overview', icon: <HomeIcon />, active: true },
-      { id: 'User Management', component: <UserManagement />,icon: <PeopleIcon /> },
-      { id: 'Team Management', icon: <GroupWork /> }
+      { id: 'Overview', icon: <HomeIcon />, active: true, path: 'overview'},
+      { id: 'User Management',icon: <PeopleIcon />, path: 'users'},
+      { id: 'Team Management', icon: <GroupWork />, path: 'teams' }
     ],
   }
 ];
@@ -87,7 +85,13 @@ function Navigator(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
+            {children.map(({ id: childId, icon, active, path }) => (
+              <NavLink
+              to={'/admin/' + path}
+              activeClassName="active"
+              key={childId}
+              >
+
               <ListItem
                 key={childId}
                 button
@@ -102,6 +106,7 @@ function Navigator(props) {
                   {childId}
                 </ListItemText>
               </ListItem>
+              </NavLink>
             ))}
 
             <Divider className={classes.divider} />
