@@ -54,7 +54,6 @@ function Header(props) {
             </Grid>
             <Grid item>
               <ProfileAvatar />
-              <Typography>test</Typography>
             </Grid>
             <Grid></Grid>
           </Grid>
@@ -68,6 +67,7 @@ function Header(props) {
         elevation={0}
       >
         <Tabs value={0} textColor='inherit'>
+          <Tab textColor='inherit' label='Home' />
           <Tab textColor='inherit' label='Manage Team' />
           <Tab textColor='inherit' label='Manage Awards' />
         </Tabs>

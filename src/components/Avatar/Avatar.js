@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
+import SFbear from "./sfbear.jpeg";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -21,12 +22,14 @@ export default function ImageAvatars() {
 
   return (
     <div className={classes.root}>
-      <Avatar
-        variant='square'
-        alt='Profile Pic'
-        src=''
-        className={classes.large}
-      />
+      <div>
+        <Avatar
+          variant='square'
+          alt='Profile Pic'
+          src={SFbear}
+          className={classes.large}
+        />
+      </div>
     </div>
   );
 }
