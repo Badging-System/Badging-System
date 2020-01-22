@@ -5,9 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from './../components/Navigator/Navigator';
-import Content from './../components/Content/Content';
-import Header from './../components/Header/AdminHeader';
+import Navigator from '../../components/Navigator/Navigator';
+import Content from '../../components/Content/Content';
+import Header from '../../components/Header/AdminHeader';
 
 function Copyright() {
   return (
@@ -33,7 +33,7 @@ let theme = createMuiTheme({
   typography: {
     h5: {
       fontWeight: 500,
-      fontSize: 26,
+      fontSize: 15,
       letterSpacing: 0.5,
     },
   },
