@@ -26,24 +26,24 @@ const styles = theme => ({
   },
 });
 
-function getComponent(currentComponent){
-  let component;
-  switch (currentComponent){
-      case 'overview' :
-          component = <Overview/>;
-          break;
-      case 'user' :
-          component = <Overview/>;
-          break;
-      case 'team' :
-          component = <Overview/>;
-          break;
-  }
-  return component;
-}
+// function getComponent(currentComponent){
+//   let component;
+//   switch (currentComponent){
+//       case 'overview' :
+//           component = <Overview/>;
+//           break;
+//       case 'user' :
+//           component = <Overview/>;
+//           break;
+//       case 'team' :
+//           component = <Overview/>;
+//           break;
+//   }
+//   return component;
+// }
 
 function Content(props) {
-  const { currentComponent } = props;
+  // const { currentComponent } = props;
 
   return (
     <div>
