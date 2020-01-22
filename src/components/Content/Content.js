@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import { Switch, Route } from "react-router-dom";
-
 import Overview from './../Overview/Overview'
 
 const styles = theme => ({
