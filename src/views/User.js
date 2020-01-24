@@ -6,7 +6,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from './../components/Navigator/Navigator';
-import Content from './../components/Content/Content';
+import UserContent from './../components/Content/UserContent';
 import Header from './../components/Header/Header';
 
 function Copyright() {
@@ -189,7 +189,7 @@ function Paperbase(props) {
                 <div className={classes.app}>
                     <Header onDrawerToggle={handleDrawerToggle} />
                     <main className={classes.main}>
-                        <Content />
+                        <UserContent />
                     </main>
                     <footer className={classes.footer}>
                         <Copyright />
