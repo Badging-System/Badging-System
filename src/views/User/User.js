@@ -5,9 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from './../components/Navigator/Navigator';
-import UserContent from './../components/Content/UserContent';
-import Header from './../components/Header/Header';
+import Navigator from '../../components/Navigator/Navigator';
+import UserContent from '../../components/Content/UserContent';
+import UserHeader from '../../components/Header/UserHeader';
 
 function Copyright() {
     return (
@@ -187,7 +187,7 @@ function Paperbase(props) {
                     </Hidden>
                 </nav>
                 <div className={classes.app}>
-                    <Header onDrawerToggle={handleDrawerToggle} />
+                    <UserHeader onDrawerToggle={handleDrawerToggle} />
                     <main className={classes.main}>
                         <UserContent />
                     </main>

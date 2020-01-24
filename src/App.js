@@ -4,7 +4,10 @@ import Login from "./Login/Login";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import Admin from "./views/Admin";
-import User from "./views/User";
+import User from "./views/User/User";
+import AdminOverview from './views/Admin/Overview';
+import AdminUsers from './views/Admin/Users';
+import AdminTeams from './views/Admin/Teams';
 
 class App extends React.Component {
   render() {
@@ -14,6 +17,9 @@ class App extends React.Component {
           <Route exact path='/' component={Login} />
           <Route exact path='/home' component={Home} />
           <Route exact path='/admin' component={Admin} />
+          <Route exact path='/admin/overview' component={AdminOverview} />
+          <Route exact path='/admin/users' component={AdminUsers} />
+          <Route exact path='/admin/teams' component={AdminTeams} />
           <Route exact path='/user' component={User} />
         </Switch>
       </Router>
