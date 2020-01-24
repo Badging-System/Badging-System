@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Grid from "@material-ui/core/Grid";
-import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -35,6 +35,10 @@ const styles = theme => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <React.Fragment>
@@ -66,7 +70,7 @@ function Header(props) {
         position='static'
         elevation={0}
       >
-        <Tabs value={0} textColor='inherit'>
+        <Tabs value={value} onChange={handleChange} textColor='inherit'>
           <Tab textColor='inherit' label='Home' />
           <Tab textColor='inherit' label='Manage Team' />
           <Tab textColor='inherit' label='Manage Awards' />

@@ -8,7 +8,7 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import Header from "../components/Header/CoachHeader";
+import CoachHeader from "../components/Header/CoachHeader";
 
 function Copyright() {
   return (
@@ -170,12 +170,14 @@ function Paperbase(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  function changeContent(value) {}
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <CoachHeader onDrawerToggle={handleDrawerToggle} />
           <main className={classes.main}>{/* <Content /> */}</main>
           <footer className={classes.footer}>
             <Copyright />
