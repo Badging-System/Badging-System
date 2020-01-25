@@ -6,7 +6,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from '../../components/Navigator/Navigator';
-import Content from '../../components/Content/Content';
 import Table from '../../components/Table/Table';
 import Header from '../../components/Header/AdminHeader';
 import moment from 'moment';
@@ -168,7 +167,7 @@ function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const [table_data, setData] = React.useState({
+  const [table_data] = React.useState({
     columns: [
       { field: 'team', title: 'Team', editable:'false'},
       { field: 'coach', title: 'Coach', editable:'false'},

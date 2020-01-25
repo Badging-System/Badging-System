@@ -171,7 +171,7 @@ function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const [table_data, setData] = React.useState({
+  const [table_data] = React.useState({
     columns: [
       { field: 'username', title: 'Username', editable: 'false' },
       { field: 'email', title: 'Email', editable: 'false' },
