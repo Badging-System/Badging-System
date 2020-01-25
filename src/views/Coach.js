@@ -161,6 +161,7 @@ const styles = {
     background: "#eaeff1"
   }
 };
+
 function MainContent(index) {
   console.log(index);
   if (index === 0) {
@@ -192,7 +193,7 @@ function Paperbase(props) {
       <div className={classes.root}>
         <CssBaseline />
         <div className={classes.app}>
-          <CoachHeader handleTabChange={handleTabChange} />
+          <CoachHeader onDrawerToggle={handleTabChange} />
           <main className={classes.main}>{MainContent(index)}</main>
           <footer className={classes.footer}>
             <Copyright />
