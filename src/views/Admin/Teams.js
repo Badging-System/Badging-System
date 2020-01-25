@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from '../../components/Navigator/Navigator';
 import Content from '../../components/Content/Content';
+import Table from '../../components/Table/Table';
 import Header from '../../components/Header/AdminHeader';
+import moment from 'moment';
+
 
 function Copyright() {
   return (
@@ -165,6 +168,24 @@ function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const [table_data, setData] = React.useState({
+    columns: [
+      { field: 'team', title: 'Team', editable:'false'},
+      { field: 'coach', title: 'Coach', editable:'false'},
+      { field: 'playerCount', title: '# of Players', editable:'false'},
+      { field: 'createdOn', title: 'Created On', editable:'false'},
+      { field: 'approved', title: 'Approved', lookup: { 1: 'true', 0: 'false' }}
+    ],
+    data: [
+      { team: 'Paw Patrol', coach: 'Alex', playerCount: 44, createdOn: moment().format(), approved: 1},
+      { team: 'Power Rangers', coach: 'Mitchell', playerCount: 0, createdOn: moment().format(), approved:0},
+      { team: 'Power Puff Girls', coach: 'Gaurav', playerCount: 4, createdOn: moment().format(), approved: 1},
+      { team: 'Edward', coach: 'David', playerCount: 5000, createdOn: moment().format(), approved: 1},
+    ],
+  });
+
+
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -189,7 +210,7 @@ function Paperbase(props) {
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} title="Team Management" admin={true}/>
           <main className={classes.main}>
-            <Content />
+            <Table title={'Team Management'} table_data={table_data}/>
           </main>
           <footer className={classes.footer}>
             <Copyright />
