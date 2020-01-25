@@ -161,10 +161,25 @@ const styles = {
     background: "#eaeff1"
   }
 };
+function MainContent(index) {
+  console.log(index);
+  if (index === 0) {
+    return <Typography>index 0</Typography>;
+  } else if (index === 1) {
+    return <Typography>index 1</Typography>;
+  } else {
+    return <Typography>index 2</Typography>;
+  }
+}
 
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [index, setIndex] = React.useState(0);
+
+  const handleTabChange = newIndex => {
+    setIndex(newIndex);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -177,8 +192,8 @@ function Paperbase(props) {
       <div className={classes.root}>
         <CssBaseline />
         <div className={classes.app}>
-          <CoachHeader onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>{/* <Content /> */}</main>
+          <CoachHeader handleTabChange={handleTabChange} />
+          <main className={classes.main}>{MainContent(index)}</main>
           <footer className={classes.footer}>
             <Copyright />
           </footer>

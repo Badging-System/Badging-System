@@ -34,10 +34,12 @@ const styles = theme => ({
 });
 
 function Header(props) {
-  const { classes, onDrawerToggle } = props;
+  const { classes, handleTabChange } = props;
   const [value, setValue] = React.useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    handleTabChange(newValue);
   };
 
   return (
