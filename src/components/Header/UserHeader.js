@@ -14,7 +14,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import {withStyles} from '@material-ui/core/styles';
+import UserTeamMember from '../../views/User/UserTeamMembers';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -40,12 +42,38 @@ const styles = theme => ({
   }
 });
 
+function TabPanel(props) {
+  const {children, value, index, ...other} = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+
+
 function Header(props) {
   const {classes, onDrawerToggle} = props;
   const [tabIndex, setTabIndex] = useState(0);
 
-  const handleChange = event => {
-    setTabIndex(event.target.value);
+
+  const handleChange = (event, newValue) => {
+    setTabIndex(newValue);
   };
 
   return (
@@ -120,8 +148,12 @@ function Header(props) {
           <Tab textColor='inherit' label='Team Members' />
         </Tabs>
       </AppBar>
-      {tabIndex === 0 && <TabContainer>Item One</TabContainer>}
-      {tabIndex === 1 && <TabContainer>Item Two</TabContainer>}
+      <TabPanel value={tabIndex} index={0}>
+        User Content will go here
+      </TabPanel>
+      <TabPanel value={tabIndex} index={1}>
+        <UserTeamMember />
+      </TabPanel>
     </React.Fragment>
   );
 }
