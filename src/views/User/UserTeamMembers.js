@@ -33,7 +33,7 @@ export default function SimpleTable() {
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
-                    <TableRow>
+                    <TableRow >
                         <TableCell align="center">Name</TableCell>
                         <TableCell align="center">Username</TableCell>
                         <TableCell align="center">Status</TableCell>
@@ -42,7 +42,7 @@ export default function SimpleTable() {
                 </TableHead>
                 <TableBody>
                     {rows.map(row => (
-                        <TableRow >
+                        <TableRow key={row.name} >
                             <TableCell align="center">{row.name}</TableCell>
                             <TableCell align="center">{row.username}</TableCell>
                             <TableCell align="center">{row.status}</TableCell>
