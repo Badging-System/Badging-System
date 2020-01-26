@@ -1,25 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import {
   createMuiTheme,
   ThemeProvider,
   withStyles
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import Navigator from "./../components/Navigator/Navigator";
-import Content from "./../components/Content/Content";
-import Header from "./../components/Header/AdminHeader";
+import CoachHeader from "../components/Header/CoachHeader";
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
       <Link color='inherit' href='https://material-ui.com/'>
-        S Your Website
+        Your Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -166,40 +162,32 @@ const styles = {
   }
 };
 
+function MainContent(index) {
+  console.log(index);
+  if (index === 0) {
+    return <Typography>index 0</Typography>;
+  } else if (index === 1) {
+    return <Typography>index 1</Typography>;
+  } else {
+    return <Typography>index 2</Typography>;
+  }
+}
+
 function Paperbase(props) {
   const { classes } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [index, setIndex] = React.useState(0);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleTabChange = newIndex => {
+    setIndex(newIndex);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation='js'>
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant='temporary'
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation='css'>
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
         <div className={classes.app}>
-          <Header
-            onDrawerToggle={handleDrawerToggle}
-            title='Overview'
-            admin={true}
-          />
-          <main className={classes.main}>
-            <Content />
-          </main>
+          <CoachHeader onDrawerToggle={handleTabChange} />
+          <main className={classes.main}>{MainContent(index)}</main>
           <footer className={classes.footer}>
             <Copyright />
           </footer>
