@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import SFbear from "./sfbear.jpeg";
-import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {

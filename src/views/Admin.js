@@ -11,14 +11,14 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Navigator from "./../components/Navigator/Navigator";
 import Content from "./../components/Content/Content";
-import Header from "../components/Header/CoachHeader";
+import Header from "./../components/Header/AdminHeader";
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
       <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
+        S Your Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -191,7 +191,11 @@ function Paperbase(props) {
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <Header
+            onDrawerToggle={handleDrawerToggle}
+            title='Overview'
+            admin={true}
+          />
           <main className={classes.main}>
             <Content />
           </main>

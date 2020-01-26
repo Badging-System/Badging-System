@@ -175,18 +175,11 @@ function MainContent(index) {
 
 function Paperbase(props) {
   const { classes } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [index, setIndex] = React.useState(0);
 
   const handleTabChange = newIndex => {
     setIndex(newIndex);
   };
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  function changeContent(value) {}
 
   return (
     <ThemeProvider theme={theme}>
