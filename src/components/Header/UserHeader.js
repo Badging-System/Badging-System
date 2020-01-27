@@ -17,6 +17,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {withStyles} from '@material-ui/core/styles';
 import UserTeamMember from '../../views/User/UserTeamMembers';
+import UserBadges from '../../views/User/UserBadges';
+
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -146,6 +148,7 @@ function Header(props) {
         <Tabs value={tabIndex} onChange={handleChange} textColor='inherit'>
           <Tab textColor='inherit' label='Home' />
           <Tab textColor='inherit' label='Team Members' />
+          <Tab textColor='inherit' label='Badge Progress' />
         </Tabs>
       </AppBar>
       <TabPanel value={tabIndex} index={0}>
@@ -153,6 +156,14 @@ function Header(props) {
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
         <UserTeamMember />
+      </TabPanel>
+      <TabPanel value={tabIndex} index={2}>
+        Badge 1
+        <UserBadges />
+        Badge 2
+        <UserBadges />
+        Badge 3
+        <UserBadges />
       </TabPanel>
     </React.Fragment>
   );
