@@ -4,7 +4,7 @@ import Login from "./Login/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Admin from "./views/Admin";
-import Coach from "./views/Coach";
+import Coach from "./views/Coach/Coach";
 import User from "./views/User/User";
 import AdminOverview from "./views/Admin/Overview";
 import AdminUsers from "./views/Admin/Users";

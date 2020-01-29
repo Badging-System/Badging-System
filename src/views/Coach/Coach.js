@@ -8,7 +8,8 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import CoachHeader from "../components/Header/CoachHeader";
+import CoachHeader from "../../components/Header/CoachHeader";
+import ManageTeam from "./ManageTeam";
 
 function Copyright() {
   return (
@@ -167,7 +168,7 @@ function MainContent(index) {
   if (index === 0) {
     return <Typography>index 0</Typography>;
   } else if (index === 1) {
-    return <Typography>index 1</Typography>;
+    return <ManageTeam />;
   } else {
     return <Typography>index 2</Typography>;
   }
