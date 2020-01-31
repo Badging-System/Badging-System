@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {
   createMuiTheme,
@@ -174,8 +174,8 @@ function MainContent(index) {
 }
 
 function Paperbase(props) {
-  const { classes } = props;
-  const [index, setIndex] = React.useState(0);
+  const {classes} = props;
+  const [index, setIndex] = useState(0);
 
   const handleTabChange = newIndex => {
     setIndex(newIndex);
