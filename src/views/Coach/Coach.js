@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import CoachHeader from "../../components/Header/CoachHeader";
 import ManageTeam from "./ManageTeam";
+import ManageAwards from "./ManageAwards";
 
 function Copyright() {
   return (
@@ -170,13 +171,13 @@ function MainContent(index) {
   } else if (index === 1) {
     return <ManageTeam />;
   } else {
-    return <Typography>index 2</Typography>;
+    return <ManageAwards />;
   }
 }
 
 function Paperbase(props) {
   const { classes } = props;
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(2);
 
   const handleTabChange = newIndex => {
     setIndex(newIndex);
