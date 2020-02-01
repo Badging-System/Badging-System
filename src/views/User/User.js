@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {createMuiTheme, ThemeProvider, withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import UserContent from '../../components/Content/UserContent';
+import UserTeamMember from '../../views/User/UserTeamMembers';
+import UserBadges from '../../views/User/UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
 
 function Copyright() {
@@ -159,13 +160,30 @@ const styles = {
     },
 };
 
+function MainContent(index) {
+    console.log(index);
+    if (index === 0) {
+        return <Typography> User Content will go here</Typography>;
+    } else if (index === 1) {
+        return <UserTeamMember />;
+    } else {
+        return (<React.Fragment> Badge 1
+            < UserBadges />
+            Badge 2
+                < UserBadges />
+            Badge 3
+                    < UserBadges /></React.Fragment>);
+
+
+    }
+}
+
 function Paperbase(props) {
     const {classes} = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
     const [index, setIndex] = useState(0);
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
+    const handleTabChange = newIndex => {
+        setIndex(newIndex);
     };
 
     return (
@@ -173,10 +191,8 @@ function Paperbase(props) {
             <div className={classes.root}>
                 <CssBaseline />
                 <div className={classes.app}>
-                    <UserHeader onDrawerToggle={handleDrawerToggle} />
-                    <main className={classes.main}>
-                        <UserContent />
-                    </main>
+                    <UserHeader onDrawerToggle={handleTabChange} />
+                    <main className={classes.main}>{MainContent(index)}</main>
                     <footer className={classes.footer}>
                         <Copyright />
                     </footer>
