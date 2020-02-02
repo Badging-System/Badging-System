@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {createMuiTheme, ThemeProvider, withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -161,8 +161,7 @@ const styles = {
 
 function Paperbase(props) {
     const {classes} = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [index, setIndex] = useState(0);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
