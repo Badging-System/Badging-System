@@ -15,8 +15,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {withStyles} from '@material-ui/core/styles';
-import UserTeamMember from '../../views/User/UserTeamMembers';
-import UserBadges from '../../views/User/UserBadges';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -75,6 +73,7 @@ function Header(props) {
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
+    onDrawerToggle(newValue);
   };
 
   return (
@@ -144,20 +143,6 @@ function Header(props) {
           <Tab textColor='inherit' label='Badge Progress' />
         </Tabs>
       </AppBar>
-      <TabPanel value={tabIndex} index={0}>
-        User Content will go here
-      </TabPanel>
-      <TabPanel value={tabIndex} index={1}>
-        <UserTeamMember />
-      </TabPanel>
-      <TabPanel value={tabIndex} index={2}>
-        Badge 1
-        <UserBadges />
-        Badge 2
-        <UserBadges />
-        Badge 3
-        <UserBadges />
-      </TabPanel>
     </React.Fragment>
   );
 }
