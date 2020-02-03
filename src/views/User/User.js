@@ -55,7 +55,7 @@ theme = {
     overrides: {
         MuiDrawer: {
             paper: {
-                backgroundColor: '#18202c',
+                backgroundColor: '#002C40',
             },
         },
         MuiButton: {

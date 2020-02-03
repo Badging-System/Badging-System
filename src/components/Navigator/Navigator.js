@@ -17,7 +17,7 @@ const categories = [
   {
     id: 'Admin Panel',
     children: [
-      { id: 'Overview', icon: <HomeIcon />, active: true, path: 'overview'},
+      { id: 'Overview', icon: <HomeIcon />, path: 'overview'},
       { id: 'User Management',icon: <PeopleIcon />, path: 'users'},
       { id: 'Team Management', icon: <GroupWork />, path: 'teams' }
     ],
@@ -41,7 +41,7 @@ const styles = theme => ({
     },
   },
   itemCategory: {
-    backgroundColor: '#232f3e',
+    backgroundColor: '#002C40',
     boxShadow: '0 -1px 0 #404854 inset',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -85,17 +85,18 @@ function Navigator(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active, path }) => (
+            {children.map(({ id: childId, icon, path }) => (
               <NavLink
               to={'/admin/' + path}
               activeClassName="active"
+              style={{ textDecoration: 'none' }}
               key={childId}
               >
 
               <ListItem
                 key={childId}
                 button
-                className={clsx(classes.item, active && classes.itemActiveItem)}
+                className={clsx(classes.item)}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
                 <ListItemText

@@ -20,7 +20,11 @@ import CardFooter from "../../components/Card/CardFooter";
 import CardTitle from "../../components/Card/CardTitle";
 import {
   Group,
-  AccessTime
+  AccessTime,
+  PersonOutline,
+  SupervisedUserCircle,
+  TurnedIn,
+  GroupWork
 } from "@material-ui/icons";
 
 
@@ -74,7 +78,7 @@ theme = {
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: '#18202c'
+        backgroundColor: '#002C40'
       }
     },
     MuiButton: {
@@ -233,7 +237,7 @@ function Paperbase(props) {
                 <Card chart >
                 <CardHeader color={'admin'} stats icon>
                     <CardIcon color={'admin'} >
-                    <Group />
+                    <PersonOutline />
                     </CardIcon>
                     <CardTitle color={'admin'} title={'Total Users'}/>
                 </CardHeader>
@@ -251,7 +255,7 @@ function Paperbase(props) {
                 <Card chart >
                 <CardHeader color={'admin'} stats icon>
                     <CardIcon color={'admin'} >
-                    <Group />
+                    <SupervisedUserCircle />
                     </CardIcon>
                     <CardTitle color={'admin'} title={'Total Coaches'}/>
                 </CardHeader>
@@ -287,7 +291,7 @@ function Paperbase(props) {
                 <Card chart >
                 <CardHeader color={'admin'} stats icon>
                     <CardIcon color={'admin'}>
-                    <Group />
+                    <GroupWork />
                     </CardIcon>
                     <CardTitle color={'admin'} title={'Top Performing Teams'}/>
                 </CardHeader>
@@ -305,7 +309,7 @@ function Paperbase(props) {
                 <Card chart >
                 <CardHeader color={'admin'} stats icon>
                     <CardIcon color={'admin'}>
-                    <Group />
+                    <TurnedIn />
                     </CardIcon>
                     <CardTitle color={'admin'} title={'Top Performing Users'}/>
                 </CardHeader>
