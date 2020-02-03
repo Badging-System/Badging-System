@@ -155,7 +155,7 @@ const styles = {
   root: {
     flexGrow: 1,
     display: 'flex',
-    minHeight: '50vh',
+    minHeight: '100vh',
     'justify-content': 'center'
   },
   top: {
