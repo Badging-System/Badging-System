@@ -11,7 +11,6 @@ import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Navigator from "./../components/Navigator/Navigator";
-import Content from "./../components/Content/Content";
 import Header from "./../components/Header/AdminHeader";
 
 function Copyright() {
@@ -197,9 +196,6 @@ function Paperbase(props) {
             title='Overview'
             admin={true}
           />
-          {/* <main className={classes.main}>
-            <Content />
-          </main> */}
           <footer className={classes.footer}>
             <Copyright />
           </footer>
