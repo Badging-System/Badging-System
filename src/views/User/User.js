@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import UserTeamMember from '../../views/User/UserTeamMembers';
 import UserBadges from '../../views/User/UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 function Copyright() {
     return (

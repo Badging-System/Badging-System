@@ -17,6 +17,7 @@ import Box from '@material-ui/core/Box';
 import {withStyles} from '@material-ui/core/styles';
 
 
+
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 const styles = theme => ({
