@@ -10,9 +10,18 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from '../../components/Navigator/Navigator';
-import Content from '../../components/Content/Content';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import GridItem from "../../components/Grid/GridItem";
+import Card from "../../components/Card/Card";
+import CardHeader from "../../components/Card/CardHeader";
+import CardIcon from "../../components/Card/CardIcon";
+import CardBody from "../../components/Card/CardBody";
+import CardFooter from "../../components/Card/CardFooter";
+import CardTitle from "../../components/Card/CardTitle";
+import {
+  Group,
+  AccessTime
+} from "@material-ui/icons";
 
 
 import Header from '../../components/Header/AdminHeader';
@@ -220,29 +229,96 @@ function Paperbase(props) {
           />
           <main className={classes.main}>
             <Grid container className={classes.top} spacing={4}>
-              <Grid item sm={3}>
-              <Paper className={classes.paper} />
-              </Grid>
-              <Grid item sm={3} >
-              <Paper className={classes.paper} />
-              </Grid>
-              <Grid item sm={3}>
-              <Paper className={classes.paper} />
-              </Grid>
-              <Grid item sm={3}>
-              <Paper className={classes.paper} />
-              </Grid>
-            </Grid>
-            <Grid container className={classes.bottom} spacing={4}>
-              <Grid item sm={4}>
-              <Paper className={classes.paper} />
-              </Grid>
-              <Grid item sm={4} >
-              <Paper className={classes.paper} />
-              </Grid>
-              <Grid item sm={4}>
-              <Paper className={classes.paper} />
-              </Grid>
+              <GridItem xs={12} sm={4}>
+                <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'} >
+                    <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Total Users'}/>
+                </CardHeader>
+                <CardBody>
+                
+                </CardBody>
+                <CardFooter chart>
+                <div className={classes.stats}>
+                    <AccessTime /> updated 4 minutes ago
+                </div>
+                </CardFooter>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={4}>
+                <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'} >
+                    <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Total Coaches'}/>
+                </CardHeader>
+                <CardBody>
+                
+                </CardBody>
+                <CardFooter chart>
+                <div className={classes.stats}>
+                    <AccessTime /> updated 4 minutes ago
+                </div>
+                </CardFooter>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={4}>
+                <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'} >
+                        <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Total Teams'}/>
+                </CardHeader>
+                <CardBody>
+                
+                </CardBody>
+                <CardFooter chart>
+                <div className={classes.stats}>
+                    <AccessTime /> updated 4 minutes ago
+                </div>
+                </CardFooter>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={6}>
+                <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'}>
+                    <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Top Performing Teams'}/>
+                </CardHeader>
+                <CardBody>
+                
+                </CardBody>
+                <CardFooter chart>
+                <div className={classes.stats}>
+                    <AccessTime /> updated 4 minutes ago
+                </div>
+                </CardFooter>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={6}>
+                <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'}>
+                    <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Top Performing Users'}/>
+                </CardHeader>
+                <CardBody>
+                
+                </CardBody>
+                <CardFooter chart>
+                <div className={classes.stats}>
+                    <AccessTime /> updated 4 minutes ago
+                </div>
+                </CardFooter>
+                </Card>
+              </GridItem>
             </Grid>
           </main>
           <footer className={classes.footer}>
