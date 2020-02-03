@@ -197,9 +197,9 @@ function Paperbase(props) {
             title='Overview'
             admin={true}
           />
-          <main className={classes.main}>
+          {/* <main className={classes.main}>
             <Content />
-          </main>
+          </main> */}
           <footer className={classes.footer}>
             <Copyright />
           </footer>
