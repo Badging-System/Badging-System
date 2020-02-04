@@ -9,6 +9,14 @@ import Navigator from '../../components/Navigator/Navigator';
 import Table from '../../components/Table/Table';
 import Header from '../../components/Header/AdminHeader';
 import moment from 'moment';
+import Card from "../../components/Card/Card";
+import CardHeader from "../../components/Card/CardHeader";
+import CardIcon from "../../components/Card/CardIcon";
+import CardBody from "../../components/Card/CardBody";
+import CardTitle from "../../components/Card/CardTitle";
+import {
+  Group
+} from "@material-ui/icons";
 
 
 function Copyright() {
@@ -209,7 +217,18 @@ function Paperbase(props) {
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} title="Team Management" admin={true}/>
           <main className={classes.main}>
-            <Table title={'Team Management'} table_data={table_data}/>
+          <Card chart >
+                <CardHeader color={'admin'} stats icon>
+                    <CardIcon color={'admin'} >
+                    <Group />
+                    </CardIcon>
+                    <CardTitle color={'admin'} title={'Team Management'}/>
+                </CardHeader>
+                <CardBody>
+                <Table title={''} table_data={table_data}/>
+
+                </CardBody>
+                </Card>
           </main>
           <footer className={classes.footer}>
             <Copyright />
