@@ -23,17 +23,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Select campaign settings", "Create an ad group", "Create an ad"];
+  return ["Task 1", "Task 2", "Complete"];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return "Step 1: Select campaign settings...";
+      return "Step 1: Task1";
     case 1:
-      return "Step 2: What is an ad group anyways?";
+      return "Step 2: Task2";
     case 2:
-      return "Step 3: This is the bit I really care about!";
+      return "Step 3: Task3";
     default:
       return "Unknown step";
   }
@@ -146,7 +146,7 @@ export default function HorizontalNonLinearStepper() {
                     onClick={handleComplete}
                   >
                     {completedSteps() === totalSteps() - 1
-                      ? "Finish"
+                      ? "Award Badge"
                       : "Complete Step"}
                   </Button>
                 ))}

@@ -8,6 +8,8 @@ import Avatar from "@material-ui/core/Avatar";
 import ImageIcon from "@material-ui/icons/Image";
 import ProgressStepper from "./ProgressStepper";
 import { Typography } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import Card from "@material-ui/core/Card";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +28,7 @@ export default function FolderList() {
         <Typography>Member 1</Typography>
         <ProgressStepper />
       </ListItem>
+      <Divider />
       <ListItem>
         <Typography>Member 2</Typography>
         <ProgressStepper />
