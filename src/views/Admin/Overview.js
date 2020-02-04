@@ -18,6 +18,13 @@ import CardIcon from "../../components/Card/CardIcon";
 import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
 import CardTitle from "../../components/Card/CardTitle";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import {
   Group,
   AccessTime,
@@ -194,6 +201,9 @@ const styles = {
     padding: theme.spacing(6, 4),
     background: '#eaeff1'
   },
+  dataList: {
+    maxHeight: '250px',
+  },
   footer: {
     padding: theme.spacing(2),
     background: '#eaeff1'
@@ -203,10 +213,68 @@ const styles = {
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const teamData = {
+    header: '',
+    body: {
+      columns: ['Rank', 'Team Name', 'Coach', 'Active Memebers', 'Badges Awarded'],
+      rowdata: [{
+        rank: '1', 
+        team: 'Paw Patrol', 
+        coach: 'Alex',
+        active_user: 5,
+        badges_awarded: 23 
+      },
+        {
+          rank: '2', 
+          team: 'Power Puff Girls', 
+          coach: 'Gaurav',
+          active_user: 2,
+          badges_awarded: 15 
+        },
+      ]
+    },
+    footer: ''
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const getColumns = (table) => {
+    let returnCells = null;
+    if(table.body.columns) {
+        returnCells = teamData.body.columns.map((val,index) =>
+            <TableCell key={index}> {val} </TableCell>
+        )
+    }
+
+
+    if(table.body.columns) {
+        return (
+            returnCells
+        );
+    } else {
+        return;
+    }
+}
+
+const getDataRow = (table) => {
+  if(table.body.rowdata) {
+      return (
+        table.body.rowdata.map((elm, index)=> 
+              <TableRow key={index}> 
+              {
+                Object.keys(elm).map((key,index) => 
+                  <TableCell key={index}> {elm[key]} </TableCell>
+                )
+              } 
+              </TableRow>
+          )
+      );
+  } else {
+      return;
+  }
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -296,7 +364,18 @@ function Paperbase(props) {
                     <CardTitle color={'admin'} title={'Top Performing Teams'}/>
                 </CardHeader>
                 <CardBody>
-                
+                <TableContainer className={classes.dataList} component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                {getColumns(teamData)}
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {getDataRow(teamData)}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </CardBody>
                 <CardFooter chart>
                 <div className={classes.stats}>
