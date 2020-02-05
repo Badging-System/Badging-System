@@ -165,7 +165,6 @@ const styles = {
 };
 
 function MainContent(index) {
-  console.log(index);
   if (index === 0) {
     return <Typography>index 0</Typography>;
   } else if (index === 1) {
@@ -177,7 +176,7 @@ function MainContent(index) {
 
 function Paperbase(props) {
   const { classes } = props;
-  const [index, setIndex] = React.useState(2);
+  const [index, setIndex] = React.useState(0);
 
   const handleTabChange = newIndex => {
     setIndex(newIndex);
