@@ -7,7 +7,7 @@ import Link from '@material-ui/core/Link';
 import UserTeamMember from '../../views/User/UserTeamMembers';
 import UserBadges from '../../views/User/UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+
 
 function Copyright() {
     return (
@@ -162,7 +162,7 @@ const styles = {
 };
 
 function MainContent(index) {
-    console.log(index);
+
     if (index === 0) {
         return <Typography> User Content will go here</Typography>;
     } else if (index === 1) {
