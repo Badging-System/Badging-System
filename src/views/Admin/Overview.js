@@ -162,6 +162,22 @@ theme = {
 
 const drawerWidth = 256;
 
+const title = {
+  color: "#3C4858",
+  textDecoration: "none",
+  fontWeight: "300",
+  marginTop: "30px",
+  marginBottom: "25px",
+  minHeight: "32px",
+  float: "right",
+  fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+  "& small": {
+      color: '#777',
+      fontWeight: "400",
+      lineHeight: "1"
+  }
+};
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -207,30 +223,132 @@ const styles = {
   footer: {
     padding: theme.spacing(2),
     background: '#eaeff1'
-  }
+  },
+  title: {
+    color: "#3C4858",
+    textDecoration: "none",
+    fontWeight: "300",
+    marginTop: "30px",
+    marginBottom: "25px",
+    minHeight: "32px",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    "& small": {
+        color: '#777',
+        fontWeight: "400",
+        lineHeight: "1"
+    }
+  },
+ cardTitle: {
+    ...title,
+    marginTop: "0",
+    marginBottom: "3px",
+    minHeight: "auto",
+    "& a": {
+        ...title,
+        marginTop: ".625rem",
+        marginBottom: "0.75rem",
+        minHeight: "auto"
+    }
+  },
+  cardCategory: {
+    color: "#999",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    paddingTop: "10px !important",
+    marginBottom: "0",
+    wordWrap: 'normal'
+  },
 };
 
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const teamData = {
+  const team_data = {
     header: '',
     body: {
       columns: ['Rank', 'Team Name', 'Coach', 'Active Memebers', 'Badges Awarded'],
-      rowdata: [{
+      rowdata: [
+        {
         rank: '1', 
         team: 'Paw Patrol', 
-        coach: 'Alex',
+        coach: 'Alex Zhou',
         active_user: 5,
-        badges_awarded: 23 
+        badges_awarded: 60 
       },
         {
           rank: '2', 
           team: 'Power Puff Girls', 
-          coach: 'Gaurav',
-          active_user: 2,
-          badges_awarded: 15 
+          coach: 'Garuav Deshpande',
+          active_user: 15,
+          badges_awarded: 50 
         },
+        {
+          rank: '3', 
+          team: 'Edward', 
+          coach: '	David Maitha',
+          active_user: 10,
+          badges_awarded: 21 
+        },
+        {
+          rank: '4', 
+          team: 'Power Rangers', 
+          coach: 'Mitchell Roberts',
+          active_user: 5,
+          badges_awarded: 7 
+        },
+        {
+          rank: '5', 
+          team: 'Badger', 
+          coach: 'John Doe',
+          active_user: 1,
+          badges_awarded: 5 
+        },
+      ]
+    },
+    footer: ''
+  };
+
+  const player_data = {
+    header: '',
+    body: {
+      columns: ['Rank', 'User Name', 'Team Name', 'Coach', 'Badges Awarded'],
+      rowdata: [
+        {
+          rank: '1', 
+          name: 'Ryan Tonthat',
+          team: 'Power Puff Girls', 
+          coach: 'Garuav Deshpande',
+          badges_awarded: 30 
+        },
+        {
+          rank: '2', 
+          name: 'David Burr',
+          team: 'Power Puff Girls', 
+          coach: 'Garuav Deshpande',
+          badges_awarded: 29 
+        },
+        {
+          rank: '3', 
+          name: '	Mitchell Roberts',
+          team: 'Paw Patrol', 
+          coach: 'Alex Zhou',
+          badges_awarded: 23 
+        },
+        {
+          rank: '4', 
+          name: 'John Snow',
+          team: 'Edward', 
+          coach: 'David Maitha',
+          badges_awarded: 10 
+        },
+        {
+          rank: '5', 
+          name: 'David Maitha',
+          team: 'Power Puff Girls', 
+          coach: 'Garuav Deshpande',
+          badges_awarded: 2 
+        }
       ]
     },
     footer: ''
@@ -243,7 +361,7 @@ function Paperbase(props) {
   const getColumns = (table) => {
     let returnCells = null;
     if(table.body.columns) {
-        returnCells = teamData.body.columns.map((val,index) =>
+        returnCells = team_data.body.columns.map((val,index) =>
             <TableCell key={index}> {val} </TableCell>
         )
     }
@@ -307,10 +425,12 @@ const getDataRow = (table) => {
                     <CardIcon color={'admin'} >
                     <PersonOutline />
                     </CardIcon>
-                    <CardTitle color={'admin'} title={'Total Users'}/>
+                    <p className={classes.cardCategory}>Total Users</p>
+                    <h1 className={classes.cardTitle}>
+                      454
+                    </h1>
                 </CardHeader>
                 <CardBody>
-                
                 </CardBody>
                 <CardFooter chart>
                 <div className={classes.stats}>
@@ -325,7 +445,10 @@ const getDataRow = (table) => {
                     <CardIcon color={'admin'} >
                     <SupervisedUserCircle />
                     </CardIcon>
-                    <CardTitle color={'admin'} title={'Total Coaches'}/>
+                    <p className={classes.cardCategory}>Total Coaches</p>
+                    <h1 className={classes.cardTitle}>
+                      10
+                    </h1>
                 </CardHeader>
                 <CardBody>
                 
@@ -343,7 +466,10 @@ const getDataRow = (table) => {
                     <CardIcon color={'admin'} >
                         <Group />
                     </CardIcon>
-                    <CardTitle color={'admin'} title={'Total Teams'}/>
+                    <p className={classes.cardCategory}>Total Teams</p>
+                    <h1 className={classes.cardTitle}>
+                      15
+                    </h1>
                 </CardHeader>
                 <CardBody>
                 
@@ -368,11 +494,11 @@ const getDataRow = (table) => {
                         <Table aria-label="simple table">
                             <TableHead>
                             <TableRow>
-                                {getColumns(teamData)}
+                                {getColumns(team_data)}
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                                {getDataRow(teamData)}
+                                {getDataRow(team_data)}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -393,7 +519,18 @@ const getDataRow = (table) => {
                     <CardTitle color={'admin'} title={'Top Performing Users'}/>
                 </CardHeader>
                 <CardBody>
-                
+                <TableContainer className={classes.dataList} component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                {getColumns(player_data)}
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {getDataRow(player_data)}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </CardBody>
                 <CardFooter chart>
                 <div className={classes.stats}>
