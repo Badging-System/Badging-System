@@ -8,6 +8,7 @@ import UserTeamMember from '../../views/User/UserTeamMembers';
 import UserBadges from '../../views/User/UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
 
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -161,7 +162,7 @@ const styles = {
 };
 
 function MainContent(index) {
-    console.log(index);
+
     if (index === 0) {
         return <Typography> User Content will go here</Typography>;
     } else if (index === 1) {
