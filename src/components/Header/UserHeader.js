@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import TeamList from '../../views/User/UserTeamList';
 import {withStyles} from '@material-ui/core/styles';
 
 
@@ -95,9 +95,7 @@ function Header(props) {
             </Hidden>
             <Grid item xs />
             <Grid item>
-              <Button className={classes.button} variant="outlined" color="inherit" size="small">
-                Teams
-              </Button>
+              <TeamList />
             </Grid>
             <Grid item>
               <Tooltip title='Alerts • No alerts'>
