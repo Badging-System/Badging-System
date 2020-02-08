@@ -10,11 +10,11 @@ export default function MenuPopupState() {
             {popupState => (
                 <React.Fragment>
                     <Button variant="contained" color="primary" {...bindTrigger(popupState)}>
-                        Open Menu
+                        Teams
           </Button>
                     <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}>Cake</MenuItem>
-                        <MenuItem onClick={popupState.close}>Death</MenuItem>
+                        <MenuItem onClick={popupState.close}>Team 1</MenuItem>
+                        <MenuItem onClick={popupState.close}>Team 2</MenuItem>
                     </Menu>
                 </React.Fragment>
             )}
