@@ -1,49 +1,61 @@
-import React, {useState} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        maxWidth: 400,
-        flexGrow: 1,
+        width: '100%',
     },
-});
+    backButton: {
+        marginRight: theme.spacing(1),
+    },
+    instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+}));
 
-export default function ProgressMobileStepper() {
+function getSteps() {
+    return ['Step 1 ', 'Step 2', 'Step 3'];
+}
+
+
+
+export default function HorizontalLabelPositionBelowStepper() {
     const classes = useStyles();
-    const theme = useTheme();
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const steps = getSteps();
 
-    const handleNext = () => {
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
-    };
 
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
+    const handleReset = () => {
+        setActiveStep(0);
     };
 
     return (
-        <MobileStepper
-            variant="progress"
-            steps={6}
-            position="static"
-            activeStep={activeStep}
-            className={classes.root}
-            nextButton={
-                <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
-                    100%
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-            }
-            backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                    {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                    0%
-        </Button>
-            }
-        />
+        <div className={classes.root}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map(label => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+            <div>
+                {activeStep === steps.length ? (
+                    <div>
+                        <Typography className={classes.instructions}>All steps completed</Typography>
+                        <Button onClick={handleReset}>Reset</Button>
+                    </div>
+                ) : (
+                        <div>
+                            <Typography className={classes.instructions}></Typography>
+                        </div>
+                    )}
+            </div>
+        </div>
     );
 }

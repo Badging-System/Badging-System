@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {createMuiTheme, ThemeProvider, withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from '../../components/Navigator/Navigator';
-import UserContent from '../../components/Content/UserContent';
+import UserTeamMember from '../../views/User/UserTeamMembers';
+import UserBadges from '../../views/User/UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
+
 
 function Copyright() {
     return (
@@ -57,7 +57,7 @@ theme = {
     overrides: {
         MuiDrawer: {
             paper: {
-                backgroundColor: '#18202c',
+                backgroundColor: '#002C40',
             },
         },
         MuiButton: {
@@ -161,36 +161,39 @@ const styles = {
     },
 };
 
+function MainContent(index) {
+
+    if (index === 0) {
+        return <Typography> User Content will go here</Typography>;
+    } else if (index === 1) {
+        return <UserTeamMember />;
+    } else {
+        return (<React.Fragment> Badge 1
+            < UserBadges />
+            Badge 2
+                < UserBadges />
+            Badge 3
+                    < UserBadges /></React.Fragment>);
+
+
+    }
+}
+
 function Paperbase(props) {
     const {classes} = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [index, setIndex] = useState(0);
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
+    const handleTabChange = newIndex => {
+        setIndex(newIndex);
     };
 
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
                 <CssBaseline />
-                <nav className={classes.drawer}>
-                    <Hidden smUp implementation="js">
-                        <Navigator
-                            PaperProps={{style: {width: drawerWidth}}}
-                            variant="temporary"
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
-                        />
-                    </Hidden>
-                    <Hidden xsDown implementation="css">
-                        <Navigator PaperProps={{style: {width: drawerWidth}}} />
-                    </Hidden>
-                </nav>
                 <div className={classes.app}>
-                    <UserHeader onDrawerToggle={handleDrawerToggle} />
-                    <main className={classes.main}>
-                        <UserContent />
-                    </main>
+                    <UserHeader onDrawerToggle={handleTabChange} />
+                    <main className={classes.main}>{MainContent(index)}</main>
                     <footer className={classes.footer}>
                         <Copyright />
                     </footer>
