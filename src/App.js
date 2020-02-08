@@ -8,7 +8,6 @@ import {
   Redirect
 } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-import Admin from "./views/Admin";
 import Coach from "./views/Coach/Coach";
 import User from "./views/User/User";
 import AdminOverview from "./views/Admin/Overview";
