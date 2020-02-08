@@ -8,9 +8,9 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import CoachHeader from "../../components/Header/CoachHeader";
-import ManageTeam from "./ManageTeam";
-import ManageAwards from "./ManageAwards";
+import CoachHeader from "./Components/CoachHeader";
+import ManageTeam from "./Components/ManageTeam";
+import ManageAwards from "./Components/ManageAwards";
 
 function Copyright() {
   return (

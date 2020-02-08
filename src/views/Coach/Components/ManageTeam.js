@@ -1,5 +1,5 @@
 import React from "react";
-import Table from "../../components/Table/Table";
+import Table from "../../../components/Table/Table";
 import moment from "moment";
 export default function ManageTeam(props) {
   const [table_data] = React.useState({
