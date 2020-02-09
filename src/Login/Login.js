@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,11 +8,11 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 function Copyright() {
   return (
@@ -47,9 +47,14 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn() {
   const classes = useStyles();
   let history = useHistory();
+  const [option, setOption] = useState('');
+
   function navigateHome() {
-    history.push("/home");
+    history.push(`/${option}`);
   }
+  const handleChange = event => {
+    setOption(event.target.value);
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -87,13 +92,13 @@ export default function SignIn() {
           <RadioGroup
             aria-label='gender'
             name='gender1'
-            // value={value}
-            // onChange={handleChange}
+            value={option}
+            onChange={handleChange}
           >
             <FormControlLabel value='coach' control={<Radio />} label='Coach' />
             <FormControlLabel value='user' control={<Radio />} label='User' />
             <FormControlLabel
-              value='other'
+              value='admin'
               control={<Radio />}
               label='Administrator'
             />
