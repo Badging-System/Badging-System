@@ -1,10 +1,11 @@
-const User = require('./models/User');
-const mongoose = require('mongoose');
-require('dotenv').config();
+const User = require("./models/User");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 //seed our db
 function seedUsers(callback) {
-  const usersForTeam = [{
+  const usersForTeam = [
+    {
       Username: "bobbo",
       First_name: "Bob",
       Last_name: "Smith",
@@ -45,34 +46,50 @@ function seedUsers(callback) {
       Last_name: "Zhou",
       Status: "User",
       Email: "hzhou@gmail.com"
+    },
+    {
+      Username: "adminMitch",
+      First_name: "Mitchell",
+      Last_name: "admin",
+      Status: "Admin",
+      Email: "badgingAdmin@gmail.com"
+    },
+    {
+      Username: "coachDave",
+      First_name: "David",
+      Last_name: "Coach",
+      Status: "Coach",
+      Email: "badgingCoach@gmail.com"
     }
   ];
-
-  mongoose.connect(process.env.HOST + process.env.DBNAME, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }).then(() => {
-    if (process.env.ENV === 'DEV') {
-      //use User model to insert/save
-      User.deleteMany({}, () => {
-        User.collection.insertMany(usersForTeam, function(err, docs) {
-          if (err) {
-            return console.error(err);
-          } else {
-            console.log("User documents inserted to Collection");
-            mongoose.connection.close();
-            callback();
-          }
+  mongoose
+    .connect(process.env.HOST + process.env.DBNAME, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => {
+      if (process.env.ENV === "DEV") {
+        //use User model to insert/save
+        User.deleteMany({}, () => {
+          User.collection.insertMany(usersForTeam, function(err, docs) {
+            if (err) {
+              return console.error(err);
+            } else {
+              console.log("User documents inserted to Collection");
+              mongoose.connection.close();
+              // callback();
+            }
+          });
         });
-      });
-    } else {
-      console.log("Database was not seeded");
-    }
-  });
+      } else {
+        console.log("Database was not seeded");
+      }
+    });
   mongoose.Promise = global.Promise;
   mongoose.connection.on("error", error => {
-    console.log('Problem connection to the database' + error);
+    console.log("Problem connection to the database" + error);
   });
 }
+seedUsers();
 
 module.exports.seedUsers = seedUsers;
