@@ -12,8 +12,11 @@ const userSchema = new Schema({
   Last_name: {
     type: String
   },
-  Status: {
+  Role: {
     type: String
+  },
+  Active: {
+    type: Boolean
   },
   Email: {
     type: String

@@ -1,6 +1,8 @@
 const User = require('./models/User');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const path = require('path')
+require('dotenv').config({path:path.join(__dirname, './.env')})
+console.log(path.join(__dirname, './.env'));
 
 //seed our db
 function seedUsers(callback) {
@@ -8,42 +10,48 @@ function seedUsers(callback) {
       Username: "bobbo",
       First_name: "Bob",
       Last_name: "Smith",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "bob@gmail.com"
     },
     {
       Username: "msrober",
       First_name: "Mitchell",
       Last_name: "Roberts",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "msrober@gmail.com"
     },
     {
       Username: "gdeshpande",
       First_name: "Gaurav",
       Last_name: "Deshpande",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "gdeshpande@gmail.com"
     },
     {
       Username: "dmaitha",
       First_name: "David",
       Last_name: "Maitha",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "dmaitha@gmail.com"
     },
     {
       Username: "rtonthat",
       First_name: "Ryan",
       Last_name: "Tonthat",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "rtonthat@gmail.com"
     },
     {
       Username: "hzhou",
       First_name: "Hongyuan",
       Last_name: "Zhou",
-      Status: "User",
+      Role: "User",
+      Active: true,
       Email: "hzhou@gmail.com"
     }
   ];
@@ -61,7 +69,7 @@ function seedUsers(callback) {
           } else {
             console.log("User documents inserted to Collection");
             mongoose.connection.close();
-            callback();
+            if(callback) callback();
           }
         });
       });
@@ -74,5 +82,5 @@ function seedUsers(callback) {
     console.log('Problem connection to the database' + error);
   });
 }
-
+seedUsers();
 module.exports.seedUsers = seedUsers;
