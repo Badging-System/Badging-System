@@ -3,7 +3,8 @@
 /**
  * Module dependencies.
  */
-require('dotenv').config()
+const path = require('path')
+require('dotenv').config({path:path.join(__dirname, '../.env')})
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
@@ -14,6 +15,8 @@ var http = require('http');
  */
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
+console.log(port)
 
 /**
  * Create HTTP server.
@@ -28,7 +31,9 @@ if (process.env.ENV === 'DEV') {
   console.log("Dev server listening on port " + port + "...");
   server.on('error', onError);
   server.on('listening', onListening);
-}
+} else {
+  console.log("Server did not start.");
+} 
 
 /**
  * Normalize a port into a number, string, or false.
