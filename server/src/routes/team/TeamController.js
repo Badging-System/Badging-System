@@ -26,4 +26,4 @@ exports.addTeamMember = async (req, res) => {
   JSONResponse(res, {
     message: "Adding a new member to a team"
   }, 200);
-}
+};

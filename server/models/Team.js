@@ -16,7 +16,7 @@ const teamSchema = new Schema({
   Badges: [{
     type: String
   }],
-  Memebers: [userSchema],
+  Members: [userSchema],
 });
 
-module.export = teamSchema;
+module.exports = teamSchema;

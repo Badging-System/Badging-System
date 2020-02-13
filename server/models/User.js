@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const teamSchema = require('./Team');
 
 //create a schema
 const userSchema = new Schema({
@@ -18,10 +19,21 @@ const userSchema = new Schema({
   Email: {
     type: String
   },
+  Teams: [{
+    type: Schema.Types.ObjectId, ref: 'teams'
+  }]
+
+
 });
 
 //create the model
 const userModel = mongoose.model('users', userSchema);
 
-//export the model
+//imported team schema to reference its ids properly
+const teamModel = mongoose.model('teams', teamSchema);
+
+//export the user model
 module.exports = userModel;
+
+//export the team model
+module.exports = teamModel;
