@@ -138,8 +138,6 @@ function Header(props) {
         elevation={0}>
         <Tabs value={tabIndex} onChange={handleChange} textColor='inherit'>
           <Tab textColor='inherit' label='Home' />
-          <Tab textColor='inherit' label='Team Members' />
-          <Tab textColor='inherit' label='Badge Progress' />
         </Tabs>
       </AppBar>
     </React.Fragment>
