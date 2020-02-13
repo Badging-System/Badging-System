@@ -2,7 +2,6 @@ const User = require('./models/User');
 const mongoose = require('mongoose');
 const path = require('path')
 require('dotenv').config({path:path.join(__dirname, './.env')})
-console.log(path.join(__dirname, './.env'));
 
 //seed our db
 function seedUsers(callback) {
@@ -82,5 +81,4 @@ function seedUsers(callback) {
     console.log('Problem connection to the database' + error);
   });
 }
-seedUsers();
 module.exports.seedUsers = seedUsers;
