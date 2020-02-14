@@ -17,6 +17,23 @@ exports.index = (req, res) => {
   });
 };
 
+/**
+ * Returns user count
+ * @return {number}       [number of users]
+ */
+exports.count = (req, res) => {
+  //Get all the collection data based off the User model
+  mongoDB.getCollectionData(User).then(async (data) => {
+    JSONResponse(res, {
+      data: data.length
+    }, 200);
+  }).catch((error) => {
+    JSONResponse(res, {
+      error: error
+    }, 500);
+  });
+};
+
 exports.user_id = (req, res) => {
   let userId = req.params.id;
   if (!userId) {
