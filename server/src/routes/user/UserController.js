@@ -39,7 +39,7 @@ exports.user_id = (req, res) => {
   if (!userId) {
     InvalidInput(res, 'No username was provided.');
   } else {
-    mongoDB.findOne(User, {
+    mongoDB.findOne(User.userModel, {
       Username: userId
     }).then(async (data) => {
       JSONResponse(res, {
