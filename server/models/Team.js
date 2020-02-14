@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const userSchema = require('./User');
+const User = require('./User');
 
 //create a schema
 const teamSchema = new Schema({
@@ -16,7 +16,14 @@ const teamSchema = new Schema({
   Badges: [{
     type: String
   }],
-  Members: [userSchema],
+  Members: [{type: Schema.Types.ObjectId, ref: 'users'}],
 });
 
-module.exports = teamSchema;
+// Creating team model
+const teamModel = mongoose.model('teams', teamSchema);
+
+// Imported user schema to reference its ids properly
+// User.userModel = mongoose.model('users', User.userSchema);
+// Exporting variables to be used in Team controller as well as User schema
+module.exports.teamSchema = teamSchema;
+module.exports.teamModel = teamModel;

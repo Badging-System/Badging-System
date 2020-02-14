@@ -1,12 +1,12 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
-const User = require('../../../models/User')
+const User = require('../../../models/User');
 const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
   //Get all the collection data based off the User model
-  mongoDB.getCollectionData(User).then(async (data) => {
+  mongoDB.getCollectionData(User.userModel).then(async (data) => {
     JSONResponse(res, {
       data: data
     }, 200);
@@ -23,7 +23,7 @@ exports.index = (req, res) => {
  */
 exports.count = (req, res) => {
   //Get all the collection data based off the User model
-  mongoDB.getCollectionData(User).then(async (data) => {
+  mongoDB.getCollectionData(User.userModel).then(async (data) => {
     JSONResponse(res, {
       data: data.length
     }, 200);
@@ -69,7 +69,7 @@ exports.addUser = async (req, res) => {
       message: 'Email needs to be in correct format. Document was not inserted.'
     }, 403);
   } else {
-    var result = await mongoDB.validateUserNameEmail(User, addedUser);
+    var result = await mongoDB.validateUserNameEmail(User.userModel, addedUser);
     if (result === null) {
       mongoDB.insertOneDocument(collection, addedUser).then((response) => {
         JSONResponse(res, {
@@ -114,7 +114,7 @@ exports.addedUsers = async (req, res) => {
       }
     }
 
-    var result = await mongoDB.validateUserNameEmail(User, addedUsers);
+    var result = await mongoDB.validateUserNameEmail(User.userModel, addedUsers);
     if (result === null) {
       mongoDB.insertManyDocuments(collection, addedUsers).then(response => {
         JSONResponse(res, {
@@ -131,13 +131,13 @@ exports.addedUsers = async (req, res) => {
       }, 403);
     }
   }
-}
+};
 /**
  * Validates email format
  * @param  {String} email [user email]
  * @return {boolean}       [true if valid else false]
  */
-function validEmail (email) {
+function validEmail(email) {
   var validate = true;
   var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (!email.match(emailFormat)) {
