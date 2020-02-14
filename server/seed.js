@@ -1,67 +1,32 @@
 const User = require("./models/User");
+const Team = require("./models/User");
 const mongoose = require("mongoose");
 require("dotenv").config();
+var fs = require("fs");
+
+const insertedTeams = readInParseToJson("./server/teams.json");
+const insertUsers = readInParseToJson("./server/users.json");
+const insertAdmins = readInParseToJson("./server/admins.json");
+const insertCoaches = readInParseToJson("./server/coaches.json");
+// console.log(insertUsers);
+
+function readInParseToJson(path) {
+  var fd = fs.openSync(path, "r");
+  var faqData = "";
+  do {
+    var buf = new Buffer.alloc(5);
+    buf.fill();
+    var bytes = fs.readSync(fd, buf, null, 5);
+    faqData += buf.toString();
+  } while (bytes > 0);
+  fs.closeSync(fd);
+  faqData = faqData.replace(/[\u0000-\u0019]+/g, "");
+  return JSON.parse(faqData);
+}
 
 //seed our db
-function seedUsers(callback) {
-  const usersForTeam = [
-    {
-      Username: "bobbo",
-      First_name: "Bob",
-      Last_name: "Smith",
-      Status: "User",
-      Email: "bob@gmail.com"
-    },
-    {
-      Username: "msrober",
-      First_name: "Mitchell",
-      Last_name: "Roberts",
-      Status: "User",
-      Email: "msrober@gmail.com"
-    },
-    {
-      Username: "gdeshpande",
-      First_name: "Gaurav",
-      Last_name: "Deshpande",
-      Status: "User",
-      Email: "gdeshpande@gmail.com"
-    },
-    {
-      Username: "dmaitha",
-      First_name: "David",
-      Last_name: "Maitha",
-      Status: "User",
-      Email: "dmaitha@gmail.com"
-    },
-    {
-      Username: "rtonthat",
-      First_name: "Ryan",
-      Last_name: "Tonthat",
-      Status: "User",
-      Email: "rtonthat@gmail.com"
-    },
-    {
-      Username: "hzhou",
-      First_name: "Hongyuan",
-      Last_name: "Zhou",
-      Status: "User",
-      Email: "hzhou@gmail.com"
-    },
-    {
-      Username: "adminMitch",
-      First_name: "Mitchell",
-      Last_name: "admin",
-      Status: "Admin",
-      Email: "badgingAdmin@gmail.com"
-    },
-    {
-      Username: "coachDave",
-      First_name: "David",
-      Last_name: "Coach",
-      Status: "Coach",
-      Email: "badgingCoach@gmail.com"
-    }
-  ];
+function seedUsers(insertData, callback) {
+  console.log(process.env.HOST);
   mongoose
     .connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
@@ -71,7 +36,8 @@ function seedUsers(callback) {
       if (process.env.ENV === "DEV") {
         //use User model to insert/save
         User.deleteMany({}, () => {
-          User.collection.insertMany(usersForTeam, function(err, docs) {
+          User.collection.insertMany(insertData, function(err, docs) {
+            console.log(docs.insertedIds);
             if (err) {
               return console.error(err);
             } else {
@@ -90,6 +56,6 @@ function seedUsers(callback) {
     console.log("Problem connection to the database" + error);
   });
 }
-seedUsers();
+seedUsers(insertUsers);
 
 module.exports.seedUsers = seedUsers;

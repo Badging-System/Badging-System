@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const userSchema = require('./User');
+// const userSchema = require("./User");
 
 //create a schema
 const teamSchema = new Schema({
@@ -13,10 +13,13 @@ const teamSchema = new Schema({
   Admin: {
     type: String
   },
-  Badges: [{
-    type: String
-  }],
-  Memebers: [userSchema],
+  Badges: [
+    {
+      type: String
+    }
+  ],
+  Memebers: []
 });
 
-module.export = teamSchema;
+const teamModel = mongoose.model("users", teamSchema);
+module.export = teamModel;

@@ -1,0 +1,44 @@
+[
+  {
+    "Username": "bobbo",
+    "First_name": "Bob",
+    "Last_name": "Smith",
+    "Status": "User",
+    "Email": "bob@gmail.com"
+  },
+  {
+    "Username": "msrober",
+    "First_name": "Mitchell",
+    "Last_name": "Roberts",
+    "Status": "User",
+    "Email": "bob@gmail.com"
+  },
+  {
+    "Username": "gdeshpande",
+    "First_name": "gdeshpande",
+    "Last_name": "gdeshpande",
+    "Status": "User",
+    "Email": "gdeshpande@gmail.com"
+  },
+  {
+    "Username": "dmaitha",
+    "First_name": "David",
+    "Last_name": "Maitha",
+    "Status": "User",
+    "Email": "dmaitha@gmail.com"
+  },
+  {
+    "Username": "rtonthat",
+    "First_name": "Ryan",
+    "Last_name": "Tonthat",
+    "Status": "User",
+    "Email": "rtonthat@gmail.com"
+  },
+  {
+    "Username": "hzhou",
+    "First_name": "Hongyuan",
+    "Last_name": "Zhou",
+    "Status": "User",
+    "Email": "hzhou@gmail.com"
+  }
+]
