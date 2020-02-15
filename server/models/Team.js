@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
-// const userSchema = require("./User");
 
 //create a schema
 const teamSchema = new Schema({
@@ -27,4 +26,5 @@ const teamSchema = new Schema({
 });
 
 const teamModel = mongoose.model("teams", teamSchema);
+
 module.exports = teamModel;

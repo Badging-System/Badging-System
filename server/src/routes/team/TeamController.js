@@ -1,5 +1,5 @@
 const JSONResponse = require('../../service/response/JSONResponse');
-const InvalidInput = require('../../service/response/InvalidInput');
+const Team = require('../../../models/Team')
 const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
@@ -8,6 +8,23 @@ exports.index = (req, res) => {
   JSONResponse(res, {
     message: "Returning a list of teams"
   }, 200);
+};
+
+/**
+ * Returns team count
+ * @return {number}       [number of teams]
+ */
+exports.count = (req, res) => {
+  //Get all the collection data based off the Team model
+  mongoDB.getCollectionData(Team).then(async (data) => {
+    JSONResponse(res, {
+      data: data.length
+    }, 200);
+  }).catch((error) => {
+    JSONResponse(res, {
+      error: error
+    }, 500);
+  });
 };
 
 exports.team_id = (req, res) => {

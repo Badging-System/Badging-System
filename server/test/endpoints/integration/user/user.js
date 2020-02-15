@@ -9,10 +9,10 @@ var http = require("http");
 var debug = require("debug")("server:server");
 var seed = require("../../../../seed");
 
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "./.env") });
 
 describe("Integration Testing", function() {
-  this.timeout(5000);
   before(done => {
     var port = parseInt(process.env.PORT || "3000", 10);
     app.set("port", port);
@@ -40,12 +40,14 @@ describe("Integration Testing", function() {
     it("should fail posting a user to the database", function(done) {
       //this.timeout(15000);
       // Post a user object to the database
+
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
-          Status: "Baller",
+          Role: "Baller",
+          Active: false,
           Email: "dbook@suns.com"
         })
         .then(function(response) {
@@ -62,12 +64,14 @@ describe("Integration Testing", function() {
     it("should fail posting a user to the database - Incorrect Email Format", function(done) {
       //this.timeout(15000);
       // Post a user object to the database
+
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
-          Status: "User",
+          Role: "User",
+          Active: false,
           Email: "Incorrect Formatted Email"
         })
         .then(function(response) {
@@ -84,12 +88,14 @@ describe("Integration Testing", function() {
     it("should succesfully post a user to the database", function(done) {
       //this.timeout(15000);
       // Post a user object to the database
+
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
-          Status: "User",
+          Role: "User",
+          Active: false,
           Email: "dbook@suns.com"
         })
         .then(function(response) {
@@ -102,8 +108,9 @@ describe("Integration Testing", function() {
         });
     });
     /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
+
     it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -111,21 +118,24 @@ describe("Integration Testing", function() {
             Username: "dbooker",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@suns.com"
           },
           {
             Username: "dayton",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "Status",
+            Role: "Status",
+            Active: false,
             Email: "dayton@suns.com"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "Blah",
+            Role: "Blah",
+            Active: false,
             Email: "mwilliams@suns.com"
           }
         ])
@@ -141,7 +151,7 @@ describe("Integration Testing", function() {
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
     it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -149,21 +159,24 @@ describe("Integration Testing", function() {
             Username: "dbooker",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@suns.com"
           },
           {
             Username: "dayton",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "Status",
+            Role: "Status",
+            Active: false,
             Email: "dayton@suns.com"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "Blah",
+            Role: "Blah",
+            Active: false,
             Email: "mwilliams@suns.com"
           }
         ])
@@ -179,7 +192,7 @@ describe("Integration Testing", function() {
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
     it("Should fail to post an array of users to the database due to one or more usernames already existing in the database", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -187,21 +200,24 @@ describe("Integration Testing", function() {
             Username: "dbooker",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@suns.com"
           },
           {
             Username: "gdeshpande",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "Status",
+            Role: "Status",
+            Active: false,
             Email: "dayton@suns.com"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "Blah",
+            Role: "Blah",
+            Active: false,
             Email: "mwilliams@suns.com"
           }
         ])
@@ -216,8 +232,9 @@ describe("Integration Testing", function() {
     });
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
+
     it("Should fail to post an array of users to the database due to one or more emails already existing in the database", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -225,21 +242,24 @@ describe("Integration Testing", function() {
             Username: "dbooker",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@suns.com"
           },
           {
             Username: "Deandre",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "Status",
+            Role: "Status",
+            Active: false,
             Email: "dayton@suns.com"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "Blah",
+            Role: "Blah",
+            Active: false,
             Email: "dmaitha@gmail.com"
           }
         ])
@@ -255,7 +275,7 @@ describe("Integration Testing", function() {
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
     it("Should fail to post an array of users to the database due to one or more emails with an incorrect format", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -263,21 +283,24 @@ describe("Integration Testing", function() {
             Username: "dbooker",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@suns.com"
           },
           {
             Username: "Deandre",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "Status",
+            Role: "Status",
+            Active: false,
             Email: "Incorrect Formatted Email"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "Blah",
+            Role: "Blah",
+            Active: false,
             Email: "Incorrect Formatted Email"
           }
         ])
@@ -293,7 +316,7 @@ describe("Integration Testing", function() {
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
     it("Should succesfully post an array of users to the database", function(done) {
-      this.timeout(15000);
+      //this.timeout(15000);
       // Post a user object to the database
       axios
         .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
@@ -301,21 +324,24 @@ describe("Integration Testing", function() {
             Username: "dbook",
             First_name: "Devin",
             Last_name: "Booker",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dbook@gmail.com"
           },
           {
             Username: "dayton",
             First_name: "Deandre",
             Last_name: "Ayton",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "dayton@suns.com"
           },
           {
             Username: "mwilliams",
             First_name: "Monty",
             Last_name: "Williams",
-            Status: "User",
+            Role: "User",
+            Active: false,
             Email: "mwilliams@suns.com"
           }
         ])

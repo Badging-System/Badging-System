@@ -13,8 +13,11 @@ const userSchema = new Schema({
   Last_name: {
     type: String
   },
-  Status: {
+  Role: {
     type: String
+  },
+  Active: {
+    type: Boolean
   },
   Email: {
     type: String
@@ -28,4 +31,5 @@ const userSchema = new Schema({
 const userModel = mongoose.model("users", userSchema);
 
 //export the model
+module.exports = userSchema;
 module.exports = userModel;
