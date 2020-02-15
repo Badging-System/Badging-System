@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
 // const userSchema = require("./User");
 
@@ -8,18 +9,22 @@ const teamSchema = new Schema({
     type: String
   },
   Coach: {
-    type: String
+    type: ObjectID
   },
   Admin: {
-    type: String
+    type: ObjectID
   },
   Badges: [
     {
-      type: String
+      type: ObjectID
     }
   ],
-  Memebers: []
+  Memebers: [
+    {
+      type: ObjectID
+    }
+  ]
 });
 
-const teamModel = mongoose.model("users", teamSchema);
-module.export = teamModel;
+const teamModel = mongoose.model("teams", teamSchema);
+module.exports = teamModel;

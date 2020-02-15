@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
 
 //create a schema
@@ -17,6 +18,9 @@ const userSchema = new Schema({
   },
   Email: {
     type: String
+  },
+  Team: {
+    type: ObjectID
   }
 });
 
