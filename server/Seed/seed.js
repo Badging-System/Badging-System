@@ -24,7 +24,7 @@ function readInParseToJson(path) {
   faqData = faqData.replace(/[\u0000-\u0019]+/g, "");
   return JSON.parse(faqData);
 }
-
+//Main entry point to seed related data.
 async function seedDB() {
   let insertedAdminIds = await seedAdmins(insertAdmins);
   let insertedCoachIds = await seedCoaches(insertCoaches);

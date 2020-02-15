@@ -3,7 +3,8 @@
     "Username": "coachDave",
     "First_name": "David",
     "Last_name": "Coach",
-    "Status": "Coach",
+    "Role": "Coach",
+    "Active": true,
     "Email": "badgingCoach@gmail.com"
   }
 ]

@@ -1,5 +1,5 @@
-
-const user_data = [{
+const user_data = [
+  {
     Username: "bobbo",
     First_name: "Bob",
     Last_name: "Smith",
@@ -49,32 +49,33 @@ const user_data = [{
   }
 ];
 
-const team_data = [{
+const team_data = [
+  {
     Name: "Paw Patrol",
     Coach: "Alex",
     Admin: "Smith",
-    Badges: ['Badge 1', 'Badge 2', 'Badge 3'],
+    Badges: ["Badge 1", "Badge 2", "Badge 3"],
     Memebers: user_data
   },
   {
     Name: "Power Rangers",
     Coach: "Mitchell",
     Admin: "Smith",
-    Badges: ['Badge 1', 'Badge 2', 'Badge 3'],
+    Badges: ["Badge 1", "Badge 2", "Badge 3"],
     Memebers: user_data
   },
   {
     Name: "Power Puff Girls",
     Coach: "Gaurav",
     Admin: "Smith",
-    Badges: ['Badge 1', 'Badge 2', 'Badge 3'],
+    Badges: ["Badge 1", "Badge 2", "Badge 3"],
     Memebers: user_data
   },
   {
     Name: "Edward",
     Coach: "David",
     Admin: "Smith",
-    Badges: ['Badge 1', 'Badge 2', 'Badge 3'],
+    Badges: ["Badge 1", "Badge 2", "Badge 3"],
     Memebers: user_data
   }
 ];

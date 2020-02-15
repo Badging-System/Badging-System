@@ -3,7 +3,8 @@
     "Username": "adminKenny",
     "First_name": "Kenny",
     "Last_name": "Shepard",
-    "Status": "Admin",
+    "Role": "Admin",
+    "Active": true,
     "Email": "kshep@gmail.com"
   }
 ]

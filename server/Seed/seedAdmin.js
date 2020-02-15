@@ -10,7 +10,7 @@ async function seedAdmins(insertData, callback) {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
-  await User.deleteMany({ Status: "Admin" });
+  await User.deleteMany({ Role: "Admin" });
   let result = await User.collection.insertMany(insertData);
   await mongoose.connection.close();
   return result;
