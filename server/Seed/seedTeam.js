@@ -1,5 +1,9 @@
 const Team = require("../models/Team");
 const mongoose = require("mongoose");
+const path = require("path");
+require("dotenv").config({
+  path: path.join(__dirname, "../../.env")
+});
 
 async function seedTeams(insertData, callback) {
   await mongoose.connect(process.env.HOST + process.env.DBNAME, {

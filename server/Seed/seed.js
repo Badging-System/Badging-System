@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
 var fs = require("fs");
 var seedPlayers = require("./seedPlayers").seedUsers;
 var seedAdmins = require("./seedAdmin").seedAdmins;
@@ -7,10 +6,10 @@ var seedCoaches = require("./seedCoach").seedCoaches;
 var seedTeams = require("./seedTeam").seedTeams;
 var updateTeamMembers = require("./seedTeam").updateTeamMembers;
 
-const insertTeams = readInParseToJson("./server/Seed/teams.json");
-const insertUsers = readInParseToJson("./server/Seed/users.json");
-const insertAdmins = readInParseToJson("./server/Seed/admins.json");
-const insertCoaches = readInParseToJson("./server/Seed/coaches.json");
+const insertTeams = readInParseToJson("./server/seed/teams.json");
+const insertUsers = readInParseToJson("./server/seed/users.json");
+const insertAdmins = readInParseToJson("./server/seed/admins.json");
+const insertCoaches = readInParseToJson("./server/seed/coaches.json");
 
 function readInParseToJson(path) {
   var fd = fs.openSync(path, "r");
