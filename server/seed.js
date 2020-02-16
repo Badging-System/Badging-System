@@ -117,7 +117,7 @@ function seedTeams(callback) {
   });
 }
 
-seeder();
+// seeder();
 
 module.exports.seedUsers = seedUsers;
 module.exports.seedTeams = seedTeams;
