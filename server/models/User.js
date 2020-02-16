@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
 const Team = require('./Team');
 
@@ -25,6 +26,7 @@ const userSchema = new Schema({
   Email: {
     type: String
   },
+<<<<<<< HEAD
   Teams: [{
     type: Schema.Types.ObjectId, ref: 'teams'
   }]
@@ -43,3 +45,16 @@ const userModel = mongoose.model('users', userSchema);
 module.exports.userSchema = userSchema;
 module.exports.userModel = userModel;
 
+=======
+  Team: {
+    type: ObjectID
+  }
+});
+
+//create the model
+const userModel = mongoose.model("users", userSchema);
+
+//export the model
+module.exports = userSchema;
+module.exports = userModel;
+>>>>>>> dev

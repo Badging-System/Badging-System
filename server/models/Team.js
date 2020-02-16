@@ -1,6 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
+<<<<<<< HEAD
 const User = require('./User');
+=======
+>>>>>>> dev
 
 //create a schema
 const teamSchema = new Schema({
@@ -8,11 +12,12 @@ const teamSchema = new Schema({
     type: String
   },
   Coach: {
-    type: String
+    type: ObjectID
   },
   Admin: {
-    type: String
+    type: ObjectID
   },
+<<<<<<< HEAD
   Badges: [{
     type: String
   }],
@@ -27,3 +32,20 @@ const teamModel = mongoose.model('teams', teamSchema);
 // Exporting variables to be used in Team controller as well as User schema
 module.exports.teamSchema = teamSchema;
 module.exports.teamModel = teamModel;
+=======
+  Badges: [
+    {
+      type: ObjectID
+    }
+  ],
+  Memebers: [
+    {
+      type: ObjectID
+    }
+  ]
+});
+
+const teamModel = mongoose.model("teams", teamSchema);
+
+module.exports = teamModel;
+>>>>>>> dev
