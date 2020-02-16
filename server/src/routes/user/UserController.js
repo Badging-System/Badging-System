@@ -54,7 +54,7 @@ exports.user_id = (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
-  let addedUser = new User(req.body);
+  let addedUser = new User.userModel(req.body);
   let collection = 'users';
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email'))) {
     JSONResponse(res, {
