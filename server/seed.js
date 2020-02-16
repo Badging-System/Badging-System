@@ -71,10 +71,11 @@ function seedUsers(callback) {
             if (callback) callback();
           }
         });
-      } else {
-        console.log("Database was not seeded with Users");
-      }
-    });
+      });
+    } else {
+      console.log("Database was not seeded with Users");
+    }
+  });
   mongoose.Promise = global.Promise;
   mongoose.connection
     .on("error", error => {
