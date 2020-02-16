@@ -61,8 +61,8 @@ function seedUsers(callback) {
   }).then(() => {
     if (process.env.ENV === 'DEV') {
       //use User model to insert/save
-      User.deleteMany({}, () => {
-        User.collection.insertMany(usersForTeam, function (err, docs) {
+      User.userModel.deleteMany({}, () => {
+        User.userModel.collection.insertMany(usersForTeam, function (err, docs) {
           if (err) {
             return console.error(err);
           } else {
