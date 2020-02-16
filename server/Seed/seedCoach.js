@@ -10,6 +10,7 @@ async function seedCoaches(insertData, callback) {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
+  //delete first
   await User.deleteMany({ Role: "Coach" });
   let result = await User.collection.insertMany(insertData);
   await mongoose.connection.close();
