@@ -158,6 +158,21 @@ class Mongo {
     });
   }
 
+  getUserTeam(user, reqObj) {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
+
   // addTeam(team) {
   //   return new Promise((resolve, reject) => {
   //     try {

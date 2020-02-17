@@ -132,6 +132,14 @@ exports.addedUsers = async (req, res) => {
     }
   }
 };
+
+exports.getUserTeam = async (req, res) => {
+  let teamID = req.params.teamID;
+  JSONResponse(res, {
+    message: `this is the team id: ${teamID}`
+  }, 200);
+};
+
 /**
  * Validates email format
  * @param  {String} email [user email]
