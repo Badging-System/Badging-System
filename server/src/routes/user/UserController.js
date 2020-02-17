@@ -6,7 +6,7 @@ const {Mongo} = require("../../database/mongoDB");
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
   //Get all the collection data based off the User model
-  mongoDB.getCollectionData(User.userModel).then(async (data) => {
+  mongoDB.getCollectionData(User).then(async (data) => {
     JSONResponse(res, {
       data: data
     }, 200);
@@ -23,7 +23,7 @@ exports.index = (req, res) => {
  */
 exports.count = (req, res) => {
   //Get all the collection data based off the User model
-  mongoDB.getCollectionData(User.userModel).then(async (data) => {
+  mongoDB.getCollectionData(User).then(async (data) => {
     JSONResponse(res, {
       data: data.length
     }, 200);
@@ -39,7 +39,7 @@ exports.user_id = (req, res) => {
   if (!userId) {
     InvalidInput(res, 'No username was provided.');
   } else {
-    mongoDB.findOne(User.userModel, {
+    mongoDB.findOne(User, {
       Username: userId
     }).then(async (data) => {
       JSONResponse(res, {
@@ -54,7 +54,7 @@ exports.user_id = (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
-  let addedUser = new User.userModel(req.body);
+  let addedUser = new User(req.body);
   let collection = 'users';
   if ((addedUser.hasOwnProperty('Username')) && (addedUser.hasOwnProperty('First_name')) && (addedUser.hasOwnProperty('Last_name')) && (addedUser.hasOwnProperty('Status')) && (addedUser.hasOwnProperty('Email'))) {
     JSONResponse(res, {
@@ -69,7 +69,7 @@ exports.addUser = async (req, res) => {
       message: 'Email needs to be in correct format. Document was not inserted.'
     }, 403);
   } else {
-    var result = await mongoDB.validateUserNameEmail(User.userModel, addedUser);
+    var result = await mongoDB.validateUserNameEmail(User, addedUser);
     if (result === null) {
       mongoDB.insertOneDocument(collection, addedUser).then((response) => {
         JSONResponse(res, {
@@ -114,7 +114,7 @@ exports.addedUsers = async (req, res) => {
       }
     }
 
-    var result = await mongoDB.validateUserNameEmail(User.userModel, addedUsers);
+    var result = await mongoDB.validateUserNameEmail(User, addedUsers);
     if (result === null) {
       mongoDB.insertManyDocuments(collection, addedUsers).then(response => {
         JSONResponse(res, {

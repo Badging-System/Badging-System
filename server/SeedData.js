@@ -55,28 +55,28 @@ const team_data = [
     Coach: "Alex",
     Admin: "Smith",
     Badges: ["Badge 1", "Badge 2", "Badge 3"],
-    Memebers: user_data
+    Members: user_data
   },
   {
     Name: "Power Rangers",
     Coach: "Mitchell",
     Admin: "Smith",
     Badges: ["Badge 1", "Badge 2", "Badge 3"],
-    Memebers: user_data
+    Members: user_data
   },
   {
     Name: "Power Puff Girls",
     Coach: "Gaurav",
     Admin: "Smith",
     Badges: ["Badge 1", "Badge 2", "Badge 3"],
-    Memebers: user_data
+    Members: user_data
   },
   {
     Name: "Edward",
     Coach: "David",
     Admin: "Smith",
     Badges: ["Badge 1", "Badge 2", "Badge 3"],
-    Memebers: user_data
+    Members: user_data
   }
 ];
 

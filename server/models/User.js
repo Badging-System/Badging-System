@@ -37,10 +37,6 @@ const userSchema = new Schema({
 const userModel = mongoose.model('users', userSchema);
 
 // Imported team schema to reference its ids properly
-// Team.teamModel = mongoose.model('teams', Team.teamSchema);
 
-
-// Exporting variables to be used in User controller as well as Team schema
-module.exports.userSchema = userSchema;
-module.exports.userModel = userModel;
+module.exports = userModel;
 
