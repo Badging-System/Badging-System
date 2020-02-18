@@ -26,11 +26,9 @@ const userSchema = new Schema({
   Email: {
     type: String
   },
-  Teams: [{
+  Team: {
     type: Schema.Types.ObjectId, ref: 'teams'
-  }]
-
-
+  }
 });
 
 // Creating the user model

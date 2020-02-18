@@ -1,6 +1,7 @@
 const JSONResponse = require('../../service/response/JSONResponse');
 const InvalidInput = require('../../service/response/InvalidInput');
 const User = require('../../../models/User');
+const Team = require('../../../models/Team');
 const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
@@ -133,10 +134,12 @@ exports.addedUsers = async (req, res) => {
   }
 };
 
-exports.getUserTeam = async (req, res) => {
-  let teamID = req.params.teamID;
+exports.getUserTeamName = async (req, res) => {
+  let userID = req.params.userID;
+  var userObj = await mongoDB.findOne(User, {_id: userID});
+  var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
   JSONResponse(res, {
-    message: `this is the team id: ${teamID}`
+    message: `This is the team name that the user is on: ${teamObj[0].Name}`
   }, 200);
 };
 
