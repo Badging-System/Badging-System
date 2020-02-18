@@ -40,7 +40,6 @@ const userModel = mongoose.model('users', userSchema);
 // Team.teamModel = mongoose.model('teams', Team.teamSchema);
 
 
-// Exporting variables to be used in User controller as well as Team schema
-module.exports.userSchema = userSchema;
-module.exports.userModel = userModel;
+// Exporting variables to be used in User controller
+module.exports = userModel;
 

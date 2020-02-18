@@ -1,5 +1,5 @@
 const JSONResponse = require('../../service/response/JSONResponse');
-const Coach = require('../../../models/Coach');
+const User = require('../../../models/User');
 const { Mongo } = require('../../database/mongoDB');
 
 const mongoDB = new Mongo();
@@ -21,7 +21,7 @@ exports.index = (req, res) => {
 exports.count = (req, res) => {
   //Get all the collection data based off the Coach model
   mongoDB
-    .getCollectionData(Coach)
+    .getCollectionData(User, { Role: "Coach" })
     .then(async data => {
       JSONResponse(
         res,

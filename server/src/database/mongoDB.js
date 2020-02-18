@@ -65,13 +65,13 @@ class Mongo {
    * @param  {Model} model [Model of collection]
    * @return {Promise}
    */
-  async getCollectionData(model) {
+  async getCollectionData(model, filter = {}) {
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
     return new Promise((resolve, reject) => {
-      model.find({})
+      model.find(filter)
         .exec((err, data) => {
           if (err) {
             reject(err);
