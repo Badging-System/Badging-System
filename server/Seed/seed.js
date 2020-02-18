@@ -25,7 +25,7 @@ function readInParseToJson(path) {
   return JSON.parse(faqData);
 }
 //Main entry point to seed related data.
-async function seedDB() {
+async function seedDB(callback) {
   let insertedAdminIds = await seedAdmins(insertAdmins);
   let insertedCoachIds = await seedCoaches(insertCoaches);
   let insertedTeams = await seedTeams(
@@ -38,6 +38,8 @@ async function seedDB() {
     insertedTeams.insertedIds[0],
     insertedUserIds.insertedIds
   );
+
+  callback();
 }
 
 function mapTeamToUser(users, teamId) {
@@ -54,4 +56,6 @@ function mapAdminCoachToTeam(teams, adminId, coachId) {
   });
   return teams;
 }
-seedDB();
+
+module.exports.seedDB = seedDB;
+
