@@ -158,21 +158,31 @@ class Mongo {
     });
   }
 
-  // addTeam(team) {
-  //   return new Promise((resolve, reject) => {
-  //     try {
-  //       mongoose.connect(process.env.HOST + process.env.DBNAME, {
-  //         useNewUrlParser: true,
-  //         useUnifiedTopology: true
-  //       });
+  getUserTeamName(User, teamID) {
+    console.log(`this is the team id: ${teamID}`);
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        User.find({Team: teamID})
+          .populate('_id')
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              console.log(`The name of the team the user is on is: ${team}`);
+              resolve(team);
+            }
 
-  //     } catch (e) {
-  //       console.error(e);
-  //       reject(e);
-  //     }
-  //     resolve();
-  //   });
-  // }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
 }
 
 module.exports = {

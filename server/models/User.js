@@ -26,20 +26,15 @@ const userSchema = new Schema({
   Email: {
     type: String
   },
-  Teams: [{
+  Team: {
     type: Schema.Types.ObjectId, ref: 'teams'
-  }]
-
-
+  }
 });
 
 // Creating the user model
 const userModel = mongoose.model('users', userSchema);
 
 // Imported team schema to reference its ids properly
-// Team.teamModel = mongoose.model('teams', Team.teamSchema);
-
 
 // Exporting variables to be used in User controller
 module.exports = userModel;
-
