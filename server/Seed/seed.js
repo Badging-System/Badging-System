@@ -6,11 +6,10 @@ var seedCoaches = require("./seedCoach").seedCoaches;
 var seedTeams = require("./seedTeam").seedTeams;
 var updateTeamMembers = require("./seedTeam").updateTeamMembers;
 const relPath = require("path");
-const insertTeams = readInParseToJson("./server/seed/teams.json");
-const insertUsers = readInParseToJson("./server/seed/users.json");
-const insertAdmins = readInParseToJson("./server/seed/admins.json");
-const insertCoaches = readInParseToJson("./server/seed/coaches.json");
-
+const insertTeams = readInParseToJson("./server/Seed/teams.json");
+const insertUsers = readInParseToJson("./server/Seed/users.json");
+const insertAdmins = readInParseToJson("./server/Seed/admins.json");
+const insertCoaches = readInParseToJson("./server/Seed/coaches.json");
 function readInParseToJson(path) {
   var fd = fs.openSync(relPath.resolve(process.cwd(), path), "r");
   var faqData = "";
