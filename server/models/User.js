@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 ObjectID = require("mongodb").ObjectID;
 const Schema = mongoose.Schema;
-const Team = require('./Team');
 
 //create a schema
 const userSchema = new Schema({
@@ -26,21 +25,18 @@ const userSchema = new Schema({
   Email: {
     type: String
   },
-  Teams: [{
-    type: Schema.Types.ObjectId, ref: 'teams'
-  }]
-
-
+  Teams: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "teams"
+    }
+  ]
 });
 
 // Creating the user model
-const userModel = mongoose.model('users', userSchema);
+const userModel = mongoose.model("users", userSchema, "users");
 
 // Imported team schema to reference its ids properly
 // Team.teamModel = mongoose.model('teams', Team.teamSchema);
 
-
-// Exporting variables to be used in User controller as well as Team schema
-module.exports.userSchema = userSchema;
-module.exports.userModel = userModel;
-
+module.exports = userModel;
