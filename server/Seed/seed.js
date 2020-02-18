@@ -12,7 +12,7 @@ const insertAdmins = readInParseToJson("./server/seed/admins.json");
 const insertCoaches = readInParseToJson("./server/seed/coaches.json");
 
 function readInParseToJson(path) {
-  var fd = fs.openSync(path, "r");
+  var fd = fs.openSync(path.resolve(process.cwd(), path), "r");
   var faqData = "";
   do {
     var buf = new Buffer.alloc(5);
