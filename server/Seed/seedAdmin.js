@@ -11,7 +11,7 @@ async function seedAdmins(insertData) {
     useUnifiedTopology: true
   });
   //delete first
-  await User.deleteMany({ Role: "Admin" });
+  await User.deleteMany({Role: "Admin"});
   let result = await User.collection.insertMany(insertData);
   await mongoose.connection.close();
   return result;
