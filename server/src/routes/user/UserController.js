@@ -244,41 +244,25 @@ exports.addedUsers = async (req, res) => {
 exports.usersByCoach = async (req, res) => {
   let coachId = req.params.id;
   if (!coachId) {
-    InvalidInput(res, "No username was provided.");
+    InvalidInput(res, "Missing coach id.");
   } else {
     mongoDB.mongooseConnect();
-    Team.findOne({ Coach: coachId })
+    Team.findOne({ Coach: coachId }, { Members: 1, _id: 0 })
       .populate("Members")
-      .exec(function(err, user) {
+      .exec((err, users) => {
         if (err) {
           console.log(err);
         } else {
-          console.log(user);
+          mongoDB.mongoogeDisconnect();
+          JSONResponse(
+            res,
+            {
+              data: users
+            },
+            200
+          );
         }
       });
-
-    // mongoDB
-    //   .findOne(Team, { Coach: "5e4b111373be477eb9290b52" })
-    //   .then(async data => {
-    //     console.log(data[0].Members);
-    //     JSONResponse(
-    //       res,
-    //       {
-    //         data: data
-    //       },
-    //       200
-    //     );
-    //   })
-    //   // .then(async () => {})
-    //   .catch(error => {
-    //     JSONResponse(
-    //       res,
-    //       {
-    //         error: error
-    //       },
-    //       500
-    //     );
-    //   });
   }
 };
 /**
