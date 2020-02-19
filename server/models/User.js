@@ -36,5 +36,5 @@ const userModel = mongoose.model('users', userSchema);
 
 // Imported team schema to reference its ids properly
 
+// Exporting variables to be used in User controller
 module.exports = userModel;
-

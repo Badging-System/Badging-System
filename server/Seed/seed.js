@@ -5,14 +5,13 @@ var seedAdmins = require("./seedAdmin").seedAdmins;
 var seedCoaches = require("./seedCoach").seedCoaches;
 var seedTeams = require("./seedTeam").seedTeams;
 var updateTeamMembers = require("./seedTeam").updateTeamMembers;
-
-const insertTeams = readInParseToJson("./server/seed/teams.json");
-const insertUsers = readInParseToJson("./server/seed/users.json");
-const insertAdmins = readInParseToJson("./server/seed/admins.json");
-const insertCoaches = readInParseToJson("./server/seed/coaches.json");
-
+const relPath = require("path");
+const insertTeams = readInParseToJson("./server/Seed/teams.json");
+const insertUsers = readInParseToJson("./server/Seed/users.json");
+const insertAdmins = readInParseToJson("./server/Seed/admins.json");
+const insertCoaches = readInParseToJson("./server/Seed/coaches.json");
 function readInParseToJson(path) {
-  var fd = fs.openSync(path, "r");
+  var fd = fs.openSync(relPath.resolve(process.cwd(), path), "r");
   var faqData = "";
   do {
     var buf = new Buffer.alloc(5);
@@ -25,7 +24,7 @@ function readInParseToJson(path) {
   return JSON.parse(faqData);
 }
 //Main entry point to seed related data.
-async function seedDB() {
+async function seedDB(callback) {
   let insertedAdminIds = await seedAdmins(insertAdmins);
   let insertedCoachIds = await seedCoaches(insertCoaches);
   let insertedTeams = await seedTeams(
@@ -38,6 +37,8 @@ async function seedDB() {
     insertedTeams.insertedIds[0],
     insertedUserIds.insertedIds
   );
+
+  callback();
 }
 
 function mapTeamToUser(users, teamId) {
@@ -54,4 +55,6 @@ function mapAdminCoachToTeam(teams, adminId, coachId) {
   });
   return teams;
 }
-seedDB();
+
+module.exports.seedDB = seedDB;
+

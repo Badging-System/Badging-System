@@ -22,4 +22,7 @@ const teamSchema = new Schema({
 // Creating team model
 const teamModel = mongoose.model('teams', teamSchema);
 
+// Imported user schema to reference its ids properly
+// User.userModel = mongoose.model('users', User.userSchema);
+// Exporting variables to be used in Team controller as well as User schema
 module.exports = teamModel;

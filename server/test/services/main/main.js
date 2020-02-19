@@ -7,16 +7,16 @@ var app = require('../../../app');
 var server;
 var http = require('http');
 var debug = require('debug')('server:server');
-var seed = require('../../../seed')
+var seed = require("../../../Seed/seed");
 
 describe('Main Page content', function() {
-  this.timeout(5000);
+  this.timeout(15000);
   before(done => {
     var port = parseInt(process.env.PORT || '3000', 10);
     app.set('port', port);
     server = http.createServer(app);
     server.listen(port, "localhost", function() {
-      seed.seedUsers(done);
+      seed.seedDB(done);
     });
   });
   /* This test the main page response to ensure the response is correct */
