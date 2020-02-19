@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   createMuiTheme,
@@ -11,6 +11,7 @@ import Link from "@material-ui/core/Link";
 import CoachHeader from "./Components/CoachHeader";
 import ManageTeam from "./Components/ManageTeam";
 import ManageAwards from "./Components/ManageAwards";
+import API from "../../utils/API";
 
 function Copyright() {
   return (
@@ -175,9 +176,9 @@ function MainContent(index) {
 }
 
 function Paperbase(props) {
-  const {classes} = props;
+  const { classes } = props;
   const [index, setIndex] = useState(0);
-
+  const [users, setUsers] = useState([]);
   const handleTabChange = newIndex => {
     setIndex(newIndex);
   };
