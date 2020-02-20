@@ -143,6 +143,20 @@ exports.getUserTeamName = async (req, res) => {
   }, 200);
 };
 
+exports.getUserTeamMembersByID = async (req, res) => {
+  let teamArray = [];
+  let teamID = req.params.id;
+  var users = await mongoDB.getUserTeamMembers(Team, teamID);
+  teamArray.push(users);
+  var admin = await mongoDB.findOne(User, {Team: teamID, Role: 'Admin'});
+  teamArray.push(admin);
+  var coach = await mongoDB.findOne(User, {Team: teamID, Role: 'Coach'});
+  teamArray.push(coach);
+  JSONResponse(res, {
+    message: `These are all members of the team the user has: ${teamArray}`
+  }, 200);
+};
+
 /**
  * Validates email format
  * @param  {String} email [user email]
