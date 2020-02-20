@@ -1,14 +1,23 @@
 const JSONResponse = require('../../service/response/JSONResponse');
-const Team = require('../../../models/Team')
+const Team = require('../../../models/Team');
+const User = require('../../../models/User');
 const {Mongo} = require("../../database/mongoDB");
+const mongoose = require("mongoose");
 
 
 const mongoDB = new Mongo();
 
 exports.index = (req, res) => {
-  JSONResponse(res, {
-    message: "Returning a list of teams"
-  }, 200);
+  //Get all the collection data based off the Team model
+  mongoDB.getCollectionData(Team).then(async (data) => {
+    JSONResponse(res, {
+      data: data
+    }, 200);
+  }).catch((error) => {
+    JSONResponse(res, {
+      error: error
+    }, 500);
+  });
 };
 
 /**
@@ -51,4 +60,11 @@ exports.addTeamMember = async (req, res) => {
   JSONResponse(res, {
     message: "Adding a new member to a team"
   }, 200);
+};
+
+//format data to match table
+function table_format(response) {
+  return new Promise((resolve, reject) => {
+
+  });
 };

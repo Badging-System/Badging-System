@@ -17,6 +17,9 @@ const teamSchema = new Schema({
     type: String
   }],
   Members: [{type: Schema.Types.ObjectId, ref: 'users'}],
+  Approved: {
+    type: Boolean
+  },
 });
 
 // Creating team model
