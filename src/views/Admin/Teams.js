@@ -18,6 +18,10 @@ import {
   Group
 } from "@material-ui/icons";
 
+import {
+  getTeams
+} from "../../helpers/teams"
+
 
 function Copyright() {
   return (
@@ -142,6 +146,7 @@ theme = {
   },
 };
 
+
 const drawerWidth = 256;
 
 const styles = {
@@ -176,19 +181,8 @@ function Paperbase(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const [table_data] = React.useState({
-    columns: [
-      { field: 'team', title: 'Team', editable:'false'},
-      { field: 'coach', title: 'Coach', editable:'false'},
-      { field: 'playerCount', title: '# of Players', editable:'false'},
-      { field: 'createdOn', title: 'Created On', editable:'false'},
-      { field: 'approved', title: 'Approved', lookup: { 1: 'true', 0: 'false' }}
-    ],
-    data: [
-      { team: 'Paw Patrol', coach: 'Alex', playerCount: 44, createdOn: moment().format(), approved: 1},
-      { team: 'Power Rangers', coach: 'Mitchell', playerCount: 0, createdOn: moment().format(), approved:0},
-      { team: 'Power Puff Girls', coach: 'Gaurav', playerCount: 4, createdOn: moment().format(), approved: 1},
-      { team: 'Edward', coach: 'David', playerCount: 5000, createdOn: moment().format(), approved: 1},
-    ],
+    columns: [{}],
+    data: [{}]
   });
 
 
@@ -225,7 +219,7 @@ function Paperbase(props) {
                     <CardTitle color={'admin'} title={'Team Management'}/>
                 </CardHeader>
                 <CardBody>
-                <Table title={''} table_data={table_data}/>
+                <Table title={''} table_data={table_data} fetch={getTeams}/>
 
                 </CardBody>
                 </Card>
