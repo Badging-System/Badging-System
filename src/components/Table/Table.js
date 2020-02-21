@@ -22,9 +22,21 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
  */
 
 export default function SearchableTable(props) {
-  const { title, table_data } = props;
+  const { title, table_data, fetch, format_data } = props;
 
-  const [state, setState] = React.useState(table_data);
+  const [state, setState] = React.useState(table_data);  
+  React.useEffect(() => { //fetch the data usinmg the helper method
+    if(fetch) {      
+      fetch(format_data).then((results) => {
+        setState({
+          columns: results.columns,
+          data: results.data
+        })
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [fetch, format_data]);
 
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
