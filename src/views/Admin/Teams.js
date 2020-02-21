@@ -219,7 +219,7 @@ function Paperbase(props) {
                     <CardTitle color={'admin'} title={'Team Management'}/>
                 </CardHeader>
                 <CardBody>
-                <Table title={''} table_data={table_data} fetch={getTeams}/>
+                <Table title={''} table_data={table_data} fetch={getTeams} format_data={true}/>
 
                 </CardBody>
                 </Card>

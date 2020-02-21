@@ -22,12 +22,12 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
  */
 
 export default function SearchableTable(props) {
-  const { title, table_data, fetch } = props;
+  const { title, table_data, fetch, format_data } = props;
 
   const [state, setState] = React.useState(table_data);  
   React.useEffect(() => { //fetch the data usinmg the helper method
-    if(fetch) {
-      fetch().then((results) => {
+    if(fetch) {      
+      fetch(format_data).then((results) => {
         setState({
           columns: results.columns,
           data: results.data

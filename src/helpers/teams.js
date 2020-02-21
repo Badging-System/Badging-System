@@ -4,21 +4,16 @@ const moment = require('moment');
 /**
  * This function returns teams
  */
-export const getTeams = () => {
+export const getTeams = (table_data = false) => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:8080/api/teams', {})
+        axios.get('http://localhost:8080/api/teams', { params: {
+            table_data: table_data}
+        })
         .then((response) => {
-            console.log(response);
             const results = {
-                data: response.data.payload.data.map(team => ({
-                    teamname: team.name,
-                    coach: team.Coach,
-                    playerCount: team.playerCount,
-                    createdOn: moment().format(),
-                    approved: team.Active
-                })),
+                data: response.data.payload.data,
                 columns: [
-                    { field: 'team', title: 'Team', editable:'false'},
+                    { field: 'name', title: 'Team', editable:'false'},
                     { field: 'coach', title: 'Coach', editable:'false'},
                     { field: 'playerCount', title: '# of Players', editable:'false'},
                     { field: 'createdOn', title: 'Created On', editable:'false'},

@@ -8,7 +8,6 @@ export const getUsers = () => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:8080/api/users', {})
         .then((response) => {
-            console.log(response);
             const results = {
                 data: response.data.payload.data.map(user => ({
                     username: user.Username,
