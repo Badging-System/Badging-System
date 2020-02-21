@@ -1,5 +1,4 @@
 const axios = require('axios');
-const moment = require('moment');
 
 /**
  * This function returns teams

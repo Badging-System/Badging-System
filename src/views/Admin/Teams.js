@@ -8,7 +8,6 @@ import Link from '@material-ui/core/Link';
 import Navigator from '../../components/Navigator/Navigator';
 import Table from '../../components/Table/Table';
 import Header from '../../components/Header/AdminHeader';
-import moment from 'moment';
 import Card from "../../components/Card/Card";
 import CardHeader from "../../components/Card/CardHeader";
 import CardIcon from "../../components/Card/CardIcon";

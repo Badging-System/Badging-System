@@ -36,7 +36,7 @@ export default function SearchableTable(props) {
         console.log(err);
       });
     }
-  }, [fetch]);
+  }, [fetch, format_data]);
 
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
