@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import {useHistory} from "react-router-dom";
+import Link from '@material-ui/core/Link';
 
 function Copyright() {
   return (
@@ -113,7 +114,13 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          <Grid container></Grid>
+          <Grid container>
+            <Grid item>
+              <Link href = "#" variant = "body 2">
+                {"Don't have an account? Sign Up!"}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
       <Box mt={8}>
