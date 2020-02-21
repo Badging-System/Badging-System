@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {
   createMuiTheme,
@@ -8,7 +8,9 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import CoachHeader from "../components/Header/CoachHeader";
+import CoachHeader from "./Components/CoachHeader";
+import ManageTeam from "./Components/ManageTeam";
+import ManageAwards from "./Components/ManageAwards";
 
 function Copyright() {
   return (
@@ -163,19 +165,18 @@ const styles = {
 };
 
 function MainContent(index) {
-  console.log(index);
   if (index === 0) {
     return <Typography>index 0</Typography>;
   } else if (index === 1) {
-    return <Typography>index 1</Typography>;
+    return <ManageTeam />;
   } else {
-    return <Typography>index 2</Typography>;
+    return <ManageAwards />;
   }
 }
 
 function Paperbase(props) {
-  const { classes } = props;
-  const [index, setIndex] = React.useState(0);
+  const {classes} = props;
+  const [index, setIndex] = useState(0);
 
   const handleTabChange = newIndex => {
     setIndex(newIndex);
