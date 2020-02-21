@@ -28,3 +28,16 @@ export const getTeams = (table_data = false) => {
         })
     });
 }
+
+export const getTeamCount = () => {
+    return new Promise((resolve, reject) => {
+        axios.get('http://localhost:8080/api/teams/count', {})
+        .then((response) => {
+            resolve(response.data.payload.data);
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error);
+        })
+    });
+}

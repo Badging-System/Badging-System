@@ -40,3 +40,31 @@ export const getUsers = () => {
         })
     });
 }
+
+
+export const getUserCount = () => {
+    return new Promise((resolve, reject) => {
+        axios.get('http://localhost:8080/api/users/count', {})
+        .then((response) => {
+            resolve(response.data.payload.data);
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error);
+        })
+    });
+}
+
+
+export const getCoachCount = () => {
+    return new Promise((resolve, reject) => {
+        axios.get('http://localhost:8080/api/coaches/count', {})
+        .then((response) => {
+            resolve(response.data.payload.data);
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error);
+        })
+    });
+}
