@@ -2,7 +2,6 @@ const JSONResponse = require("../../service/response/JSONResponse");
 const Team = require("../../../models/Team");
 const User = require("../../../models/User");
 const {Mongo} = require("../../database/mongoDB");
-const mongoose = require("mongoose");
 const moment = require("moment");
 
 
