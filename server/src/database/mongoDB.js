@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const test = require('assert');
 var Promise = require('promise');
+const Team = require("../../models/Team");
 require('dotenv').config();
 
 class Mongo {
@@ -103,6 +104,30 @@ class Mongo {
         });
     });
   };
+
+  getTeamInfo() {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        Team.find({})
+          .populate("Coach")
+          .populate("Members")
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
 
   /**
    * This function returns data based off of username and/or email exists in database
