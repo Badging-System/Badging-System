@@ -27,7 +27,7 @@ export default function ManageTeam() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e4b5a48464661862aa61614");
+      let res = await API.get("/users/coach/5e4b5a48464661862aa61612");
       setData({
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
@@ -35,7 +35,7 @@ export default function ManageTeam() {
       console.log(res);
     }
     fetchData();
-  }, []);
+  }, [table_data.columns]);
 
   return <Table title={"My Team"} table_data={table_data} />;
 }
