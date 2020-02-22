@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Table from "../../../components/Table/Table";
+import Table from "../../../components/Table/CoachTable";
 import API from "../../../utils/API";
 import TableMapper from "./TableMapper";
 
@@ -27,7 +27,7 @@ export default function ManageTeam() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e4b5a48464661862aa61612");
+      let res = await API.get("/users/coach/5e51b1e8a126d468fcd098b8");
       setData({
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
