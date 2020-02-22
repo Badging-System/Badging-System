@@ -2,7 +2,7 @@ const User = require("../models/User");
 const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config({
-  path: path.join(__dirname, "../../.env")
+  path: path.join(__dirname, "../.env")
 });
 
 async function seedAdmins(insertData) {
@@ -11,7 +11,7 @@ async function seedAdmins(insertData) {
     useUnifiedTopology: true
   });
   //delete first
-  await User.deleteMany({ Role: "Admin" });
+  await User.deleteMany({Role: "Admin"});
   let result = await User.collection.insertMany(insertData);
   await mongoose.connection.close();
   return result;

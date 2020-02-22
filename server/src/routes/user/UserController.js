@@ -3,13 +3,12 @@ const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
 const { Mongo } = require("../../database/mongoDB");
-const mongoose = require("mongoose");
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
   //Get all the collection data based off the User model
   mongoDB
-    .getCollectionData(User.userModel)
+    .getCollectionData(User)
     .then(async data => {
       JSONResponse(
         res,
@@ -37,7 +36,7 @@ exports.index = (req, res) => {
 exports.count = (req, res) => {
   //Get all the collection data based off the User model
   mongoDB
-    .getCollectionData(User.userModel)
+    .getCollectionData(User)
     .then(async data => {
       JSONResponse(
         res,
@@ -65,7 +64,7 @@ exports.user_id = (req, res) => {
   } else {
     mongoDB
       .findOne(User, {
-        _id: userId
+        Username: userId
       })
       .then(async data => {
         JSONResponse(
@@ -89,7 +88,7 @@ exports.user_id = (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
-  let addedUser = new User.userModel(req.body);
+  let addedUser = new User(req.body);
   let collection = "users";
   if (
     addedUser.hasOwnProperty("Username") &&
@@ -124,7 +123,7 @@ exports.addUser = async (req, res) => {
       403
     );
   } else {
-    var result = await mongoDB.validateUserNameEmail(User.userModel, addedUser);
+    var result = await mongoDB.validateUserNameEmail(User, addedUser);
     if (result === null) {
       mongoDB
         .insertOneDocument(collection, addedUser)
@@ -203,10 +202,7 @@ exports.addedUsers = async (req, res) => {
       }
     }
 
-    var result = await mongoDB.validateUserNameEmail(
-      User.userModel,
-      addedUsers
-    );
+    var result = await mongoDB.validateUserNameEmail(User, addedUsers);
     if (result === null) {
       mongoDB
         .insertManyDocuments(collection, addedUsers)
@@ -241,6 +237,19 @@ exports.addedUsers = async (req, res) => {
   }
 };
 
+exports.getUserTeamName = async (req, res) => {
+  let userID = req.params.userID;
+  var userObj = await mongoDB.findOne(User, { _id: userID });
+  var teamObj = await mongoDB.findOne(Team, { _id: userObj[0].Team });
+  JSONResponse(
+    res,
+    {
+      message: `This is the team name that the user is on: ${teamObj[0].Name}`
+    },
+    200
+  );
+};
+
 exports.usersByCoach = async (req, res) => {
   let coachId = req.params.id;
   if (!coachId) {
@@ -265,6 +274,25 @@ exports.usersByCoach = async (req, res) => {
       });
   }
 };
+
+exports.getUserTeamMembersByID = async (req, res) => {
+  let teamArray = [];
+  let teamID = req.params.id;
+  var users = await mongoDB.getUserTeamMembers(Team, teamID);
+  teamArray.push(users);
+  var admin = await mongoDB.findOne(User, { Team: teamID, Role: "Admin" });
+  teamArray.push(admin);
+  var coach = await mongoDB.findOne(User, { Team: teamID, Role: "Coach" });
+  teamArray.push(coach);
+  JSONResponse(
+    res,
+    {
+      message: `These are all members of the team the user has: ${teamArray}`
+    },
+    200
+  );
+};
+
 /**
  * Validates email format
  * @param  {String} email [user email]

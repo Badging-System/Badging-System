@@ -3,7 +3,8 @@
     "Name": "Team1",
     "Coach": "",
     "Admin": "",
-    "Badges": ["test1", "test2", "test3"],
-    "Members": []
+    "Badges": [],
+    "Members": [],
+    "Approved": true
   }
 ]

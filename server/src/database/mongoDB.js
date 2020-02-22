@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const test = require("assert");
 var Promise = require("promise");
+const Team = require("../../models/Team");
 require("dotenv").config();
 
 class Mongo {
@@ -90,13 +91,13 @@ class Mongo {
    * @param  {Model} model [Model of collection]
    * @return {Promise}
    */
-  async getCollectionData(model) {
+  async getCollectionData(model, filter = {}) {
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
     return new Promise((resolve, reject) => {
-      model.find({}).exec((err, data) => {
+      model.find(filter).exec((err, data) => {
         if (err) {
           reject(err);
         } else {
@@ -124,6 +125,30 @@ class Mongo {
           resolve(data);
         }
       });
+    });
+  }
+
+  getTeamInfo() {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        Team.find({})
+          .populate("Coach")
+          .populate("Members")
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
     });
   }
 
@@ -183,21 +208,28 @@ class Mongo {
     });
   }
 
-  // addTeam(team) {
-  //   return new Promise((resolve, reject) => {
-  //     try {
-  //       mongoose.connect(process.env.HOST + process.env.DBNAME, {
-  //         useNewUrlParser: true,
-  //         useUnifiedTopology: true
-  //       });
-
-  //     } catch (e) {
-  //       console.error(e);
-  //       reject(e);
-  //     }
-  //     resolve();
-  //   });
-  // }
+  getUserTeamMembers(Team, teamID) {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        Team.findOne({ _id: teamID }, { Members: 1, _id: 0 })
+          .populate("Members")
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
 }
 
 module.exports = {
