@@ -8,7 +8,8 @@ const teamSchema = new Schema({
     type: String
   },
   Coach: {
-    type: ObjectID
+    type: Schema.Types.ObjectId,
+    ref: "users"
   },
   Admin: {
     type: ObjectID

@@ -10,6 +10,7 @@ class Mongo {
   }
 
   async mongooseConnect() {
+    console.log(process.env.HOST + process.env.DBNAME);
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
