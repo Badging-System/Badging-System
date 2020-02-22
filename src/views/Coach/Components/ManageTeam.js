@@ -24,7 +24,6 @@ export default function ManageTeam() {
     ],
     data: []
   });
-  console.log("TABLE DATA", table_data);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +32,7 @@ export default function ManageTeam() {
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
       });
-      console.log(TableMapper(res.data.payload.data.Members));
+      console.log(res);
     }
     fetchData();
   }, []);
