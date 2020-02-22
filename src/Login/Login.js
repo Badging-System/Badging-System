@@ -112,12 +112,12 @@ export default function SignIn() {
             className={classes.submit}
             onClick={navigateHome}
           >
-            Sign In
+           Sign In
           </Button>
-          <Grid container>
+          <Grid container justify='flex-end'>
             <Grid item>
-              <Link href = "#" variant = "body 2">
-                {"Don't have an account? Sign Up!"}
+              <Link href = "/signup" variant = "body 2"> 
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
