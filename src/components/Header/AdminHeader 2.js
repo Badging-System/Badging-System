@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,30 +7,22 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import TeamList from '../../views/User/UserTeamList';
-import {withStyles} from '@material-ui/core/styles';
-import {
-  getUserTeamName
-} from "../../helpers/users";
-
+import { withStyles } from '@material-ui/core/styles';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 const styles = theme => ({
   secondaryBar: {
-    zIndex: 0,
+    zIndex: 0
   },
   menuButton: {
-    marginLeft: -theme.spacing(1),
+    marginLeft: -theme.spacing(1)
   },
   iconButtonAvatar: {
-    padding: 4,
+    padding: 4
   },
   link: {
     textDecoration: 'none',
@@ -44,60 +36,18 @@ const styles = theme => ({
   }
 });
 
-function TabPanel(props) {
-  const {children, value, index, ...other} = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-
-
 function Header(props) {
-
-  const {classes, onDrawerToggle, teamName, fetch} = props;
-  // const teamName = '5e49b1a973dbc009478a861c';
-  const [tabIndex, setTabIndex] = useState(0);
-  const [state, setState] = React.useState('');
-  // let teamName = '';
-  React.useEffect(() => { //fetch the data usinmg the helper method
-    if (fetch) {
-      fetch(teamName).then((results) => {
-        setState({
-          team_name: results
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
-  }, [fetch, teamName]);
-
-
-  const handleChange = (event, newValue) => {
-    setTabIndex(newValue);
-    onDrawerToggle(newValue);
-  };
+  const { classes, onDrawerToggle, title } = props;
 
   return (
     <React.Fragment>
       <AppBar color='primary' position='sticky' elevation={0}>
         <Toolbar>
+          <Grid item xs>
+            <Typography color='inherit' variant='h5' component='h1'>
+              {title}
+            </Typography>
+          </Grid>
           <Grid container spacing={1} alignItems='center'>
             <Hidden smUp>
               <Grid item>
@@ -112,9 +62,6 @@ function Header(props) {
             </Hidden>
             <Grid item xs />
             <Grid item>
-              <TeamList />
-            </Grid>
-            <Grid item>
               <Tooltip title='Alerts • No alerts'>
                 <IconButton color='inherit'>
                   <NotificationsIcon />
@@ -126,24 +73,6 @@ function Header(props) {
                 <Avatar src='/static/images/avatar/1.jpg' alt='My Avatar' />
               </IconButton>
             </Grid>
-
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1" fetch={getUserTeamName} teamName={'5e49b1a973dbc009478a861c'}>
-                Team Name - {state.team_name}
-              </Typography>
-            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
@@ -152,11 +81,13 @@ function Header(props) {
         className={classes.secondaryBar}
         color='primary'
         position='static'
-        elevation={0}>
-        <Tabs value={tabIndex} onChange={handleChange} textColor='inherit'>
-          <Tab textColor='inherit' label='Home' />
-        </Tabs>
-      </AppBar>
+        elevation={0}></AppBar>
+      <AppBar
+        component='div'
+        className={classes.secondaryBar}
+        color='primary'
+        position='static'
+        elevation={0}></AppBar>
     </React.Fragment>
   );
 }
