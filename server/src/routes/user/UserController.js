@@ -2,7 +2,7 @@ const JSONResponse = require("../../service/response/JSONResponse");
 const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
-const { Mongo } = require("../../database/mongoDB");
+const {Mongo} = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
@@ -239,12 +239,12 @@ exports.addedUsers = async (req, res) => {
 
 exports.getUserTeamName = async (req, res) => {
   let userID = req.params.userID;
-  var userObj = await mongoDB.findOne(User, { _id: userID });
-  var teamObj = await mongoDB.findOne(Team, { _id: userObj[0].Team });
+  var userObj = await mongoDB.findOne(User, {_id: userID});
+  var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
   JSONResponse(
     res,
     {
-      message: `This is the team name that the user is on: ${teamObj[0].Name}`
+      message: teamObj[0].Name
     },
     200
   );
@@ -256,7 +256,7 @@ exports.usersByCoach = async (req, res) => {
     InvalidInput(res, "Missing coach id.");
   } else {
     mongoDB.mongooseConnect();
-    Team.findOne({ Coach: coachId }, { Members: 1, _id: 0 })
+    Team.findOne({Coach: coachId}, {Members: 1, _id: 0})
       .populate("Members")
       .exec((err, users) => {
         if (err) {
@@ -280,9 +280,9 @@ exports.getUserTeamMembersByID = async (req, res) => {
   let teamID = req.params.id;
   var users = await mongoDB.getUserTeamMembers(Team, teamID);
   teamArray.push(users);
-  var admin = await mongoDB.findOne(User, { Team: teamID, Role: "Admin" });
+  var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
   teamArray.push(admin);
-  var coach = await mongoDB.findOne(User, { Team: teamID, Role: "Coach" });
+  var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
   teamArray.push(coach);
   JSONResponse(
     res,
