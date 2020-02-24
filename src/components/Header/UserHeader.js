@@ -15,9 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TeamList from '../../views/User/UserTeamList';
 import {withStyles} from '@material-ui/core/styles';
-import {
-  getUserTeamName
-} from "../../helpers/users";
+import TeamName from '../../views/User/UserTeamName';
+
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -71,22 +70,21 @@ TabPanel.propTypes = {
 
 function Header(props) {
 
-  const {classes, onDrawerToggle, teamName, fetch} = props;
-  // const teamName = '5e49b1a973dbc009478a861c';
+  const {classes, onDrawerToggle} = props;
   const [tabIndex, setTabIndex] = useState(0);
-  const [state, setState] = React.useState('');
-  // let teamName = '';
-  React.useEffect(() => { //fetch the data usinmg the helper method
-    if (fetch) {
-      fetch(teamName).then((results) => {
-        setState({
-          team_name: results
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
-  }, [fetch, teamName]);
+  // const [state, setState] = React.useState('test');
+  // React.useEffect(() => { //fetch the data usinmg the helper method
+  //   if (fetch) {
+  //     fetch(teamname).then((results) => {
+  //       console.log(`these are the results: ${results}`);
+  //       setState({
+  //         team_name: results
+  //       });
+  //     }).catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  // }, [fetch, teamname]);
 
 
   const handleChange = (event, newValue) => {
@@ -140,9 +138,7 @@ function Header(props) {
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1" fetch={getUserTeamName} teamName={'5e49b1a973dbc009478a861c'}>
-                Team Name - {state.team_name}
-              </Typography>
+              <TeamName fetch={true} />
             </Grid>
           </Grid>
         </Toolbar>

@@ -69,15 +69,13 @@ export const getCoachCount = () => {
     });
 };
 
-export const getUserTeamName = (team_name) => {
+export const getUserTeamName = (user_id) => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:8080/api/users/getUserTeamName', {
-            params: {
-                team_name: team_name
-            }
+        axios.get(`http://localhost:8080/api/users/getUserTeamName/${user_id}`, {
+
         })
             .then((response) => {
-                resolve(response.data.payload.data);
+                resolve(response.data.payload.message);
             })
             .catch((error) => {
                 console.log(error);
