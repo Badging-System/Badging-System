@@ -20,7 +20,8 @@ const taskUserJoinSchema = new Schema({
   },
   Tasks_Completed: [
     {
-      type: Schema.Types.ObjectId
+      type: Schema.Types.ObjectId,
+      ref: "tasks"
     }
   ]
 });
