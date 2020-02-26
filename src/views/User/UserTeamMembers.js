@@ -9,26 +9,47 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+import {
+    getUserTeamMembersByID
+} from "../../helpers/users";
+
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     }
 });
 
-function createData(name, username, status, email) {
-    return {name, username, status, email};
+function createData(name, username, role, email) {
+    return {name, username, role, email};
 }
 
-const rows = [
-    createData('Gaurav Deshpande', 'gdeshpande', 'User', 'gdeshpande@asu.edu'),
-    createData('Mitchell Roberts', 'mroberts', 'User', 'mroberts@asu.edu'),
-    createData('David Maitha', 'dmaitha', 'User', 'dmaitha@asu.edu'),
-    createData('Ryan Tonthat', 'rtonthat', 'User', 'rtonthat@asu.edu'),
-    createData('Hongyuan Zhou', 'hzhou', 'User', 'hzhou@asu.edu'),
-];
+
 
 export default function SimpleTable() {
     const classes = useStyles();
+    const teamID = '5e49b1a973dbc009478a861a';
+    const [team_members, setTeamMembers] = React.useState([]);
+    const rows = [];
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const result = await getUserTeamMembersByID(teamID);
+            console.log(result);
+            setTeamMembers(result);
+
+
+        };
+        fetchData();
+    }, [teamID]);
+
+    if (team_members[0] !== undefined || team_members.length !== 0) {
+        rows.push(createData(`${team_members[0][0].First_name} ${team_members[0][0].Last_name}`, team_members[0][0].Username, team_members[0][0].Role, team_members[0][0].Email));
+        rows.push(createData(`${team_members[1][0].First_name} ${team_members[1][0].Last_name}`, team_members[1][0].Username, team_members[1][0].Role, team_members[1][0].Email));
+
+        for (let j = 0; j < team_members[2].Members.length; j++) {
+            rows.push(createData(`${team_members[2].Members[j].First_name} ${team_members[2].Members[j].Last_name}`, team_members[2].Members[j].Username, team_members[2].Members[j].Role, team_members[2].Members[j].Email));
+        }
+    }
+
 
     return (
         <React.Fragment>
@@ -39,7 +60,7 @@ export default function SimpleTable() {
                         <TableRow >
                             <TableCell align="center">Name</TableCell>
                             <TableCell align="center">Username</TableCell>
-                            <TableCell align="center">Status</TableCell>
+                            <TableCell align="center">Role</TableCell>
                             <TableCell align="center">Email</TableCell>
                         </TableRow>
                     </TableHead>
@@ -48,7 +69,7 @@ export default function SimpleTable() {
                             <TableRow key={row.name} >
                                 <TableCell align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.username}</TableCell>
-                                <TableCell align="center">{row.status}</TableCell>
+                                <TableCell align="center">{row.role}</TableCell>
                                 <TableCell align="center">{row.email}</TableCell>
                             </TableRow>
                         ))}
