@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server/bin/www",
+    "start": "nodemon server/bin/www",
     "test": "mocha --recursive 'server/test' --exit",
-    "seed": "node server/seed"
+    "seed": "node server/Seed/seed"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -17,6 +17,8 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "minimist": "^1.2.0",
+    "moment": "^2.24.0",
     "mongodb": "^3.3.3",
     "mongoose": "^5.7.9",
     "morgan": "~1.9.1",
@@ -26,6 +28,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
+    "nodemon": "^2.0.2",
     "request": "^2.88.0"
   }
 }
