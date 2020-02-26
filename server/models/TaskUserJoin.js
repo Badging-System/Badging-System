@@ -29,7 +29,7 @@ const taskUserJoinSchema = new Schema({
 const taskModel = mongoose.model(
   "taskUserJoin",
   taskUserJoinSchema,
-  "taskstaskUserJoin"
+  "tasksUserJoin"
 );
 
 module.exports = taskModel;
