@@ -278,16 +278,18 @@ exports.usersByCoach = async (req, res) => {
 exports.getUserTeamMembersByID = async (req, res) => {
   let teamArray = [];
   let teamID = req.params.id;
-  var users = await mongoDB.getUserTeamMembers(Team, teamID);
-  teamArray.push(users);
+
   var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
   teamArray.push(admin);
   var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
   teamArray.push(coach);
+  var users = await mongoDB.getUserTeamMembers(Team, teamID);
+  teamArray.push(users);
+
   JSONResponse(
     res,
     {
-      message: `These are all members of the team the user has: ${teamArray}`
+      message: teamArray
     },
     200
   );
