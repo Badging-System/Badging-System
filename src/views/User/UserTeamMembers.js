@@ -8,9 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
+import TeamName from '../../views/User/UserTeamName';
 import {
-    getUserTeamMembersByID
+    getUserTeamMembersByID,
 } from "../../helpers/users";
 
 const useStyles = makeStyles({
@@ -53,7 +53,7 @@ export default function SimpleTable() {
 
     return (
         <React.Fragment>
-            <Typography>Team 1</Typography>
+            <Typography><TeamName fetch={true} /></Typography>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>

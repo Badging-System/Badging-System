@@ -72,20 +72,6 @@ function Header(props) {
 
   const {classes, onDrawerToggle} = props;
   const [tabIndex, setTabIndex] = useState(0);
-  // const [state, setState] = React.useState('test');
-  // React.useEffect(() => { //fetch the data usinmg the helper method
-  //   if (fetch) {
-  //     fetch(teamname).then((results) => {
-  //       console.log(`these are the results: ${results}`);
-  //       setState({
-  //         team_name: results
-  //       });
-  //     }).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }, [fetch, teamname]);
-
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -138,7 +124,10 @@ function Header(props) {
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
-              <TeamName fetch={true} />
+              <Typography color="inherit" variant="h5" component="h1">
+                Team name - <TeamName fetch={true} />
+              </Typography>
+
             </Grid>
           </Grid>
         </Toolbar>
