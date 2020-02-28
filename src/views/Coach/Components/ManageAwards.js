@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     maxWidth: "100%",
     backgroundColor: theme.palette.background.paper
+  }, 
+  buttonStyle: {
+    margin: "1em"
   }
 }));
 
@@ -30,7 +33,7 @@ export default function FolderList() {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button className={classes.buttonStyle} variant="contained" color="primary" onClick={handleOpen}>
       Create Badge
     </Button>
     <SpringModal open={open} handleClose={handleClose}/>
