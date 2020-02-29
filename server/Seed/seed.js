@@ -38,7 +38,7 @@ async function seedDB(callback) {
     insertedUserIds.insertedIds
   );
 
-  callback();
+  // callback();
 }
 
 function mapTeamToUser(users, teamId) {
@@ -55,6 +55,6 @@ function mapAdminCoachToTeam(teams, adminId, coachId) {
   });
   return teams;
 }
+seedDB();
 
 module.exports.seedDB = seedDB;
-
