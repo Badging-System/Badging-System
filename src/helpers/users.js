@@ -96,3 +96,18 @@ export const getUserTeamMembersByID = team_id => {
             });
     });
 };
+
+export const getUserName = user_name => {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/api/users/${user_name}`, {
+        })
+            .then(response => {
+                resolve(response.data.payload.data);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
+
+    });
+};
