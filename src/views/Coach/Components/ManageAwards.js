@@ -1,10 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import PropTypes from "prop-types";
 import SpringModal from "./Modal";
 import Grid from "@material-ui/core/Grid";
 import GridItem from "../../../components/Grid/GridItem";
@@ -99,7 +95,7 @@ export default function FolderList() {
       tasks: badge.table_data
     });
     console.log(badges);
-
+    setBadges(badges);
     setOpen(false);
   };
 
