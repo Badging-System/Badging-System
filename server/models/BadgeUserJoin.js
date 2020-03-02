@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 
 //create a schema
 const taskUserJoinSchema = new Schema({
-  Description: {
-    type: String
+  User: {
+    type: Schema.Types.ObjectId,
+    refs: "users"
   },
   Badge: {
     type: Schema.Types.ObjectId,
@@ -27,9 +28,9 @@ const taskUserJoinSchema = new Schema({
 });
 
 const taskModel = mongoose.model(
-  "taskUserJoin",
+  "badgeUserJoin",
   taskUserJoinSchema,
-  "tasksUserJoin"
+  "badgeUserJoin"
 );
 
 module.exports = taskModel;
