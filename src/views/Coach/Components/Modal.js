@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -93,12 +93,17 @@ Fade.propTypes = {
 };
 
 export default function SpringModal(props) {
-  const { open, handleClose } = props;
+  const { open, handleClose, handleSave } = props;
   const classes = useStyles();
+  const [inputValues, setInputValues] = useState({
+    badge_name: "",
+    desc: "Describe your badge",
+    table_data: []
+  });
 
   const [data, setData] = React.useState({
     columns: [
-      { field: "id", title: "Task Number" },
+      { field: "id", title: "Task Number", type: "numeric" },
       { field: "desc", title: "Description" }
     ],
     data: []
@@ -132,6 +137,17 @@ export default function SpringModal(props) {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
+  const getData = () => {
+    handleSave(inputValues);
+  };
+  /**
+   * Get the values from the text field wand store the value in the binded variable
+   * @param {*} event
+   */
+  const handleOnChange = event => {
+    const { name, value } = event.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
   return (
     <Paper className={classes.root}>
       <Modal
@@ -159,17 +175,20 @@ export default function SpringModal(props) {
                   name="badge_name"
                   label="Badge Name"
                   fullWidth
-                  autoComplete="fname"
+                  defaultValue={inputValues.badge_name}
+                  onChange={handleOnChange}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
                   id="standard-multiline-static"
                   label="Description"
+                  name="desc"
                   multiline
                   fullWidth={true}
                   rows="2"
-                  defaultValue="Describe your badge"
+                  defaultValue={inputValues.desc}
+                  onChange={handleOnChange}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -178,7 +197,17 @@ export default function SpringModal(props) {
                     options={{
                       sorting: false,
                       search: false,
-                      actionsColumnIndex: -1
+                      actionsColumnIndex: -1,
+                      draggable: false,
+                      detailPanelColumnAlignment: "left",
+                      headerStyle: {
+                        width: "50%",
+                        backgroundColor: "#ddd",
+                        height: 10,
+                        textAlign: "center"
+                      },
+                      cellStyle: { textAlign: "center" },
+                      rowStyle: { textAlign: "center" }
                     }}
                     icons={tableIcons}
                     title={"Add Tasks"}
@@ -192,6 +221,10 @@ export default function SpringModal(props) {
                             setData(prevState => {
                               const data = [...prevState.data];
                               data.push(newData);
+                              setInputValues({
+                                ...inputValues,
+                                table_data: data
+                              });
                               return { ...prevState, data };
                             });
                           }, 600);
@@ -204,6 +237,10 @@ export default function SpringModal(props) {
                               setData(prevState => {
                                 const data = [...prevState.data];
                                 data[data.indexOf(oldData)] = newData;
+                                setInputValues({
+                                  ...inputValues,
+                                  table_data: data
+                                });
                                 return { ...prevState, data };
                               });
                             }
@@ -216,6 +253,10 @@ export default function SpringModal(props) {
                             setData(prevState => {
                               const data = [...prevState.data];
                               data.splice(data.indexOf(oldData), 1);
+                              setInputValues({
+                                ...inputValues,
+                                table_data: data
+                              });
                               return { ...prevState, data };
                             });
                           }, 600);
@@ -226,20 +267,20 @@ export default function SpringModal(props) {
               </Grid>
               <Grid item xs={12} sm={12}>
                 <Button
-                  className={classes.save}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleClose}
-                >
-                  Save
-                </Button>
-                <Button
                   className={classes.cancel}
                   variant="contained"
                   color="primary"
                   onClick={handleClose}
                 >
                   Close
+                </Button>
+                <Button
+                  className={classes.save}
+                  variant="contained"
+                  color="primary"
+                  onClick={getData}
+                >
+                  Save
                 </Button>
               </Grid>
             </Grid>
