@@ -48,6 +48,30 @@
         }
       }
     },
+    "/users/getUserTeamName/{id}": {
+      "get": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Gets user team name based off of their user id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User team name"
+          }
+        }
+      }
+    },
     "/users/adduser": {
       "post": {
         "tags": [

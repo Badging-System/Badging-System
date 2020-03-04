@@ -238,7 +238,7 @@ exports.addedUsers = async (req, res) => {
 };
 
 exports.getUserTeamName = async (req, res) => {
-  let userID = req.params.userID;
+  let userID = req.params.id;
   var userObj = await mongoDB.findOne(User, {_id: userID});
   var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
   JSONResponse(
