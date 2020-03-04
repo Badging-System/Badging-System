@@ -3,7 +3,7 @@ const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
 const {Mongo} = require("../../database/mongoDB");
-var mongoose = require('./../../../node_modules/mongoose');
+const mongoose = require('mongoose');
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
