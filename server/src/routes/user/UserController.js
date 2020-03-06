@@ -3,6 +3,7 @@ const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
 const {Mongo} = require("../../database/mongoDB");
+const mongoose = require('mongoose');
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
@@ -238,16 +239,30 @@ exports.addedUsers = async (req, res) => {
 };
 
 exports.getUserTeamName = async (req, res) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
+    InvalidInput(res, 'ObjectId of user is invalid');
+    return;
+  }
   let userID = req.params.id;
   var userObj = await mongoDB.findOne(User, {_id: userID});
-  var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
-  JSONResponse(
-    res,
-    {
-      message: teamObj[0].Name
+
+  if (userObj.length === 0) {
+    JSONResponse(res, {
+      message: 'User id does not exist '
     },
-    200
-  );
+      400
+    );
+  } else {
+    var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
+    JSONResponse(
+      res,
+      {
+        message: teamObj[0].Name
+      },
+      200
+    );
+  }
+
 };
 
 exports.usersByCoach = async (req, res) => {
