@@ -38,7 +38,7 @@ const useStyles = makeStyles({
  */
 export default function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open, badges} = props;
+  const { onClose, selectedValue, open} = props;
   const [openDialog, setDialog] = React.useState(false);
 
   const handleClose = () => {

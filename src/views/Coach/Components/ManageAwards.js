@@ -135,7 +135,6 @@ export default function FolderList() {
       />
       <Dialog
         selectedValue={selectedValue}
-        badges={badges}
         open={openDialog}
         onClose={handleDialog}
       />
