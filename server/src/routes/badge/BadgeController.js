@@ -11,6 +11,7 @@ exports.index = (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      mongoDB.mongoogeDisconnect();
       JSONResponse(
         res,
         {
