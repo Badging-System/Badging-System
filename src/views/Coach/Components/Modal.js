@@ -96,10 +96,12 @@ export default function SpringModal(props) {
   const { open, handleClose, handleSave } = props;
   const classes = useStyles();
   const [inputValues, setInputValues] = useState({
+    id: Math.floor(Math.random() * 100),
     badge_name: "",
     desc: "Describe your badge",
     table_data: []
   });
+
 
   const [data, setData] = React.useState({
     columns: [
@@ -139,6 +141,12 @@ export default function SpringModal(props) {
 
   const getData = () => {
     handleSave(inputValues);
+    setInputValues({ //clear the modals information
+      id:  Math.floor(Math.random() * 100),
+      badge_name: "",
+      desc: "Describe your badge",
+      table_data: []
+    })
   };
   /**
    * Get the values from the text field wand store the value in the binded variable
@@ -148,6 +156,9 @@ export default function SpringModal(props) {
     const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
   };
+
+
+
   return (
     <Paper className={classes.root}>
       <Modal
