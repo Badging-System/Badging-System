@@ -291,23 +291,39 @@ exports.usersByCoach = async (req, res) => {
 };
 
 exports.getUserTeamMembersByID = async (req, res) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
+    InvalidInput(res, 'ObjectId of team is invalid');
+    return;
+  }
   let teamArray = [];
   let teamID = req.params.id;
 
-  var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
-  teamArray.push(admin);
-  var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
-  teamArray.push(coach);
-  var users = await mongoDB.getUserTeamMembers(Team, teamID);
-  teamArray.push(users);
 
-  JSONResponse(
-    res,
-    {
-      message: teamArray
+
+  var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
+  console.log(`this is admin: ${admin}`);
+  if (admin.length === 0) {
+    JSONResponse(res, {
+      message: 'Team id does not exist '
     },
-    200
-  );
+      400
+    );
+  } else {
+    teamArray.push(admin);
+    var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
+    teamArray.push(coach);
+    var users = await mongoDB.getUserTeamMembers(Team, teamID);
+    teamArray.push(users);
+
+    JSONResponse(
+      res,
+      {
+        message: teamArray
+      },
+      200
+    );
+  }
+
 };
 
 /**
