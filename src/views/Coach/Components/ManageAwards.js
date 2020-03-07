@@ -72,6 +72,7 @@ export default function FolderList() {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setDialog] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState({
+    id: null,
     badge_name: "",
     desc: "",
     tasks: [{ id: null, desc: "", tableData: {} }]
@@ -86,15 +87,13 @@ export default function FolderList() {
     setOpen(false);
   };
 
-  const handleSave = badge => {
-    console.log(badge);
-
+  const handleSave = badge => { //Handles the additions of new badges
     badges.push({
+      id: badge.id,
       badge_name: badge.badge_name,
       desc: badge.desc,
       tasks: badge.table_data
     });
-    console.log(badges);
     setBadges(badges);
     setOpen(false);
   };
@@ -104,7 +103,18 @@ export default function FolderList() {
     setDialog(true);
   };
 
-  const handleDialog = () => {
+  const handleDialog = (item, event) => {
+    if(event) {
+      //Loop through and remove the badge
+      for (let index = 0; index < badges.length; index++) {
+        if(item.id === badges[index].id) {
+          let updated_badges = badges;
+          updated_badges.splice(index,1);
+                    
+          setBadges(updated_badges);
+        }        
+      }
+    }
     setDialog(false);
   };
 
@@ -131,7 +141,7 @@ export default function FolderList() {
       <main className={classes.main}>
         <Grid container className={classes.top} spacing={4}>
           {badges.map((badge, index) => (
-            <GridItem key={index} xs={12} sm={4}>
+            <GridItem key={index} xs={12} sm={3}>
               <Card chart>
                 <CardHeader color={"admin"} stats icon>
                   <CardIcon color={"admin"}>

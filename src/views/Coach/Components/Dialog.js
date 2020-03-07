@@ -1,16 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 import PersonIcon from "@material-ui/icons/Person";
 import Typography from "@material-ui/core/Typography";
 import { blue } from "@material-ui/core/colors";
 import ProgressStepper from "./ProgressStepper";
+import AlertDialog from "./Alert"
 
 const members = [{ name: "Mitchell Roberts" }];
 const useStyles = makeStyles({
@@ -34,16 +38,35 @@ const useStyles = makeStyles({
  */
 export default function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open } = props;
-  console.log("selectedValue");
-
-  console.log(selectedValue);
+  const { onClose, selectedValue, open} = props;
+  const [openDialog, setDialog] = React.useState(false);
 
   const handleClose = () => {
+    
     onClose(selectedValue);
   };
 
+  const handleAlert= (event) => {
+    if(event) {
+      setDialog(false);
+      onClose(selectedValue, true);
+    } else {
+      setDialog(false);
+    }
+  };
+
+  const openAlert = () => {
+    setDialog(true);
+  };
+
   return (
+    <div>
+    <AlertDialog
+      onClose={handleAlert}
+      open={openDialog}
+      message={"By deleting this badge all players will also lose any progress made towards the badge. Are you sure you want to do this?"}
+      title={"Delete " + selectedValue.badge_name + "?"}
+    />
     <Dialog
       onClose={handleClose}
       aria-labelledby="Badge Details"
@@ -55,6 +78,7 @@ export default function SimpleDialog(props) {
       <DialogTitle id="simple-dialog-title">
         {selectedValue.badge_name}
       </DialogTitle>
+      <DialogContent>
 
       <List>
         {members.map((member, index) => (
@@ -69,7 +93,16 @@ export default function SimpleDialog(props) {
           </ListItem>
         ))}
       </List>
+      </DialogContent>
+
+      <DialogActions>
+          <Button autoFocus onClick={openAlert} color="secondary">
+            Delete Badge
+          </Button>
+        </DialogActions>
     </Dialog>
+    </div>
+
   );
 }
 

@@ -28,14 +28,12 @@ export default function HorizontalNonLinearStepper(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const steps = tasks;
-  console.log(tasks);
 
   const totalSteps = () => {
     return steps.length;
   };
 
   const getStepContent = step => {
-    console.log(step);
     return tasks[step].desc;
   };
 
