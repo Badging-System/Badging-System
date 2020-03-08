@@ -1,6 +1,7 @@
 const JSONResponse = require("../../service/response/JSONResponse");
 const mongoose = require("mongoose");
 const Badge = require("../../../models/Badge");
+const BadgeUserJoin = require("../../../models/BadgeUserJoin");
 const { Mongo } = require("../../database/mongoDB");
 
 const mongoDB = new Mongo();
@@ -21,4 +22,8 @@ exports.index = (req, res) => {
       );
     }
   });
+};
+
+exports.progress = (req, res) => {
+  mongoDB.mongooseConnect();
 };
