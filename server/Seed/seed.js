@@ -5,11 +5,16 @@ var seedAdmins = require("./seedAdmin").seedAdmins;
 var seedCoaches = require("./seedCoach").seedCoaches;
 var seedTeams = require("./seedTeam").seedTeams;
 var updateTeamMembers = require("./seedTeam").updateTeamMembers;
+var seedBadges = require("./seedBadges").seedBadges;
+var seedBadgeUserJoin = require("./seedUserBadgeJoin").seedBadgeUserJoin;
 const relPath = require("path");
 const insertTeams = readInParseToJson("./server/Seed/teams.json");
 const insertUsers = readInParseToJson("./server/Seed/users.json");
 const insertAdmins = readInParseToJson("./server/Seed/admins.json");
 const insertCoaches = readInParseToJson("./server/Seed/coaches.json");
+const insertBadges = readInParseToJson("./server/Seed/badges.json");
+const insertTasks = readInParseToJson("./server/Seed/tasks.json");
+
 function readInParseToJson(path) {
   var fd = fs.openSync(relPath.resolve(process.cwd(), path), "r");
   var faqData = "";
@@ -30,14 +35,24 @@ async function seedDB(callback) {
   let insertedTeams = await seedTeams(
     mapAdminCoachToTeam(insertTeams, insertedAdminIds[0], insertedCoachIds[0])
   );
-  let insertedUserIds = await seedPlayers(
+  let insertedUsers = await seedPlayers(
     mapTeamToUser(insertUsers, insertedTeams.insertedIds[0])
   );
   let teamUpdate = await updateTeamMembers(
     insertedTeams.insertedIds[0],
-    insertedUserIds.insertedIds
+    insertedUsers.insertedIds
   );
-
+  badgeItems = generateTasksWithIds(insertTasks); //generate mongo ids
+  insertBadges[0].Tasks = badgeItems.tasks; //assign Tasks array for badge
+  insertBadges[0].Team = insertedTeams.insertedIds[0];
+  let insertedBadges = await seedBadges(insertBadges);
+  let badgeUserJoinData = generateBadgeUserJoinData(
+    insertedUsers.insertedIds,
+    insertedTeams.insertedIds[0],
+    insertedBadges.insertedIds[0],
+    badgeItems.ids
+  );
+  await seedBadgeUserJoin(badgeUserJoinData);
   callback();
 }
 
@@ -56,5 +71,33 @@ function mapAdminCoachToTeam(teams, adminId, coachId) {
   return teams;
 }
 
-module.exports.seedDB = seedDB;
+function generateTasksWithIds(tasks) {
+  items = {
+    ids: [],
+    tasks: []
+  };
+  tasks.forEach(task => {
+    task._id = mongoose.Types.ObjectId();
+    items.ids.push(task._id);
+  });
+  items.tasks = tasks;
+  return items;
+}
 
+function generateBadgeUserJoinData(userIds, teamId, badgeId, taskIds) {
+  let dataArr = [];
+  for (let [key, value] of Object.entries(userIds)) {
+    let newData = {
+      User: value,
+      Team: teamId,
+      Badge: badgeId,
+      Tasks_Completed: taskIds,
+      Award: true
+    };
+    dataArr.push(newData);
+  }
+  return dataArr;
+}
+// seedDB();
+
+module.exports.seedDB = seedDB;
