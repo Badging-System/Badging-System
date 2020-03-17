@@ -22,31 +22,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function getSteps() {
-  return ["Task 1", "Task 2", "Complete"];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return "Step 1: Task1";
-    case 1:
-      return "Step 2: Task2";
-    case 2:
-      return "Step 3: Task3";
-    default:
-      return "Unknown step";
-  }
-}
-
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(props) {
   const classes = useStyles();
+  const { tasks } = props;
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
-  const steps = getSteps();
+  const steps = tasks;
 
   const totalSteps = () => {
     return steps.length;
+  };
+
+  const getStepContent = step => {
+    return tasks[step].desc;
   };
 
   const completedSteps = () => {
@@ -94,13 +82,13 @@ export default function HorizontalNonLinearStepper() {
   return (
     <div className={classes.root}>
       <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => (
-          <Step key={label}>
+        {steps.map((task, index) => (
+          <Step key={task}>
             <StepButton
               onClick={handleStep(index)}
               completed={completed[index]}
             >
-              {label}
+              Task: {task.id}
             </StepButton>
           </Step>
         ))}
@@ -127,8 +115,8 @@ export default function HorizontalNonLinearStepper() {
                 Back
               </Button>
               <Button
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="primary"
                 onClick={handleNext}
                 className={classes.button}
               >
@@ -136,18 +124,18 @@ export default function HorizontalNonLinearStepper() {
               </Button>
               {activeStep !== steps.length &&
                 (completed[activeStep] ? (
-                  <Typography variant='caption' className={classes.completed}>
-                    Step {activeStep + 1} already completed
+                  <Typography variant="caption" className={classes.completed}>
+                    Task {activeStep + 1} already completed
                   </Typography>
                 ) : (
                   <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     onClick={handleComplete}
                   >
                     {completedSteps() === totalSteps() - 1
                       ? "Award Badge"
-                      : "Complete Step"}
+                      : "Complete Task"}
                   </Button>
                 ))}
             </div>
