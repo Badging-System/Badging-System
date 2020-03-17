@@ -16,7 +16,9 @@ import Box from '@material-ui/core/Box';
 import TeamList from '../../views/User/UserTeamList';
 import {withStyles} from '@material-ui/core/styles';
 import TeamName from '../../views/User/UserTeamName';
-
+import {
+  getUserName,
+} from "../../helpers/users";
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -72,20 +74,19 @@ function Header(props) {
 
   const {classes, onDrawerToggle} = props;
   const [tabIndex, setTabIndex] = useState(0);
-  // const [state, setState] = React.useState('test');
-  // React.useEffect(() => { //fetch the data usinmg the helper method
-  //   if (fetch) {
-  //     fetch(teamname).then((results) => {
-  //       console.log(`these are the results: ${results}`);
-  //       setState({
-  //         team_name: results
-  //       });
-  //     }).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }, [fetch, teamname]);
 
+  const user_name = 'gdeshpande';
+  const [user, setUserFirstName] = React.useState('');
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const result = await getUserName(user_name);
+      console.log(result);
+      setUserFirstName(result[0].First_name);
+
+
+    };
+    fetchData();
+  }, [user_name]);
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -138,7 +139,13 @@ function Header(props) {
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
-              <TeamName fetch={true} />
+              <Typography color="inherit" variant="h4" component="h3">
+                Welcome Back {user}!
+              </Typography>
+              <Typography color="inherit" variant="h5" component="h1">
+                Team name - <TeamName fetch={true} />
+              </Typography>
+
             </Grid>
           </Grid>
         </Toolbar>

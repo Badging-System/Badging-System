@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 
 import {
     getUserTeamName
@@ -20,8 +19,9 @@ export default function TeamName(props) {
         }
     }, [fetch, userID]);
     return (
-        <Typography color="inherit" variant="h5" component="h1">
-            Team Name - {teamname}
-        </Typography>
+        <React.Fragment>
+            {teamname}
+        </React.Fragment>
+
     );
 }

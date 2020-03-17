@@ -7,7 +7,7 @@ const moment = require('moment');
 export const getUsers = () => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:8080/api/users', {})
-            .then((response) => {
+            .then(response => {
                 const results = {
                     data: response.data.payload.data.map(user => ({
                         username: user.Username,
@@ -34,7 +34,7 @@ export const getUsers = () => {
                 };
                 resolve(results);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
                 reject(error);
             });
@@ -45,10 +45,10 @@ export const getUsers = () => {
 export const getUserCount = () => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:8080/api/users/count', {})
-            .then((response) => {
+            .then(response => {
                 resolve(response.data.payload.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
                 reject(error);
             });
@@ -59,20 +59,19 @@ export const getUserCount = () => {
 export const getCoachCount = () => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:8080/api/coaches/count', {})
-            .then((response) => {
+            .then(response => {
                 resolve(response.data.payload.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
                 reject(error);
             });
     });
 };
 
-export const getUserTeamName = (user_id) => {
+export const getUserTeamName = user_id => {
     return new Promise((resolve, reject) => {
         axios.get(`http://localhost:8080/api/users/getUserTeamName/${user_id}`, {
-
         })
             .then((response) => {
                 resolve(response.data.payload.message);
@@ -81,5 +80,34 @@ export const getUserTeamName = (user_id) => {
                 console.log(error);
                 reject(error);
             });
+    });
+};
+
+export const getUserTeamMembersByID = team_id => {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/api/users/getUserTeamMembers/${team_id}`, {
+        })
+            .then(response => {
+                resolve(response.data.payload.message);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
+    });
+};
+
+export const getUserName = user_name => {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/api/users/${user_name}`, {
+        })
+            .then(response => {
+                resolve(response.data.payload.data);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
+
     });
 };
