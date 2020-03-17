@@ -23,7 +23,7 @@ class Mongo {
   }
 
   insertOneDocument(collectionName, reqObj) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       try {
         mongoose.connect(
           process.env.HOST + process.env.DBNAME,
@@ -31,12 +31,12 @@ class Mongo {
             useNewUrlParser: true,
             useUnifiedTopology: true
           },
-          function(err, db) {
+          function (err, db) {
             if (err) throw err;
             var db = mongoose.connection;
             db.on("error", console.error.bind(console, "connection error:"));
 
-            db.collection(collectionName).insertOne(reqObj, function(err, res) {
+            db.collection(collectionName).insertOne(reqObj, function (err, res) {
               if (err) throw err;
               console.log(
                 `One new document has been inserted into the collection ${collectionName}`
@@ -54,7 +54,7 @@ class Mongo {
   }
 
   insertManyDocuments(collectionName, reqObj) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       try {
         mongoose.connect(
           process.env.HOST + process.env.DBNAME,
@@ -62,12 +62,12 @@ class Mongo {
             useNewUrlParser: true,
             useUnifiedTopology: true
           },
-          function(err, db) {
+          function (err, db) {
             if (err) throw err;
             var db = mongoose.connection;
             db.on("error", console.error.bind(console, "connection error:"));
 
-            db.collection(collectionName).insertMany(reqObj, function(
+            db.collection(collectionName).insertMany(reqObj, function (
               err,
               res
             ) {
@@ -112,19 +112,26 @@ class Mongo {
    * @param  {Object}  filter [Filter must proved the appropriate attributes based off of model]
    * @return {Promise}
    */
-  async findOne(model, filter) {
-    await mongoose.connect(process.env.HOST + process.env.DBNAME, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+  findOne(model, filter) {
+
     return new Promise((resolve, reject) => {
-      model.find(filter).exec((err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        model.find(filter).exec((err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+
     });
   }
 
@@ -168,7 +175,7 @@ class Mongo {
 
         if (userObj.length > 1) {
           var userNameEmailArray = [];
-          userObj.forEach(function(userInfo) {
+          userObj.forEach(function (userInfo) {
             userNameEmailArray.push(
               {
                 Username: userInfo.Username
@@ -215,7 +222,7 @@ class Mongo {
           useNewUrlParser: true,
           useUnifiedTopology: true
         });
-        Team.findOne({ _id: teamID }, { Members: 1, _id: 0 })
+        Team.findOne({_id: teamID}, {Members: 1, _id: 0})
           .populate("Members")
           .exec((err, team) => {
             if (err) {
