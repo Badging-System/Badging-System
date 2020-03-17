@@ -1,0 +1,159 @@
+{
+  "info": {
+    "title": "Badging System API Spec",
+    "version": "1.0.0",
+    "description": "API Specification for the Badging System API"
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/",
+  "swagger": "2.0",
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Gets of list of users",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of user data"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Gets a specific user based off their unique id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User data"
+          }
+        }
+      }
+    },
+    "/users/adduser": {
+      "post": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Inserts new specified user",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          }
+        }
+      }
+    },
+    "/users/addedusers": {
+      "post": {
+        "tags": [
+          "User - Catalog"
+        ],
+        "description": "Inserts an array of specified users",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "$ref": "#/definitions/UsersArray"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "Username"
+      ],
+      "properties": {
+        "Username": {
+          "type": "string"
+        },
+        "First_name": {
+          "type": "string"
+        },
+        "Last_name": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "UsersArray": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "Username"
+        ],
+        "properties": {
+          "Username": {
+            "type": "string"
+          },
+          "First_name": {
+            "type": "string"
+          },
+          "Last_name": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}

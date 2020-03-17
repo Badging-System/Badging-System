@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon server/bin/www",
+    "test": "mocha --recursive 'server/test' --exit",
+    "seed": "node server/Seed/seed"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "ci": "^1.0.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "minimist": "^1.2.2",
+    "moment": "^2.24.0",
+    "mongodb": "^3.3.3",
+    "mongoose": "^5.7.9",
+    "morgan": "~1.9.1",
+    "request-promise": "^4.2.5",
+    "swagger-ui-express": "^4.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.2",
+    "request": "^2.88.0"
+  }
+}
