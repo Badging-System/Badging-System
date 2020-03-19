@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const JSONResponse = require('../service/response/JSONResponse');
-const InvalidInput = require('../service/response/InvalidInput');
-
 const UserRoutes = require("./user/UserRoutes");
 const CoachRoutes = require("./coach/CoachRoutes");
 const TeamRoutes = require("./team/TeamRoutes");

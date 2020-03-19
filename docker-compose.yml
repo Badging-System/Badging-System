@@ -45,6 +45,15 @@ services:
             - '4000:80'
         networks:
             - app-network
+    swagger:
+        image: swaggerapi/swagger-ui
+        container_name: "swagger"
+        volumes:
+            - ./WebServer/server/swagger-doc.json:/var/www/swagger-doc.json
+        environment:
+            - SWAGGER_JSON=/var/www/swagger-doc.json
+        networks:
+            - app-network
 networks:
     app-network:
         driver: bridge
