@@ -6,12 +6,9 @@ const Schema = mongoose.Schema;
 const taskUserJoinSchema = new Schema({
   User: {
     type: Schema.Types.ObjectId,
-    refs: "users"
+    ref: "users"
   },
-  Badge: {
-    type: Schema.Types.ObjectId,
-    ref: "badges"
-  },
+  Badge: { type: Schema.Types.ObjectId, ref: "badges" },
   Team: {
     type: Schema.Types.ObjectId,
     ref: "teams"
