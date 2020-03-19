@@ -18,6 +18,7 @@ services:
             - app-network
         env_file: ./WebServer/.env
     client:
+        container_name: "client"
         volumes:
             - /var/www/node_modules
             - ./FrontEnd:/var/www
