@@ -1,0 +1,51 @@
+version: '3'
+services:
+    api:
+        volumes:
+            - /var/www/node_modules
+            - ./WebServer:/var/www
+        container_name: WebServer
+        build:
+            context: ./WebServer
+            dockerfile: Dockerfile.dev
+        links:
+            - mongo
+        ports:
+            - 80:8080
+        depends_on: 
+            - mongo
+        networks:
+            - app-network
+        env_file: ./WebServer/.env
+    client:
+        volumes:
+            - /var/www/node_modules
+            - ./FrontEnd:/var/www
+        build: 
+            context: ./FrontEnd
+            dockerfile: Dockerfile.dev
+        networks:
+            - app-network
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        networks:
+            - app-network
+    nginx:
+        depends_on: 
+            - api
+            - client
+        restart: always
+        build: 
+            context: ./Nginx
+            dockerfile: Dockerfile.dev
+        ports: 
+            - '4000:80'
+        networks:
+            - app-network
+networks:
+    app-network:
+        driver: bridge
+        

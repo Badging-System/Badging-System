@@ -92,6 +92,10 @@ class Mongo {
    * @return {Promise}
    */
   async getCollectionData(model, filter = {}) {
+    console.log("HERE");
+    console.log(process.env.HOST);
+    console.log(process.env.DBNAME);
+
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true

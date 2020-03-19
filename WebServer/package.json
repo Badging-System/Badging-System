@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon server/bin/www",
     "test": "mocha --recursive 'server/test' --exit",
+    "dev": "nodemon server/bin/www",
     "seed": "node server/Seed/seed"
   },
   "dependencies": {
