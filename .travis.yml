@@ -6,6 +6,9 @@ services:
 before_install:
   - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
 
+before_script:
+  - ls
+
 script: 
   - docker run msrober3/badging-system npm test -- --coverage
 
