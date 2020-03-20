@@ -5,8 +5,6 @@ const async = require("async");
 const axios = require("axios");
 var app = require("../../../../app");
 var server;
-var http = require("http");
-var debug = require("debug")("server:server");
 // var seed = require("../../../../Seed/seed.js").seedDB;
 
 const path = require("path");
@@ -18,7 +16,7 @@ describe("Integration Testing", function() {
   //   var port = parseInt(process.env.PORT || "3000", 10);
   //   app.set("port", port);
   //   server = http.createServer(app);
-  //   server.listen(port, "${process.env.HOST}", function() {
+  //   server.listen(port, "mongodb://mongo:27017/", function() {
   //     seed(done);
   //   });
   // });
@@ -28,7 +26,7 @@ describe("Integration Testing", function() {
     /* This test the user endpoint testing if the it recieve the id poarameter */
     it("User Query Param", function(done) {
       this.timeout(15000);
-      request(`http://${process.env.HOST}${process.env.PORT}/api/users/msrober`)
+      request(`http://localhost:4000/api/users/msrober`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -43,7 +41,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/adduser`, {
+        .post(`http://localhost:4000/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -67,7 +65,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/adduser`, {
+        .post(`http://localhost:4000/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -91,7 +89,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/adduser`, {
+        .post(`http://localhost:4000/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -114,7 +112,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -155,7 +153,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -196,7 +194,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -238,7 +236,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -279,7 +277,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -320,7 +318,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://${process.env.HOST}${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://localhost:4000/api/users/addedusers`, [
           {
             Username: "dbook",
             First_name: "Devin",
@@ -363,7 +361,7 @@ describe("Integration Testing", function() {
         /* This test that the database is seeded with the correct amount of users in the development enviroment */
         it("should list the seeded database", function(done) {
           this.timeout(15000);
-          request(`http://${process.env.HOST}${process.env.PORT}/api/users/`)
+          request(`http://localhost:4000/api/users/`)
             .then(response => {
               let parsedRes = JSON.parse(response);
               expect(parsedRes.status).to.equal(200);
@@ -382,7 +380,7 @@ describe("Integration Testing", function() {
         /* This test that the endpoint returns the correct type of object */
         it("should return the correct type of object (User)", function(done) {
           this.timeout(15000);
-          request(`http://${process.env.HOST}${process.env.PORT}/api/users/msrober`)
+          request(`http://localhost:4000/api/users/msrober`)
             .then(response => {
               let parsedRes = JSON.parse(response); //parse payload
               expect(parsedRes.status).to.equal(200);
