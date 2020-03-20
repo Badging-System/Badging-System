@@ -34,6 +34,12 @@ services:
             - 27017:27017
         networks:
             - app-network
+    mongo-seed:
+        build:
+            context: ./mongo-seed
+            dockerfile: Dockerfile.dev
+        links:
+            - mongo
     nginx:
         depends_on: 
             - api
