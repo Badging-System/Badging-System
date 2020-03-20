@@ -57,7 +57,7 @@ You can access the logs to each of the containers by typing the following comman
 ```
 docker logs <containername> -f
 ```
-Container Names: 
+### Container Names ###
  * WebServer
  * client
  * swagger
