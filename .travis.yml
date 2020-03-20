@@ -2,24 +2,22 @@ sudo: required
 services:
   - docker
   - mongodb
-
+  
 env:
-  DOCKER_COMPOSE_VERSION: 1.23.2
-
+  - DOCKER_COMPOSE_VERSION=1.4.2
+  
 before_install:
-    - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    - chmod +x docker-compose
-    - sudo mv docker-compose /usr/local/bin
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
 
 before_script:
-  - docker-compose up --build -d
+  - docker-compose up --build
 
 script: 
   - docker run msrober3/badging-system npm test -- --coverage
-
-after_script:
-  - docker-compose down
 
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
