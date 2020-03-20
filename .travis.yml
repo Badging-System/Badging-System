@@ -1,9 +1,9 @@
 sudo: required
 services:
   - docker
+  - mongodb
 
 before_install:
-  - docker build -t msrober3/mongo -f ./mongo/Dockerfile.dev ./mongo
   - docker build -t msrober3/mongo-seed -f ./mongo-seed/Dockerfile.dev ./mongo-seed
   - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
 
