@@ -50,6 +50,18 @@ Access the api documentation with the url:
 http://localhost:4000/docs
 ```
 
+## Access Logs
+
+You can access the logs to each of the containers by typing the following command:
+
+```
+docker logs <containername> -f
+```
+Container Nmes: 
+ Markup : * WebServer
+        * client
+        * swagger
+        
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
