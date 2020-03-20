@@ -1,4 +1,7 @@
 FROM mongo
 
-COPY users.json /users.json
-CMD mongoimport --host mongodb --db reach-engine --collection users --type json --file /users.json --jsonArray
+COPY ./data /
+
+# CMD mongoimport --host mongo --db badging-system --collection teams --type json --file /teams.json --jsonArray
+
+CMD mongoimport --host mongo --db badging-system --collection users --type json --file /users.json --jsonArray

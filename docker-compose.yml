@@ -40,6 +40,8 @@ services:
             dockerfile: Dockerfile.dev
         links:
             - mongo
+        networks:
+            - app-network
     nginx:
         depends_on: 
             - api

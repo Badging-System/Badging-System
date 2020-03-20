@@ -46,5 +46,21 @@
     "Role": "User",
     "Active": true,
     "Email": "hzhou@gmail.com"
+  },
+  {
+    "Username": "adminKenny",
+    "First_name": "Kenny",
+    "Last_name": "Shepard",
+    "Role": "Admin",
+    "Active": true,
+    "Email": "kshep@gmail.com"
+  },
+  {
+    "Username": "coachDave",
+    "First_name": "David",
+    "Last_name": "Coach",
+    "Role": "Coach",
+    "Active": true,
+    "Email": "badgingCoach@gmail.com"
   }
 ]
