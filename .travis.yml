@@ -5,9 +5,8 @@ services:
 
 before_install:
   - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
+  - docker build -t msrober3/seeder -f ./mongo-seed/Dockerfile.dev ./mongo-seed
 
-before_script:
-  - ls
 
 script: 
   - docker run msrober3/badging-system npm test -- --coverage

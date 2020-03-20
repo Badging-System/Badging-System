@@ -5,21 +5,21 @@ const async = require("async");
 const axios = require("axios");
 var app = require("../../../../app");
 var server;
-var seed = require("../../../../Seed/seed.js").seedDB;
+// var seed = require("../../../../Seed/seed.js").seedDB;
 
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "./.env") });
 
 describe("Integration Testing", function() {
   this.timeout(15000);
-  before(done => {
-    var port = parseInt(process.env.PORT || "3000", 10);
-    app.set("port", 8080);
-    server = http.createServer(app);
-    server.listen(port, "localhost", function() {
-      seed(done);
-    });
-  });
+  // before(done => {
+  //   var port = parseInt(process.env.PORT || "3000", 10);
+  //   app.set("port", 8080);
+  //   server = http.createServer(app);
+  //   server.listen(port, "localhost", function() {
+  //     seed(done);
+  //   });
+  // });
 
   /* This test that the endpoint returns the correct type of object */
   describe("User Endpoints", function() {
