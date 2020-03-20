@@ -4,6 +4,8 @@ services:
 before_install:
   - docker-compose up -d
 script: 
-  - docker exec api npm run test
+  - docker exec WebServer npm run test
+after_script: 
+  - docker-compose down
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
