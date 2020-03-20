@@ -47,7 +47,18 @@ http://localhost:4000/api/
 Access the api documentation with the url:
 
 ```
-http://localhost:4000/docs
+http://localhost:4000/docs/
+```
+
+Make sure to include a slash after 'docs' -> '/docs' will not work.
+
+## Using Mongo Compass
+
+If you need to access the data using mongo compass. Make sure mongodb is NOT running on your local machine. 
+
+Window users use the command:
+```
+net stop MongoDB
 ```
 
 ## Access Logs
