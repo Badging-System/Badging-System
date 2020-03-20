@@ -13,10 +13,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 
-before_script:
-  - docker-compose up --build
-
 script: 
+  - docker-compose up --build
   - docker run msrober3/badging-system npm test -- --coverage
 
 env:
