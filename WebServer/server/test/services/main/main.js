@@ -7,10 +7,18 @@ var app = require('../../../app');
 var server;
 var http = require('http');
 var debug = require('debug')('server:server');
+var seed = require("../../../../Seed/seed.js").seedDB;
 
 describe('Main Page content', function() {
   this.timeout(15000);
-
+  before(done => {
+    var port = parseInt(process.env.PORT || "3000", 10);
+    app.set("port", port);
+    server = http.createServer(app);
+    server.listen(port, "localhost", function() {
+      seed(done);
+    });
+  });
   /* This test the main page response to ensure the response is correct */
   it('should return succesful status 200', function(done) {
     request(`mongodb://host.docker.internal:27017/api/`).then((response) => {
