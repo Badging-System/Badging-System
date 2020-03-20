@@ -2,7 +2,7 @@ sudo: required
 services:
   - docker
 before_install:
-  - chmod +x build.sh
+  - chmod +x import.sh
 before_install:
   - docker-compose up -d --build
 before_script: 
