@@ -1,11 +1,8 @@
 sudo: required
 services:
   - docker
-  - mongodb
 before_install:
   - docker-compose up -d
-before_script:
-  - ls
 script: 
   - docker exec api npm run test
 env:
