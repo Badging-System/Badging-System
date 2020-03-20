@@ -10,6 +10,7 @@ import CardIcon from "../../../components/Card/CardIcon";
 import CardBody from "../../../components/Card/CardBody";
 import CardFooter from "../../../components/Card/CardFooter";
 import Dialog from "./Dialog";
+import ProgressStepper from "./ProgressStepper";
 
 const title = {
   color: "#3C4858",
@@ -87,7 +88,8 @@ export default function FolderList() {
     setOpen(false);
   };
 
-  const handleSave = badge => { //Handles the additions of new badges
+  const handleSave = badge => {
+    //Handles the additions of new badges
     badges.push({
       id: badge.id,
       badge_name: badge.badge_name,
@@ -104,15 +106,15 @@ export default function FolderList() {
   };
 
   const handleDialog = (item, event) => {
-    if(event) {
+    if (event) {
       //Loop through and remove the badge
       for (let index = 0; index < badges.length; index++) {
-        if(item.id === badges[index].id) {
+        if (item.id === badges[index].id) {
           let updated_badges = badges;
-          updated_badges.splice(index,1);
-                    
+          updated_badges.splice(index, 1);
+
           setBadges(updated_badges);
-        }        
+        }
       }
     }
     setDialog(false);
@@ -122,12 +124,13 @@ export default function FolderList() {
     <div>
       <Button
         className={classes.buttonStyle}
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
         onClick={handleOpen}
       >
         Create Badge
       </Button>
+      <ProgressStepper />
       <SpringModal
         open={open}
         handleClose={handleClose}
@@ -154,8 +157,8 @@ export default function FolderList() {
                 <CardFooter chart>
                   <Button
                     className={classes.badgeBtn}
-                    variant="contained"
-                    color="secondary"
+                    variant='contained'
+                    color='secondary'
                     onClick={() => openBadgeDetails(badge)}
                   >
                     View Details
