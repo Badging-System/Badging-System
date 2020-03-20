@@ -16,7 +16,7 @@ describe("Integration Testing", function() {
     /* This test the user endpoint testing if the it recieve the id poarameter */
     it("User Query Param", function(done) {
       this.timeout(15000);
-      request(`http://localhost:4000/api/users/msrober`)
+      request(`mongodb://localhost:4000/api/users/msrober`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
