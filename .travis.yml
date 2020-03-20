@@ -3,6 +3,8 @@ services:
   - docker
 
 before_install:
+  - docker build -t mongo .
+  - docker build -t msrober3/mongo-seed -f ./mongo-seed/Dockerfile.dev ./mongo-seed
   - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
 
 script: 
