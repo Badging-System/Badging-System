@@ -37,12 +37,19 @@ exports.badgesByTeamId = (req, res) => {
         path: "User",
         select: "Username First_name Last_name Active Email -_id"
       })
-      .populate({ path: "Badge", select: "Name Tasks -_id" })
+      .populate({ path: "Badge", select: "Name Team Tasks -_id" })
       .exec((err, data) => {
         if (err) {
           console.log(error);
         } else {
           console.log(data);
+          JSONResponse(
+            res,
+            {
+              data: data
+            },
+            200
+          );
         }
       });
   }
