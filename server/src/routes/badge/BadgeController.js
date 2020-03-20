@@ -42,7 +42,6 @@ exports.badgesByTeamId = (req, res) => {
         if (err) {
           console.log(error);
         } else {
-          console.log(data);
           JSONResponse(
             res,
             {
