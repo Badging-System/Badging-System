@@ -2,9 +2,14 @@ sudo: required
 services:
   - docker
 before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+before_install:
   - docker-compose up --build
 before_script: 
-  - docker network ls
+  - docker ps
 script: 
   - docker exec WebServer npm run test
 after_script: 
