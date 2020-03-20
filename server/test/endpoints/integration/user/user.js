@@ -10,23 +10,23 @@ var debug = require("debug")("server:server");
 var seed = require("../../../../Seed/seed.js").seedDB;
 
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "./.env") });
+require("dotenv").config({path: path.join(__dirname, "./.env")});
 
-describe("Integration Testing", function() {
+describe("Integration Testing", function () {
   this.timeout(15000);
   before(done => {
     var port = parseInt(process.env.PORT || "3000", 10);
     app.set("port", port);
     server = http.createServer(app);
-    server.listen(port, "localhost", function() {
+    server.listen(port, "localhost", function () {
       seed(done);
     });
   });
 
   /* This test that the endpoint returns the correct type of object */
-  describe("User Endpoints", function() {
+  describe("User Endpoints", function () {
     /* This test the user endpoint testing if the it recieve the id poarameter */
-    it("User Query Param", function(done) {
+    it("User Query Param", function (done) {
       this.timeout(15000);
       request(`http://localhost:${process.env.PORT}/api/users/msrober`)
         .then(response => {
@@ -37,8 +37,20 @@ describe("Integration Testing", function() {
         .catch(done);
     });
 
+    /* This tests that the user cannot retrieve its team name based off of userId due to incorrect ObjectID inputted */
+    it("Should fail retrieving user team name based off of the user id due to incorrect user id inputted", function (done) {
+      this.timeout(15000);
+      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamName/5e6ff3ea5bb01e0c02D0409c`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(400);
+          done();
+        })
+        .catch(done);
+    });
+
     /* This test the user endpoint testing if the api sends the correct response if it fails */
-    it("should fail posting a user to the database", function(done) {
+    it("should fail posting a user to the database", function (done) {
       this.timeout(15000);
       // Post a user object to the database
 
@@ -51,18 +63,18 @@ describe("Integration Testing", function() {
           Active: false,
           Email: "dbook@suns.com"
         })
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This test the user endpoint testing if the api sends the correct response if it fails */
-    it("should fail posting a user to the database - Incorrect Email Format", function(done) {
+    it("should fail posting a user to the database - Incorrect Email Format", function (done) {
       this.timeout(15000);
       // Post a user object to the database
 
@@ -75,18 +87,18 @@ describe("Integration Testing", function() {
           Active: false,
           Email: "Incorrect Formatted Email"
         })
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This tests the user endpoint testing if the api sends the correct response if it passes */
-    it("should succesfully post a user to the database", function(done) {
+    it("should succesfully post a user to the database", function (done) {
       this.timeout(15000);
       // Post a user object to the database
 
@@ -99,18 +111,18 @@ describe("Integration Testing", function() {
           Active: false,
           Email: "dbook@suns.com"
         })
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(201);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
     /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
 
-    it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function(done) {
+    it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -140,18 +152,18 @@ describe("Integration Testing", function() {
             Email: "mwilliams@suns.com"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
-    it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function(done) {
+    it("Should fail to post an array of users to the database due to incorrect status of one user or more users", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -181,18 +193,18 @@ describe("Integration Testing", function() {
             Email: "mwilliams@suns.com"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
-    it("Should fail to post an array of users to the database due to one or more usernames already existing in the database", function(done) {
+    it("Should fail to post an array of users to the database due to one or more usernames already existing in the database", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -222,11 +234,11 @@ describe("Integration Testing", function() {
             Email: "mwilliams@suns.com"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
@@ -234,7 +246,7 @@ describe("Integration Testing", function() {
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
 
-    it("Should fail to post an array of users to the database due to one or more emails already existing in the database", function(done) {
+    it("Should fail to post an array of users to the database due to one or more emails already existing in the database", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -264,18 +276,18 @@ describe("Integration Testing", function() {
             Email: "dmaitha@gmail.com"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it fails */
-    it("Should fail to post an array of users to the database due to one or more emails with an incorrect format", function(done) {
+    it("Should fail to post an array of users to the database due to one or more emails with an incorrect format", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -305,18 +317,18 @@ describe("Integration Testing", function() {
             Email: "Incorrect Formatted Email"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(403);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
     });
 
     /* This test the addedusers endpoint testing if the api sends the correct response if it passes */
-    it("Should succesfully post an array of users to the database", function(done) {
+    it("Should succesfully post an array of users to the database", function (done) {
       this.timeout(15000);
       // Post a user object to the database
       axios
@@ -346,11 +358,11 @@ describe("Integration Testing", function() {
             Email: "mwilliams@suns.com"
           }
         ])
-        .then(function(response) {
+        .then(function (response) {
           expect(response.data.status).to.equal(201);
           done();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           done();
         });
@@ -361,7 +373,7 @@ describe("Integration Testing", function() {
       "DEV Environment User Endpoints",
       () => {
         /* This test that the database is seeded with the correct amount of users in the development enviroment */
-        it("should list the seeded database", function(done) {
+        it("should list the seeded database", function (done) {
           this.timeout(15000);
           request(`http://localhost:${process.env.PORT}/api/users/`)
             .then(response => {
@@ -380,7 +392,7 @@ describe("Integration Testing", function() {
       "DEV Environment User Endpoints",
       () => {
         /* This test that the endpoint returns the correct type of object */
-        it("should return the correct type of object (User)", function(done) {
+        it("should return the correct type of object (User)", function (done) {
           this.timeout(15000);
           request(`http://localhost:${process.env.PORT}/api/users/msrober`)
             .then(response => {
