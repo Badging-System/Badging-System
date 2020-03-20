@@ -26,7 +26,7 @@ describe("Integration Testing", function() {
     /* This test the user endpoint testing if the it recieve the id poarameter */
     it("User Query Param", function(done) {
       this.timeout(15000);
-      request(`http://localhost:4000/api/users/msrober`)
+      request(`mongodb://host.docker.internal:27017/api/users/msrober`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -41,7 +41,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:4000/api/users/adduser`, {
+        .post(`mongodb://host.docker.internal:27017/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -65,7 +65,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:4000/api/users/adduser`, {
+        .post(`mongodb://host.docker.internal:27017/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -89,7 +89,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:4000/api/users/adduser`, {
+        .post(`mongodb://host.docker.internal:27017/api/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -112,7 +112,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -153,7 +153,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -194,7 +194,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -236,7 +236,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -277,7 +277,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -318,7 +318,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:4000/api/users/addedusers`, [
+        .post(`mongodb://host.docker.internal:27017/api/users/addedusers`, [
           {
             Username: "dbook",
             First_name: "Devin",
@@ -361,7 +361,7 @@ describe("Integration Testing", function() {
         /* This test that the database is seeded with the correct amount of users in the development enviroment */
         it("should list the seeded database", function(done) {
           this.timeout(15000);
-          request(`http://localhost:4000/api/users/`)
+          request(`mongodb://host.docker.internal:27017/api/users/`)
             .then(response => {
               let parsedRes = JSON.parse(response);
               expect(parsedRes.status).to.equal(200);
@@ -380,7 +380,7 @@ describe("Integration Testing", function() {
         /* This test that the endpoint returns the correct type of object */
         it("should return the correct type of object (User)", function(done) {
           this.timeout(15000);
-          request(`http://localhost:4000/api/users/msrober`)
+          request(`mongodb://host.docker.internal:27017/api/users/msrober`)
             .then(response => {
               let parsedRes = JSON.parse(response); //parse payload
               expect(parsedRes.status).to.equal(200);
