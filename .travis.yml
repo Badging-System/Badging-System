@@ -4,10 +4,10 @@ services:
   - mongodb
 
 before_install:
-  - docker build -t msrober3/WebServer -f ./WebServer/Dockerfile.dev ./WebServer
+  - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
 
 script: 
-  - docker run msrober3/WebServer npm test -- --coverage
+  - docker run msrober3/badging-system npm test -- --coverage
 
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
