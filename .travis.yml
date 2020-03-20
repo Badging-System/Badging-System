@@ -2,14 +2,11 @@ sudo: required
 services:
   - docker
   - mongodb
-
 before_install:
-  - docker build -t msrober3/badging-system -f ./WebServer/Dockerfile.dev ./WebServer
-  - docker build -t msrober3/seeder -f ./mongo-seed/Dockerfile.dev ./mongo-seed
-
-
+  - docker-compose up -d
+before_script:
+  - ls
 script: 
-  - docker run msrober3/badging-system npm test -- --coverage
-
+  - docker exec api npm run test
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
