@@ -32,7 +32,10 @@ exports.badgesByTeamId = (req, res) => {
     InvalidInput(res, "invalid or missing coach id");
   } else {
     mongoDB.mongooseConnect();
-    BadgeUserJoin.find({ Team: teamId }, { _id: 0, User: 1, Badge: 1 })
+    BadgeUserJoin.find(
+      { Team: teamId },
+      { _id: 0, User: 1, Badge: 1, Tasks_Completed: 1 }
+    )
       .populate({
         path: "User",
         select: "Username First_name Last_name Active Email -_id"
@@ -42,6 +45,7 @@ exports.badgesByTeamId = (req, res) => {
         if (err) {
           console.log(error);
         } else {
+          console.log(data);
           JSONResponse(
             res,
             {
