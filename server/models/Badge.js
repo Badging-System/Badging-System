@@ -14,8 +14,8 @@ const badgeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "teams"
   },
-  Recipients: [{ type: Schema.Types.ObjectId, ref: "users" }],
-  Tasks: [{ type: Schema.Types.ObjectId, ref: "tasks" }]
+  Recipients: [{type: Schema.Types.ObjectId, ref: "users"}],
+  Tasks: [{Description: {type: String}, _id: {type: Schema.Types.ObjectId}}]
 });
 
 const badgeModel = mongoose.model("badges", badgeSchema, "badges");
