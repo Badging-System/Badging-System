@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import API from "../../../utils/API";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import SpringModal from "./Modal";
@@ -10,7 +11,7 @@ import CardIcon from "../../../components/Card/CardIcon";
 import CardBody from "../../../components/Card/CardBody";
 import CardFooter from "../../../components/Card/CardFooter";
 import Dialog from "./Dialog";
-import ProgressStepper from "./ProgressStepper";
+import ProgressStepperMapper from "./ProgressStepperMapper";
 
 const title = {
   color: "#3C4858",
@@ -79,7 +80,7 @@ export default function FolderList() {
     tasks: [{ id: null, desc: "", tableData: {} }]
   });
   const [badges, setBadges] = React.useState([]);
-
+  const [progress, setProgress] = React.useState([]);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -120,6 +121,14 @@ export default function FolderList() {
     setDialog(false);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      let res = await API.get("/badges/5e72cde0ec0ded51a2c8b4e9");
+      setProgress(res.data.payload.data);
+    }
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Button
@@ -130,7 +139,7 @@ export default function FolderList() {
       >
         Create Badge
       </Button>
-      <ProgressStepper />
+      <ProgressStepperMapper progressData={progress} />
       <SpringModal
         open={open}
         handleClose={handleClose}
