@@ -17,4 +17,4 @@ jobs:
     - name: Run Docker Compose
       run: | 
         docker-compose up -d
-        docker inspect --format `{{ .NetworkSettings.IPAddress }}` WebServer
+        docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' WebServer
