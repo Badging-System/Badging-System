@@ -17,4 +17,4 @@ jobs:
     - name: Run Docker Compose
       run: | 
         docker-compose up -d
-        docker exec WebServer npm run test
+        docker inspect WebServer
