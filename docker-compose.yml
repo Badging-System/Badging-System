@@ -10,8 +10,6 @@ services:
             dockerfile: Dockerfile.dev
         links:
             - mongo
-        ports:
-            - 80:8080
         depends_on: 
             - mongo
         networks:
