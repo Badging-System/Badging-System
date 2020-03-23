@@ -5,6 +5,11 @@ services:
             - /var/www/node_modules
             - ./WebServer:/var/www
         container_name: WebServer
+        environment:
+            - ENV=DEV
+            - PORT=8080
+            - HOST=mongodb://mongo:27017/
+            - DBNAME=badging-system
         build:
             context: ./WebServer
             dockerfile: Dockerfile.dev

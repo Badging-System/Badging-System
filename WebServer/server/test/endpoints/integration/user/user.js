@@ -16,7 +16,7 @@ describe("Integration Testing", function() {
     /* This test the user endpoint testing if the it recieve the id poarameter */
     it("User Query Param", function(done) {
       this.timeout(15000);
-      request(`http://172.18.0.4:4000/users/msrober`)
+      request(`http://api:8080/users/msrober`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -35,7 +35,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://172.18.0.4:4000/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -59,7 +59,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://172.18.0.4:4000/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -83,7 +83,7 @@ describe("Integration Testing", function() {
       // Post a user object to the database
 
       axios
-        .post(`http://172.18.0.4:4000/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -106,7 +106,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -147,7 +147,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -188,7 +188,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -230,7 +230,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -271,7 +271,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -312,7 +312,7 @@ describe("Integration Testing", function() {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://172.18.0.4:4000/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbook",
             First_name: "Devin",
@@ -355,7 +355,7 @@ describe("Integration Testing", function() {
         /* This test that the database is seeded with the correct amount of users in the development enviroment */
         it("should list the seeded database", function(done) {
           this.timeout(15000);
-          request(`http://172.18.0.4:4000/users/`)
+          request(`http://api:8080/users/`)
             .then(response => {
               let parsedRes = JSON.parse(response);
               expect(parsedRes.status).to.equal(200);
@@ -374,7 +374,7 @@ describe("Integration Testing", function() {
         /* This test that the endpoint returns the correct type of object */
         it("should return the correct type of object (User)", function(done) {
           this.timeout(15000);
-          request(`http://172.18.0.4:4000/users/msrober`)
+          request(`http://api:8080/users/msrober`)
             .then(response => {
               let parsedRes = JSON.parse(response); //parse payload
               expect(parsedRes.status).to.equal(200);
