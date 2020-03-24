@@ -14,7 +14,7 @@ after_script:
 after_success:
   - docker build -t msrober3/badging-client ./FrontEnd
   - docker build -t msrober3/badging-nginx ./Nginx
-  - docker build -t msrober3/badging-server ./Webserver
+  - docker build -t msrober3/badging-server ./WebServer
   # Log into docker
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   # push images to docker
