@@ -15,8 +15,6 @@ services:
             dockerfile: Dockerfile.dev
         links:
             - mongo
-        ports:
-            - 80:8080
         depends_on: 
             - mongo
         networks:
@@ -34,8 +32,6 @@ services:
     mongo:
         image: mongo
         restart: always
-        ports:
-            - 27017:27017
         networks:
             - app-network
     mongo-seed:
