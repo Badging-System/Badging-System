@@ -30,9 +30,11 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   const [user, setUser] = React.useState(props.user);
   const [progress, setProgress] = React.useState(props.progress);
   const [activeStep, setActiveStep] = React.useState(0);
-  const completed = getCompleted(props.tasks_completed);
-  const [skipped, setSkipped] = React.useState(new Set());
-  const steps = getSteps(props.tasks);
+  const [completed, setCompleted] = React.useState(
+    getCompleted(props.tasks_completed)
+  );
+  const stepDescriptions = getSteps(props.tasks);
+  const steps = props.tasks;
 
   useEffect(() => {
     setProgress(props.progress);
@@ -45,7 +47,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
       return [];
     }
     tasks.forEach(element => {
-      strippedDescriptionString.push(element.Description);
+      strippedDescriptionString.push(element.description);
     });
     return strippedDescriptionString;
   }
@@ -55,55 +57,22 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     for (let i = 0; i < tasks; i++) {
       set.add(i);
     }
-    console.log(set);
     return set;
   }
 
   function getStepContent(step) {
-    switch (step) {
-      case 0:
-        return "Step 1: Select campaign settings...";
-      case 1:
-        return "Step 2: What is an ad group anyways?";
-      case 2:
-        return "Step 3: This is the bit I really care about!";
-      default:
-        return "Unknown step";
-    }
+    return stepDescriptions[step];
   }
 
   const totalSteps = () => {
-    return getSteps().length;
+    return stepDescriptions.length;
   };
-
-  // const isStepOptional = step => {
-  //   return step === 1;
-  // };
-
-  // const handleSkip = () => {
-  //   if (!isStepOptional(activeStep)) {
-  //     // You probably want to guard against something like this
-  //     // it should never occur unless someone's actively trying to break something.
-  //     throw new Error("You can't skip a step that isn't optional.");
-  //   }
-
-  //   setActiveStep(prevActiveStep => prevActiveStep + 1);
-  //   setSkipped(prevSkipped => {
-  //     const newSkipped = new Set(prevSkipped.values());
-  //     newSkipped.add(activeStep);
-  //     return newSkipped;
-  //   });
-  // };
-
-  // const skippedSteps = () => {
-  //   return skipped.size;
-  // };
-
   const completedSteps = () => {
     return completed.size;
   };
 
   const allStepsCompleted = () => {
+    console.log(completedSteps() + " : " + totalSteps());
     return completedSteps() === totalSteps();
   };
 
@@ -116,7 +85,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed
           // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.has(i))
+          stepDescriptions.findIndex((step, i) => !completed.has(i))
         : activeStep + 1;
 
     setActiveStep(newActiveStep);
@@ -131,28 +100,18 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   };
 
   const handleComplete = () => {
-    // const newCompleted = new Set(completed);
-    // newCompleted.add(activeStep);
-    // setCompleted(newCompleted);
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
-    // if (completed.size !== totalSteps()) {
-    //   handleNext();
-    // }
+    const newCompleted = new Set(completed);
+    newCompleted.add(activeStep);
+    setCompleted(newCompleted);
+    if (completed.size !== totalSteps()) {
+      handleNext();
+    }
   };
   //change to handle complete!!!!!!!!!!!!!
   const handleReset = () => {
-    // setActiveStep(0);
-    // setCompleted(new Set());
-    // setSkipped(new Set());
+    setActiveStep(0);
+    setCompleted(new Set());
   };
-
-  // const isStepSkipped = step => {
-  //   return skipped.has(step);
-  // };
 
   function isStepComplete(step) {
     return completed.has(step);
@@ -161,19 +120,11 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   return (
     <div className={classes.root}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {stepDescriptions.map((label, index) => {
           const stepProps = {};
           const buttonProps = {};
-          // if (isStepOptional(index)) {
-          //   buttonProps.optional = (
-          //     <Typography variant='caption'>Optional</Typography>
-          //   );
-          // }
-          // if (isStepSkipped(index)) {
-          //   stepProps.completed = false;
-          // }
           return (
-            <Step key={label} {...stepProps}>
+            <Step key={index} {...stepProps}>
               <StepButton
                 onClick={handleStep(index)}
                 completed={isStepComplete(index)}
@@ -214,18 +165,8 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
               >
                 Next
               </Button>
-              {/* {isStepOptional(activeStep) && !completed.has(activeStep) && (
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )} */}
 
-              {activeStep !== steps.length &&
+              {activeStep !== stepDescriptions.length &&
                 (completed.has(activeStep) ? (
                   <Typography variant='caption' className={classes.completed}>
                     Step {activeStep + 1} already completed
