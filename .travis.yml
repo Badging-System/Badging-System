@@ -11,5 +11,15 @@ script:
   - docker exec WebServer npm run test
 after_script: 
   - docker-compose down
+after_success:
+  - docker build -t msrober3/badging-client ./FrontEnd
+  - docker build -t msrober3/badging-nginx ./Nginx
+  - docker build -t msrober3/badging-server ./Webserver
+  # Log into docker
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  # push images to docker
+  - docker push msrober3/badging-client
+  - docker push msrober3/badging-nginx
+  - docker push msrober3/badging-server
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
