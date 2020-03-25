@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import API from "../../../utils/API";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button} from "@material-ui/core";
 import SpringModal from "./Modal";
 import Grid from "@material-ui/core/Grid";
 import GridItem from "../../../components/Grid/GridItem";
@@ -77,7 +77,7 @@ export default function FolderList() {
     id: null,
     badge_name: "",
     desc: "",
-    tasks: [{ id: null, desc: "", tableData: {} }]
+    tasks: [{id: null, desc: "", tableData: {}}]
   });
   const [badges, setBadges] = React.useState([]);
   const [progress, setProgress] = React.useState([]);
@@ -99,6 +99,8 @@ export default function FolderList() {
     });
     setBadges(badges);
     setOpen(false);
+
+    console.log(badges);
   };
 
   const openBadgeDetails = badge_info => {
