@@ -6,5 +6,6 @@ const BadgeController = require("./BadgeController");
 router.get("", BadgeController.index);
 router.get("/:id", BadgeController.badgesByTeamId);
 router.put("/task", BadgeController.completeTask);
+router.put("/task/delete", BadgeController.deleteTask);
 
 module.exports = router;
