@@ -5,5 +5,6 @@ const BadgeController = require("./BadgeController");
 /* This handles all routes ssociated with the endpoint api/badges/ */
 router.get("", BadgeController.index);
 router.get("/:id", BadgeController.badgesByTeamId);
+router.put("/task", BadgeController.completeTask);
 
 module.exports = router;

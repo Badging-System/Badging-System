@@ -38,13 +38,14 @@ exports.badgesByTeamId = (req, res) => {
     )
       .populate({
         path: "User",
-        select: "Username First_name Last_name Active Email -_id"
+        select: "Username First_name Last_name Active Email"
       })
       .populate({ path: "Badge", select: "Name Team Tasks" })
       .exec((err, data) => {
         if (err) {
           console.log(error);
         } else {
+          mongoDB.mongoogeDisconnect();
           console.log(data);
           JSONResponse(
             res,
@@ -56,4 +57,17 @@ exports.badgesByTeamId = (req, res) => {
         }
       });
   }
+};
+
+exports.completeTask = async (req, res) => {
+  let userId = req.body.user_id;
+  let badgeId = req.body.badge_id;
+  let taskId = req.body.task_id;
+
+  mongoDB.mongooseConnect();
+  let doc = await BadgeUserJoin.findOneAndUpdate(
+    { Badge: badgeId, User: userId },
+    { $push: { Tasks_Completed: taskId } }
+  );
+  JSONResponse(res, { data: [] }, 200);
 };
