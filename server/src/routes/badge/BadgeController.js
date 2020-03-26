@@ -40,7 +40,7 @@ exports.badgesByTeamId = (req, res) => {
         path: "User",
         select: "Username First_name Last_name Active Email -_id"
       })
-      .populate({ path: "Badge", select: "Name Team Tasks -_id" })
+      .populate({ path: "Badge", select: "Name Team Tasks" })
       .exec((err, data) => {
         if (err) {
           console.log(error);
@@ -57,16 +57,3 @@ exports.badgesByTeamId = (req, res) => {
       });
   }
 };
-
-/*
-        Team.find({})
-          .populate("Coach")
-          .populate("Members")
-          .exec((err, team) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(team);
-            }
-          });
- */
