@@ -17,10 +17,12 @@ services:
             - mongo
         depends_on: 
             - mongo
+        expose: 
+            - 8080
         networks:
             - app-network
     client:
-        container_name: "client"
+        container_name: client
         volumes:
             - /var/www/node_modules
             - ./FrontEnd:/var/www
@@ -29,6 +31,8 @@ services:
             dockerfile: Dockerfile.dev
         networks:
             - app-network
+        expose:
+            - 3000
     mongo:
         image: mongo
         restart: always
