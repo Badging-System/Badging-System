@@ -10,6 +10,10 @@ import CardIcon from "../../components/Card/CardIcon";
 import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
 import ProgressStepperMapper from "./ProgressStepperMapper";
+import Dialog from "./Dialog";
+import {
+    getUserBadgesById,
+} from "../../helpers/users";
 
 const title = {
     color: "#3C4858",
@@ -71,14 +75,21 @@ export default function FolderList() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [openDialog, setDialog] = React.useState(false);
+    const userID = '5e73f58f111ae80bfceaa35f';
+    const [progress, setProgress] = React.useState([]);
     const [selectedValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
-        desc: "",
-        tasks: [{id: null, desc: "", tableData: {}}]
     });
     const [badges, setBadges] = React.useState([]);
-    const [progress, setProgress] = React.useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            let res = await getUserBadgesById(userID);
+            handleSave(res);
+            setProgress(res);
+        }
+        fetchData();
+    }, [userID]);
     const handleOpen = () => {
         setOpen(true);
     };
@@ -90,15 +101,11 @@ export default function FolderList() {
     const handleSave = badge => {
         //Handles the additions of new badges
         badges.push({
-            id: badge.id,
-            badge_name: badge.badge_name,
-            desc: badge.desc,
-            tasks: badge.table_data
+            id: badge.Badge._id,
+            badge_name: badge.Badge.Name
         });
         setBadges(badges);
-        setOpen(false);
-
-        console.log(badges);
+        setOpen(true);
     };
 
     const openBadgeDetails = badge_info => {
@@ -121,24 +128,15 @@ export default function FolderList() {
         setDialog(false);
     };
 
-    useEffect(() => {
-        async function fetchData() {
-            let res = await API.get("/badges/5e72cde0ec0ded51a2c8b4e9");
-            setProgress(res.data.payload.data);
-        }
-        fetchData();
-    }, []);
+
 
     return (
         <div>
-            <Button
-                className={classes.buttonStyle}
-                variant='contained'
-                color='primary'
-                onClick={handleOpen}
-            >
-                Create Badge
-      </Button>
+            <Dialog
+                selectedValue={selectedValue}
+                open={openDialog}
+                onClose={handleDialog}
+            />
             <ProgressStepperMapper progressData={progress} />
             <main className={classes.main}>
                 <Grid container className={classes.top} spacing={4}>
@@ -151,7 +149,7 @@ export default function FolderList() {
                                     </CardIcon>
                                 </CardHeader>
                                 <CardBody>
-                                    <p>{badge.desc}</p>
+                                    <p>Badge Description</p>
                                 </CardBody>
                                 <CardFooter chart>
                                     <Button

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useState, useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
@@ -115,8 +115,8 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.has(i))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !completed.has(i))
         : activeStep + 1;
 
     setActiveStep(newActiveStep);
@@ -194,27 +194,27 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
             <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
+              <Typography className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Typography>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
               </Button>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={handleNext}
+                  className={classes.button}
+                >
+                  Next
               </Button>
-              {/* {isStepOptional(activeStep) && !completed.has(activeStep) && (
+                {/* {isStepOptional(activeStep) && !completed.has(activeStep) && (
                 <Button
                   variant='contained'
                   color='primary'
@@ -225,25 +225,25 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
                 </Button>
               )} */}
 
-              {activeStep !== steps.length &&
-                (completed.has(activeStep) ? (
-                  <Typography variant='caption' className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleComplete}
-                  >
-                    {completedSteps() === totalSteps() - 1
-                      ? "Finish"
-                      : "Complete Step"}
-                  </Button>
-                ))}
+                {activeStep !== steps.length &&
+                  (completed.has(activeStep) ? (
+                    <Typography variant='caption' className={classes.completed}>
+                      Step {activeStep + 1} already completed
+                    </Typography>
+                  ) : (
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={handleComplete}
+                      >
+                        {completedSteps() === totalSteps() - 1
+                          ? "Finish"
+                          : "Complete Step"}
+                      </Button>
+                    ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

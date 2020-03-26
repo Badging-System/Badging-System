@@ -80,10 +80,7 @@ function Header(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await getUserName(user_name);
-      console.log(result);
       setUserFirstName(result[0].First_name);
-
-
     };
     fetchData();
   }, [user_name]);

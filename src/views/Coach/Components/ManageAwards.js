@@ -104,6 +104,7 @@ export default function FolderList() {
   };
 
   const openBadgeDetails = badge_info => {
+    console.log(badge_info);
     setSelectedValue(badge_info);
     setDialog(true);
   };

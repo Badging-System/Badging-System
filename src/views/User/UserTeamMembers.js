@@ -33,14 +33,10 @@ export default function SimpleTable() {
     React.useEffect(() => {
         const fetchData = async () => {
             const result = await getUserTeamMembersByID(teamID);
-            console.log(result);
             setTeamMembers(result);
-
-
         };
         fetchData();
     }, [teamID]);
-
     if (team_members[0] !== undefined || team_members.length !== 0) {
         rows.push(createData(`${team_members[0][0].First_name} ${team_members[0][0].Last_name}`, team_members[0][0].Username, team_members[0][0].Role, team_members[0][0].Email));
         rows.push(createData(`${team_members[1][0].First_name} ${team_members[1][0].Last_name}`, team_members[1][0].Username, team_members[1][0].Role, team_members[1][0].Email));

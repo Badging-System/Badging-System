@@ -32,7 +32,6 @@ export default function ManageTeam() {
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
       });
-      console.log(res);
     }
     fetchData();
   }, [table_data.columns]);

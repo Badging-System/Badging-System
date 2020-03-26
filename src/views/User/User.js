@@ -4,9 +4,10 @@ import {createMuiTheme, ThemeProvider, withStyles} from '@material-ui/core/style
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import UserTeamMember from '../../views/User/UserTeamMembers';
-import UserBadges from '../../views/User/UserBadges';
+import UserTeamMember from './UserTeamMembers';
+import UserBadges from './UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
+import ProgressStepper from './ProgressStepper';
 
 
 function Copyright() {
@@ -166,14 +167,11 @@ function MainContent(index) {
     if (index === 0) {
         return (<React.Fragment>
             <UserTeamMember />
-            <p /><p /><p />
+            <p /><p /><p /><p />
 
-            <React.Fragment> Badge 1
-            < UserBadges />
-                Badge 2
+            <React.Fragment>
                 < UserBadges />
-                Badge 3
-                    < UserBadges /></React.Fragment>
+            </React.Fragment>
         </React.Fragment>);
     }
 }
