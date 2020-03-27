@@ -9,7 +9,7 @@ export default function ProgressStepperMapper(props) {
       <List>
         <ProgressStepper
           user={data.User}
-          progress={data.Badge}
+          _id={data.Badge._id}
           tasks={data.Badge.Tasks}
           tasks_completed={completed}
         />

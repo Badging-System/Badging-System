@@ -5,6 +5,7 @@ import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import API from "../../../utils/API";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,29 +29,18 @@ const useStyles = makeStyles(theme => ({
 export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   const classes = useStyles();
   const [user, setUser] = React.useState(props.user);
-  const [progress, setProgress] = React.useState(props.progress);
+  const [badgeId, setBadgeId] = React.useState(props._id);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(
     getCompleted(props.tasks_completed)
-  );
-  const stepDescriptions = getSteps(props.tasks);
-  const steps = props.tasks;
+  ); //change this to an array if you can.
+  // const steps = props.tasks;
+  const [steps, setStep] = React.useState(props.tasks);
 
   useEffect(() => {
-    setProgress(props.progress);
+    setBadgeId(props._id);
     setUser(props.user);
-  }, [props.user, props.progress]);
-
-  function getSteps(tasks) {
-    let strippedDescriptionString = [];
-    if (!tasks) {
-      return [];
-    }
-    tasks.forEach(element => {
-      strippedDescriptionString.push(element.description);
-    });
-    return strippedDescriptionString;
-  }
+  });
 
   function getCompleted(tasks) {
     let set = new Set();
@@ -61,18 +51,17 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   }
 
   function getStepContent(step) {
-    return stepDescriptions[step];
+    return steps[step].Description;
   }
 
   const totalSteps = () => {
-    return stepDescriptions.length;
+    return steps.length;
   };
   const completedSteps = () => {
     return completed.size;
   };
 
   const allStepsCompleted = () => {
-    console.log(completedSteps() + " : " + totalSteps());
     return completedSteps() === totalSteps();
   };
 
@@ -85,14 +74,19 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed
           // find the first step that has been completed
-          stepDescriptions.findIndex((step, i) => !completed.has(i))
+          steps.findIndex((step, i) => !completed.has(i))
         : activeStep + 1;
 
     setActiveStep(newActiveStep);
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    let taskRemove = {
+      user_id: user._id,
+      badge_id: badgeId,
+      task_id: steps[activeStep]._id
+    };
+    API.put("/badges/task/delete", taskRemove);
   };
 
   const handleStep = step => () => {
@@ -103,11 +97,28 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
-    if (completed.size !== totalSteps()) {
+    console.log(completed.size + " " + totalSteps());
+    if (completed.size === totalSteps() - 1) {
+    } else {
+      let taskComplete = {
+        user_id: user._id,
+        badge_id: badgeId,
+        task_id: steps[activeStep]._id
+      };
+      API.put("/badges/task", taskComplete);
+      updateTasksCompleted();
       handleNext();
     }
   };
-  //change to handle complete!!!!!!!!!!!!!
+
+  async function updateTasksCompleted() {
+    let request = {
+      params: { user_id: user._id, badge_id: badgeId }
+    };
+    let res = await API.get("/badges/task/completed", request);
+    console.log(res.data);
+  }
+
   const handleReset = () => {
     setActiveStep(0);
     setCompleted(new Set());
@@ -120,7 +131,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   return (
     <div className={classes.root}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {stepDescriptions.map((label, index) => {
+        {steps.map((task, index) => {
           const stepProps = {};
           const buttonProps = {};
           return (
@@ -130,7 +141,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
                 completed={isStepComplete(index)}
                 {...buttonProps}
               >
-                {label}
+                {task.Description}
               </StepButton>
             </Step>
           );
@@ -151,22 +162,23 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
             </Typography>
             <div>
               <Button
-                disabled={activeStep === 0}
                 onClick={handleBack}
                 className={classes.button}
+                color='secondary'
+                variant='contained'
               >
-                Back
+                Remove Task
               </Button>
-              <Button
+              {/* <Button
                 variant='contained'
                 color='primary'
                 onClick={handleNext}
                 className={classes.button}
               >
                 Next
-              </Button>
+              </Button> */}
 
-              {activeStep !== stepDescriptions.length &&
+              {activeStep !== steps.length &&
                 (completed.has(activeStep) ? (
                   <Typography variant='caption' className={classes.completed}>
                     Step {activeStep + 1} already completed

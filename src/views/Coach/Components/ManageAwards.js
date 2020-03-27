@@ -123,7 +123,7 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e72cde0ec0ded51a2c8b4e9");
+      let res = await API.get("/badges/5e7d0bc979428f96aede33c8");
       setProgress(res.data.payload.data);
     }
     fetchData();
