@@ -303,7 +303,6 @@ exports.getUserTeamMembersByID = async (req, res) => {
 
 
   var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
-  console.log(`this is admin: ${admin}`);
   if (admin.length === 0) {
     JSONResponse(res, {
       message: 'Team id does not exist '
