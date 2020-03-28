@@ -27,12 +27,11 @@ export default function ManageTeam() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e51b1e8a126d468fcd098b8");
+      let res = await API.get("/users/coach/5e7e6411844637a6a6c6b4ae");
       setData({
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
       });
-      console.log(res);
     }
     fetchData();
   }, [table_data.columns]);

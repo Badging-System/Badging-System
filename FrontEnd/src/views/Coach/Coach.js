@@ -11,6 +11,7 @@ import Link from "@material-ui/core/Link";
 import CoachHeader from "./Components/CoachHeader";
 import ManageTeam from "./Components/ManageTeam";
 import ManageAwards from "./Components/ManageAwards";
+import CoachHome from "./Components/CoachHome";
 
 function Copyright() {
   return (
@@ -166,7 +167,7 @@ const styles = {
 
 function MainContent(index) {
   if (index === 0) {
-    return <Typography>index 0</Typography>;
+    return <CoachHome />;
   } else if (index === 1) {
     return <ManageTeam />;
   } else {

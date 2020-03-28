@@ -80,10 +80,7 @@ function Header(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await getUserName(user_name);
-      console.log(result);
       setUserFirstName(result[0].First_name);
-
-
     };
     fetchData();
   }, [user_name]);
@@ -158,6 +155,7 @@ function Header(props) {
         elevation={0}>
         <Tabs value={tabIndex} onChange={handleChange} textColor='inherit'>
           <Tab textColor='inherit' label='Home' />
+          <Tab textColor='inherit' label='My Team' />
         </Tabs>
       </AppBar>
     </React.Fragment>

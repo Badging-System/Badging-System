@@ -27,19 +27,18 @@ function createData(name, username, role, email) {
 
 export default function SimpleTable() {
     const classes = useStyles();
-    const teamID = '5e49b1a973dbc009478a861a';
+    const teamID = '5e73f58f111ae80bfceaa35c';
     const [team_members, setTeamMembers] = React.useState([]);
     const rows = [];
+
     React.useEffect(() => {
         const fetchData = async () => {
             const result = await getUserTeamMembersByID(teamID);
-            console.log(result);
             setTeamMembers(result);
-
-
         };
         fetchData();
     }, [teamID]);
+
 
     if (team_members[0] !== undefined || team_members.length !== 0) {
         rows.push(createData(`${team_members[0][0].First_name} ${team_members[0][0].Last_name}`, team_members[0][0].Username, team_members[0][0].Role, team_members[0][0].Email));
