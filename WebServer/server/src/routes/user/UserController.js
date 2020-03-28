@@ -2,7 +2,10 @@ const JSONResponse = require("../../service/response/JSONResponse");
 const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
+const BadgeUserJoin = require("../../../models/BadgeUserJoin");
+const Badge = require("../../../models/Badge");
 const {Mongo} = require("../../database/mongoDB");
+const mongoose = require('mongoose');
 
 const mongoDB = new Mongo();
 exports.index = (req, res) => {
@@ -238,16 +241,30 @@ exports.addedUsers = async (req, res) => {
 };
 
 exports.getUserTeamName = async (req, res) => {
-  let userID = req.params.userID;
+  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
+    InvalidInput(res, 'ObjectId of user is invalid');
+    return;
+  }
+  let userID = req.params.id;
   var userObj = await mongoDB.findOne(User, {_id: userID});
-  var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
-  JSONResponse(
-    res,
-    {
-      message: teamObj[0].Name
+
+  if (userObj.length === 0) {
+    JSONResponse(res, {
+      message: 'User id does not exist '
     },
-    200
-  );
+      400
+    );
+  } else {
+    var teamObj = await mongoDB.findOne(Team, {_id: userObj[0].Team});
+    JSONResponse(
+      res,
+      {
+        message: teamObj[0].Name
+      },
+      200
+    );
+  }
+
 };
 
 exports.usersByCoach = async (req, res) => {
@@ -276,21 +293,60 @@ exports.usersByCoach = async (req, res) => {
 };
 
 exports.getUserTeamMembersByID = async (req, res) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
+    InvalidInput(res, 'ObjectId of team is invalid');
+    return;
+  }
   let teamArray = [];
   let teamID = req.params.id;
-  var users = await mongoDB.getUserTeamMembers(Team, teamID);
-  teamArray.push(users);
+
+
+
   var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
-  teamArray.push(admin);
-  var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
-  teamArray.push(coach);
-  JSONResponse(
-    res,
-    {
-      message: `These are all members of the team the user has: ${teamArray}`
+  if (admin.length === 0) {
+    JSONResponse(res, {
+      message: 'Team id does not exist '
     },
-    200
-  );
+      400
+    );
+  } else {
+    teamArray.push(admin);
+    var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
+    teamArray.push(coach);
+    var users = await mongoDB.getUserTeamMembers(Team, teamID);
+    teamArray.push(users);
+
+    JSONResponse(
+      res,
+      {
+        message: teamArray
+      },
+      200
+    );
+  }
+
+};
+
+exports.getUserBadgesByID = async (req, res) => {
+  let userID = req.params.id;
+  mongoDB.mongooseConnect();
+  BadgeUserJoin.findOne({User: userID}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
+    .populate("Badge")
+    .exec((err, badgeObj) => {
+      if (err) {
+        console.log(err);
+      } else {
+        mongoDB.mongoogeDisconnect();
+        JSONResponse(
+          res,
+          {
+            data: badgeObj
+          },
+          200
+        );
+      }
+    });
+
 };
 
 /**
