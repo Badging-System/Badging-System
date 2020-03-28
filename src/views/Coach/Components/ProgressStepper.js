@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -32,11 +32,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function HorizontalNonLinearAlternativeLabelStepper(props) {
-  console.log(props.tasks);
   const classes = useStyles();
-  const [user, setUser] = React.useState(props.user);
-  const [badgeId, setBadgeId] = React.useState(props._id);
-  const [steps, setSteps] = React.useState(props.tasks);
+  const user = props.user;
+  const badgeId = props._id;
+  const steps = props.tasks;
+  const badgeName = props.badgeName;
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(props.tasks_completed);
 
@@ -51,20 +51,20 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     return completedSteps() === totalSteps();
   };
 
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
+  // const isLastStep = () => {
+  //   return activeStep === totalSteps() - 1;
+  // };
 
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.includes(i))
-        : activeStep + 1;
+  // const handleNext = () => {
+  //   const newActiveStep =
+  //     isLastStep() && !allStepsCompleted()
+  //       ? // It's the last step, but not all steps have been completed
+  //         // find the first step that has been completed
+  //         steps.findIndex((step, i) => !completed.includes(i))
+  //       : activeStep + 1;
 
-    setActiveStep(newActiveStep);
-  };
+  //   setActiveStep(newActiveStep);
+  // };
 
   const handleRemove = () => {
     let taskRemove = {
@@ -76,7 +76,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     updateRemoved(steps[activeStep]._id);
   };
 
-  async function updateRemoved(taskId) {
+  async function updateRemoved() {
     let request = {
       params: {
         user_id: user._id,
@@ -105,6 +105,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
       newCompleted.push(steps[activeStep]._id);
       setCompleted(newCompleted);
       API.put("/badges/task", taskComplete);
+      updateRemoved(steps[activeStep]._id);
       // handleNext();
     }
   };
@@ -193,13 +194,14 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
         </div>
       </CardBody>
       <CardFooter chart>
-        {/* <Button
+        <h4>{badgeName}</h4>
+        <Button
           variant='contained'
-          color='secondary'
+          color='primary'
           // onClick={() => openBadgeDetails(badge)}
         >
           View Details
-        </Button> */}
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import API from "../../../utils/API";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -11,7 +11,6 @@ import CardIcon from "../../../components/Card/CardIcon";
 import CardBody from "../../../components/Card/CardBody";
 import CardFooter from "../../../components/Card/CardFooter";
 import Dialog from "./Dialog";
-import ProgressStepperMapper from "./ProgressStepperMapper";
 
 const title = {
   color: "#3C4858",
@@ -73,14 +72,14 @@ export default function FolderList() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setDialog] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState({
+  //add back setter for selectedValue, setSelectedValue
+  const selectedValue = React.useState({
     id: null,
     badge_name: "",
     desc: "",
     tasks: [{ id: null, desc: "", tableData: {} }]
   });
   const [badges, setBadges] = React.useState([]);
-  const [progress, setProgress] = React.useState([]);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -101,10 +100,10 @@ export default function FolderList() {
     setOpen(false);
   };
 
-  const openBadgeDetails = badge_info => {
-    setSelectedValue(badge_info);
-    setDialog(true);
-  };
+  //   const openBadgeDetails = badge_info => {
+  //     setSelectedValue(badge_info);
+  //     setDialog(true);
+  //   };
 
   const handleDialog = (item, event) => {
     if (event) {
@@ -123,8 +122,8 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e7e6411844637a6a6c6b4af");
-      setProgress(res.data.payload.data);
+      let res = await API.get("/badges/");
+      setBadges(res.data.payload.data);
     }
     fetchData();
   }, []);
@@ -156,18 +155,18 @@ export default function FolderList() {
               <Card chart>
                 <CardHeader color={"admin"} stats icon>
                   <CardIcon color={"admin"}>
-                    <h1 className={classes.badgeName}>{badge.badge_name}</h1>
+                    <h1 className={classes.badgeName}>{badge.Name}</h1>
                   </CardIcon>
                 </CardHeader>
                 <CardBody>
-                  <p>{badge.desc}</p>
+                  <p>{badge.Description}</p>
                 </CardBody>
                 <CardFooter chart>
                   <Button
                     className={classes.badgeBtn}
                     variant='contained'
                     color='secondary'
-                    onClick={() => openBadgeDetails(badge)}
+                    // onClick={() => openBadgeDetails(badge)}
                   >
                     View Details
                   </Button>

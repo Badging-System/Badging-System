@@ -4,11 +4,11 @@ import List from "@material-ui/core/List";
 
 export default function ProgressStepperMapper(props) {
   return props.progressData.map(function(data) {
-    console.log(data.Tasks_Completed.length);
     return (
       <List>
         <ProgressStepper
           user={data.User}
+          badgeName={data.Badge.Name}
           _id={data.Badge._id}
           tasks={data.Badge.Tasks}
           tasks_completed={data.Tasks_Completed}
