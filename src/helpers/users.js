@@ -111,3 +111,17 @@ export const getUserName = user_name => {
 
     });
 };
+export const getUserBadgesById = user_id => {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/api/users/getUserBadgesByID/${user_id}`, {
+        })
+            .then(response => {
+                resolve(response.data.payload.data);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
+    });
+
+};
