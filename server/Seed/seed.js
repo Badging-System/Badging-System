@@ -53,7 +53,7 @@ async function seedDB(callback) {
     badgeItems.ids
   );
   await seedBadgeUserJoin(badgeUserJoinData);
-  // callback();
+  callback();
 }
 
 function mapTeamToUser(users, teamId) {
@@ -98,6 +98,6 @@ function generateBadgeUserJoinData(userIds, teamId, badgeId, taskIds) {
   }
   return dataArr;
 }
-seedDB();
+// seedDB();
 
 module.exports.seedDB = seedDB;

@@ -38,14 +38,14 @@ exports.badgesByTeamId = (req, res) => {
     )
       .populate({
         path: "User",
-        select: "Username First_name Last_name Active Email -_id"
+        select: "Username First_name Last_name Active Email"
       })
-      .populate({ path: "Badge", select: "Name Team Tasks -_id" })
+      .populate({ path: "Badge", select: "Name Team Tasks" })
       .exec((err, data) => {
         if (err) {
           console.log(error);
         } else {
-          console.log(data);
+          mongoDB.mongoogeDisconnect();
           JSONResponse(
             res,
             {
@@ -58,15 +58,43 @@ exports.badgesByTeamId = (req, res) => {
   }
 };
 
-/*
-        Team.find({})
-          .populate("Coach")
-          .populate("Members")
-          .exec((err, team) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(team);
-            }
-          });
- */
+exports.completeTask = async (req, res) => {
+  let userId = req.body.user_id;
+  let badgeId = req.body.badge_id;
+  let taskId = req.body.task_id;
+
+  mongoDB.mongooseConnect();
+  let doc = await BadgeUserJoin.findOneAndUpdate(
+    { Badge: badgeId, User: userId },
+    { $push: { Tasks_Completed: taskId } }
+  );
+  JSONResponse(res, { data: [] }, 200);
+  mongoDB.mongoogeDisconnect();
+};
+
+exports.deleteTask = async (req, res) => {
+  let userId = req.body.user_id;
+  let badgeId = req.body.badge_id;
+  let taskId = req.body.task_id;
+
+  mongoDB.mongooseConnect();
+  let doc = await BadgeUserJoin.findOneAndUpdate(
+    { Badge: badgeId, User: userId },
+    { $pull: { Tasks_Completed: taskId } }
+  );
+  JSONResponse(res, { data: [] }, 200);
+  mongoDB.mongoogeDisconnect();
+};
+
+exports.completedTasksById = async (req, res) => {
+  let userId = req.query.user_id;
+  let badgeId = req.query.badge_id;
+  console.log("user id: " + userId);
+  mongoDB.mongooseConnect();
+  let doc = await BadgeUserJoin.findOne(
+    { Badge: badgeId, User: userId },
+    { _id: 0, User: 0, Team: 0, Badge: 0 }
+  );
+  JSONResponse(res, { data: doc }, 200);
+  mongoDB.mongoogeDisconnect();
+};
