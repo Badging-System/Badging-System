@@ -10,15 +10,6 @@ const path = require("path");
 require("dotenv").config({path: path.join(__dirname, "./.env")});
 
 describe("Integration Testing", function () {
-  this.timeout(15000);
-  before(done => {
-    var port = parseInt(process.env.PORT || "3000", 10);
-    app.set("port", port);
-    server = http.createServer(app);
-    server.listen(port, "localhost", function () {
-      seed(done);
-    });
-  });
 
   /* This test that the endpoint returns the correct type of object */
   describe("User Endpoints", function () {
@@ -41,7 +32,7 @@ describe("Integration Testing", function () {
     /* This tests that the user cannot retrieve its team name based off of userId due to incorrect ObjectID inputted */
     it("Should fail retrieving user team name based off of the user id due to incorrect user id inputted", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamName/5e6ff3ea5bb01e0c02D0409c`)
+      request(`http://api:8080/users/getUserTeamName/5e6ff3ea5bb01e0c02D0409c`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(400);
