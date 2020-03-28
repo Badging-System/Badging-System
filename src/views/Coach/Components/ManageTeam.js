@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Table from "../../../components/Table/CoachTable";
 import API from "../../../utils/API";
 import TableMapper from "./TableMapper";
@@ -6,20 +6,20 @@ import TableMapper from "./TableMapper";
 export default function ManageTeam() {
   const [table_data, setData] = useState({
     columns: [
-      { field: "username", title: "Username", editable: "false" },
-      { field: "email", title: "Email", editable: "false" },
-      { field: "name", title: "Full Name", editable: "false" },
+      {field: "username", title: "Username", editable: "false"},
+      {field: "email", title: "Email", editable: "false"},
+      {field: "name", title: "Full Name", editable: "false"},
       {
         field: "roles",
         title: "Roles",
-        lookup: { Admin: "Admin", Coach: "Coach", User: "User" }
+        lookup: {Admin: "Admin", Coach: "Coach", User: "User"}
       },
-      { field: "createdOn", title: "Created On", editable: "false" },
-      { field: "lastActivity", title: "Last Activity", editable: "false" },
+      {field: "createdOn", title: "Created On", editable: "false"},
+      {field: "lastActivity", title: "Last Activity", editable: "false"},
       {
         field: "active",
         title: "Active",
-        lookup: { true: "true", false: "false" }
+        lookup: {true: "true", false: "false"}
       }
     ],
     data: []
@@ -27,12 +27,11 @@ export default function ManageTeam() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e51b1e8a126d468fcd098b8");
+      let res = await API.get("/users/coach/5e73f58f111ae80bfceaa370");
       setData({
         columns: table_data.columns,
         data: TableMapper(res.data.payload.data.Members)
       });
-      console.log(res);
     }
     fetchData();
   }, [table_data.columns]);
