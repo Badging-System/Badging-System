@@ -85,29 +85,31 @@ export default function FolderList() {
     useEffect(() => {
         async function fetchData() {
             let res = await getUserBadgesById(userID);
+            const handleSave = res => {
+                //Handles the additions of new badges
+                let tempArray = [];
+                for (var i = 0; i < res.Badge.Tasks.length; i++) {
+                    tempArray.push([{id: res.Badge.Tasks[i]._id, desc: res.Badge.Tasks[i].Description}]);
+                }
+
+                badges.push({
+                    id: res.Badge._id,
+                    badge_name: res.Badge.Name,
+                    completed: res.Tasks_Completed.length,
+                    tasks: tempArray
+                });
+
+                setBadges(badges);
+                setOpen(false);
+            };
             handleSave(res);
             setProgress(res);
         }
         fetchData();
-    }, [userID]);
+    }, [badges, userID]);
 
-    const handleSave = badge => {
-        //Handles the additions of new badges
-        let tempArray = [];
-        for (var i = 0; i < badge.Badge.Tasks.length; i++) {
-            tempArray.push([{id: badge.Badge.Tasks[i]._id, desc: badge.Badge.Tasks[i].Description}]);
-        }
 
-        badges.push({
-            id: badge.Badge._id,
-            badge_name: badge.Badge.Name,
-            completed: badge.Tasks_Completed.length,
-            tasks: tempArray
-        });
 
-        setBadges(badges);
-        setOpen(false);
-    };
 
     const openBadgeDetails = badge_info => {
         setSelectedValue(badge_info);
