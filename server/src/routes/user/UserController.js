@@ -2,6 +2,8 @@ const JSONResponse = require("../../service/response/JSONResponse");
 const InvalidInput = require("../../service/response/InvalidInput");
 const User = require("../../../models/User");
 const Team = require("../../../models/Team");
+const BadgeUserJoin = require("../../../models/BadgeUserJoin");
+const Badge = require("../../../models/Badge");
 const {Mongo} = require("../../database/mongoDB");
 const mongoose = require('mongoose');
 
@@ -301,7 +303,6 @@ exports.getUserTeamMembersByID = async (req, res) => {
 
 
   var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
-  console.log(`this is admin: ${admin}`);
   if (admin.length === 0) {
     JSONResponse(res, {
       message: 'Team id does not exist '
@@ -323,6 +324,28 @@ exports.getUserTeamMembersByID = async (req, res) => {
       200
     );
   }
+
+};
+
+exports.getUserBadgesByID = async (req, res) => {
+  let userID = req.params.id;
+  mongoDB.mongooseConnect();
+  BadgeUserJoin.findOne({User: userID}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
+    .populate("Badge")
+    .exec((err, badgeObj) => {
+      if (err) {
+        console.log(err);
+      } else {
+        mongoDB.mongoogeDisconnect();
+        JSONResponse(
+          res,
+          {
+            data: badgeObj
+          },
+          200
+        );
+      }
+    });
 
 };
 
