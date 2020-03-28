@@ -6,6 +6,11 @@ import StepButton from "@material-ui/core/StepButton";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import API from "../../../utils/API";
+import CardHeader from "../../../components/Card/CardHeader";
+import CardIcon from "../../../components/Card/CardIcon";
+import CardBody from "../../../components/Card/CardBody";
+import CardFooter from "../../../components/Card/CardFooter";
+import Card from "../../../components/Card/Card";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,38 +32,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function HorizontalNonLinearAlternativeLabelStepper(props) {
+  console.log(props.tasks);
   const classes = useStyles();
   const [user, setUser] = React.useState(props.user);
   const [badgeId, setBadgeId] = React.useState(props._id);
+  const [steps, setSteps] = React.useState(props.tasks);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState(
-    getCompleted(props.tasks_completed)
-  ); //change this to an array if you can.
-  // const steps = props.tasks;
-  const [steps, setStep] = React.useState(props.tasks);
-
-  useEffect(() => {
-    setBadgeId(props._id);
-    setUser(props.user);
-  });
-
-  function getCompleted(tasks) {
-    let set = new Set();
-    for (let i = 0; i < tasks; i++) {
-      set.add(i);
-    }
-    return set;
-  }
-
-  function getStepContent(step) {
-    return steps[step].Description;
-  }
+  const [completed, setCompleted] = React.useState(props.tasks_completed);
 
   const totalSteps = () => {
     return steps.length;
   };
   const completedSteps = () => {
-    return completed.size;
+    return completed.length;
   };
 
   const allStepsCompleted = () => {
@@ -74,50 +60,54 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed
           // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.has(i))
+          steps.findIndex((step, i) => !completed.includes(i))
         : activeStep + 1;
 
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
+  const handleRemove = () => {
     let taskRemove = {
       user_id: user._id,
       badge_id: badgeId,
       task_id: steps[activeStep]._id
     };
     API.put("/badges/task/delete", taskRemove);
+    updateRemoved(steps[activeStep]._id);
   };
 
+  async function updateRemoved(taskId) {
+    let request = {
+      params: {
+        user_id: user._id,
+        badge_id: badgeId
+      }
+    };
+    let res = await API.get("/badges/tasks/completed", request);
+    setCompleted(res.data.payload.data.Tasks_Completed);
+  }
+
   const handleStep = step => () => {
+    console.log(step);
     setActiveStep(step);
   };
 
   const handleComplete = () => {
-    const newCompleted = new Set(completed);
-    newCompleted.add(activeStep);
-    setCompleted(newCompleted);
-    console.log(completed.size + " " + totalSteps());
-    if (completed.size === totalSteps() - 1) {
+    if (completed.length === totalSteps() - 1) {
     } else {
       let taskComplete = {
         user_id: user._id,
         badge_id: badgeId,
         task_id: steps[activeStep]._id
       };
+
+      const newCompleted = completed;
+      newCompleted.push(steps[activeStep]._id);
+      setCompleted(newCompleted);
       API.put("/badges/task", taskComplete);
-      updateTasksCompleted();
-      handleNext();
+      // handleNext();
     }
   };
-
-  async function updateTasksCompleted() {
-    let request = {
-      params: { user_id: user._id, badge_id: badgeId }
-    };
-    let res = await API.get("/badges/task/completed", request);
-    console.log(res.data);
-  }
 
   const handleReset = () => {
     setActiveStep(0);
@@ -125,79 +115,92 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   };
 
   function isStepComplete(step) {
-    return completed.has(step);
+    if (!step) {
+      return false;
+    }
+    return completed.includes(step);
   }
 
   return (
-    <div className={classes.root}>
-      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {steps.map((task, index) => {
-          const stepProps = {};
-          const buttonProps = {};
-          return (
-            <Step key={index} {...stepProps}>
-              <StepButton
-                onClick={handleStep(index)}
-                completed={isStepComplete(index)}
-                {...buttonProps}
-              >
-                {task.Description}
-              </StepButton>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {allStepsCompleted() ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
-            <div>
-              <Button
-                onClick={handleBack}
-                className={classes.button}
-                color='secondary'
-                variant='contained'
-              >
-                Remove Task
-              </Button>
-              {/* <Button
-                variant='contained'
-                color='primary'
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button> */}
-
-              {activeStep !== steps.length &&
-                (completed.has(activeStep) ? (
-                  <Typography variant='caption' className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleComplete}
+    <Card chart>
+      <CardHeader color={"admin"} stats icon>
+        <CardIcon color={"admin"}>
+          <h3>{user.Username}</h3>
+        </CardIcon>
+      </CardHeader>
+      <CardBody>
+        <div className={classes.root}>
+          <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+            {steps.map((task, index) => {
+              const stepProps = {};
+              const buttonProps = {};
+              return (
+                <Step key={task} {...stepProps}>
+                  <StepButton
+                    onClick={handleStep(index)}
+                    completed={isStepComplete(task._id)}
+                    {...buttonProps}
                   >
-                    {completedSteps() === totalSteps() - 1
-                      ? "Finish"
-                      : "Complete Step"}
+                    {task.Description}
+                  </StepButton>
+                </Step>
+              );
+            })}
+          </Stepper>
+          <div>
+            {allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+              </div>
+            ) : (
+              <div>
+                <Typography className={classes.instructions}></Typography>
+                <div>
+                  <Button
+                    onClick={handleRemove}
+                    className={classes.button}
+                    color='secondary'
+                    variant='contained'
+                  >
+                    Remove Task
                   </Button>
-                ))}
-            </div>
+                  {activeStep !== steps.length &&
+                    (isStepComplete(steps[activeStep]._id) ? (
+                      <Typography
+                        variant='caption'
+                        className={classes.completed}
+                      >
+                        Step {steps[activeStep].Description} already completed
+                      </Typography>
+                    ) : (
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={handleComplete}
+                      >
+                        {completedSteps() === totalSteps() - 1
+                          ? "Finish"
+                          : "Complete Step"}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </CardBody>
+      <CardFooter chart>
+        {/* <Button
+          variant='contained'
+          color='secondary'
+          // onClick={() => openBadgeDetails(badge)}
+        >
+          View Details
+        </Button> */}
+      </CardFooter>
+    </Card>
   );
 }
