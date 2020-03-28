@@ -1,2 +1,1 @@
-mongoimport --host mongo --db badging-system --collection users --type json --file /users.json --jsonArray
-mongoimport --host mongo --db badging-system --collection teams --type json --file /teams.json --jsonArray
+mongoimport --host mongo --db badging-system --collection users --type json --file /users.json --jsonArray && mongoimport --host mongo --db badging-system --collection teams --type json --file /teams.json --jsonArray
