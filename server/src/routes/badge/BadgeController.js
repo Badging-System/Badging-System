@@ -69,6 +69,7 @@ exports.completeTask = async (req, res) => {
     { $push: { Tasks_Completed: taskId } }
   );
   JSONResponse(res, { data: [] }, 200);
+  mongoDB.mongoogeDisconnect();
 };
 
 exports.deleteTask = async (req, res) => {
@@ -82,4 +83,18 @@ exports.deleteTask = async (req, res) => {
     { $pull: { Tasks_Completed: taskId } }
   );
   JSONResponse(res, { data: [] }, 200);
+  mongoDB.mongoogeDisconnect();
+};
+
+exports.completedTasksById = async (req, res) => {
+  let userId = req.query.user_id;
+  let badgeId = req.query.badge_id;
+  console.log("user id: " + userId);
+  mongoDB.mongooseConnect();
+  let doc = await BadgeUserJoin.findOne(
+    { Badge: badgeId, User: userId },
+    { _id: 0, User: 0, Team: 0, Badge: 0 }
+  );
+  JSONResponse(res, { data: doc }, 200);
+  mongoDB.mongoogeDisconnect();
 };
