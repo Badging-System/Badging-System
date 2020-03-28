@@ -164,14 +164,12 @@ const styles = {
 function MainContent(index) {
 
     if (index === 0) {
-        return (<React.Fragment>
-            <UserTeamMember />
-            <p /><p /><p /><p />
-
-            <React.Fragment>
-                < UserBadges />
-            </React.Fragment>
-        </React.Fragment>);
+        return (
+            < UserBadges />);
+    }
+    else if (index === 1) {
+        return (
+            <UserTeamMember />);
     }
 }
 

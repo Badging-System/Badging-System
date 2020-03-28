@@ -71,10 +71,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function FolderList() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
     const [openDialog, setDialog] = React.useState(false);
     const userID = '5e73f58f111ae80bfceaa35f';
-    const [progress, setProgress] = React.useState([]);
     const [currentValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
@@ -85,31 +83,27 @@ export default function FolderList() {
     useEffect(() => {
         async function fetchData() {
             let res = await getUserBadgesById(userID);
-            const handleSave = res => {
+            const handleSave = badge => {
                 //Handles the additions of new badges
                 let tempArray = [];
-                for (var i = 0; i < res.Badge.Tasks.length; i++) {
-                    tempArray.push([{id: res.Badge.Tasks[i]._id, desc: res.Badge.Tasks[i].Description}]);
+                for (var i = 0; i < badge.Badge.Tasks.length; i++) {
+                    tempArray.push([{id: badge.Badge.Tasks[i]._id, desc: badge.Badge.Tasks[i].Description}]);
                 }
 
                 badges.push({
-                    id: res.Badge._id,
-                    badge_name: res.Badge.Name,
-                    completed: res.Tasks_Completed.length,
+                    id: badge.Badge._id,
+                    badge_name: badge.Badge.Name,
+                    completed: badge.Tasks_Completed.length,
                     tasks: tempArray
                 });
 
                 setBadges(badges);
-                setOpen(false);
             };
             handleSave(res);
-            setProgress(res);
+            setSelectedValue(res);
         }
         fetchData();
     }, [badges, userID]);
-
-
-
 
     const openBadgeDetails = badge_info => {
         setSelectedValue(badge_info);

@@ -30,6 +30,7 @@ export default function SimpleTable() {
     const teamID = '5e73f58f111ae80bfceaa35c';
     const [team_members, setTeamMembers] = React.useState([]);
     const rows = [];
+
     React.useEffect(() => {
         const fetchData = async () => {
             const result = await getUserTeamMembersByID(teamID);

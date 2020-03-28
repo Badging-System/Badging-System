@@ -20,14 +20,9 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     const [tasks, setTasks] = React.useState(props.tasks);
     const classes = useStyles();
 
-
-
     useEffect(() => {
         setTasks(props.tasks);
     }, [props.tasks]);
-
-
-
 
     function renderRow(props) {
         const {index, style} = props;
