@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import API from "../../../utils/API";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
@@ -104,7 +104,6 @@ export default function FolderList() {
   };
 
   const openBadgeDetails = badge_info => {
-    console.log(badge_info);
     setSelectedValue(badge_info);
     setDialog(true);
   };

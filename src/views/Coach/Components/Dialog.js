@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
@@ -12,11 +12,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import PersonIcon from "@material-ui/icons/Person";
 import Typography from "@material-ui/core/Typography";
-import { blue } from "@material-ui/core/colors";
+import {blue} from "@material-ui/core/colors";
 import ProgressStepper from "./ProgressStepper";
-import AlertDialog from "./Alert"
+import AlertDialog from "./Alert";
 
-const members = [{ name: "Mitchell Roberts" }];
+const members = [{name: "Mitchell Roberts"}];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -38,16 +38,16 @@ const useStyles = makeStyles({
  */
 export default function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open} = props;
+  const {onClose, selectedValue, open} = props;
   const [openDialog, setDialog] = React.useState(false);
-
+  console.log(selectedValue);
   const handleClose = () => {
-    
+
     onClose(selectedValue);
   };
 
-  const handleAlert= (event) => {
-    if(event) {
+  const handleAlert = (event) => {
+    if (event) {
       setDialog(false);
       onClose(selectedValue, true);
     } else {
@@ -61,46 +61,46 @@ export default function SimpleDialog(props) {
 
   return (
     <div>
-    <AlertDialog
-      onClose={handleAlert}
-      open={openDialog}
-      message={"By deleting this badge all players will also lose any progress made towards the badge. Are you sure you want to do this?"}
-      title={"Delete " + selectedValue.badge_name + "?"}
-    />
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby="Badge Details"
-      scroll={"body"}
-      fullWidth={true}
-      maxWidth={"lg"}
-      open={open}
-    >
-      <DialogTitle id="simple-dialog-title">
-        {selectedValue.badge_name}
-      </DialogTitle>
-      <DialogContent>
+      <AlertDialog
+        onClose={handleAlert}
+        open={openDialog}
+        message={"By deleting this badge all players will also lose any progress made towards the badge. Are you sure you want to do this?"}
+        title={"Delete " + selectedValue.badge_name + "?"}
+      />
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="Badge Details"
+        scroll={"body"}
+        fullWidth={true}
+        maxWidth={"lg"}
+        open={open}
+      >
+        <DialogTitle id="simple-dialog-title">
+          {selectedValue.badge_name}
+        </DialogTitle>
+        <DialogContent>
 
-      <List>
-        {members.map((member, index) => (
-          <ListItem key={index}>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <PersonIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <Typography>{member.name}</Typography>
-            <ProgressStepper tasks={selectedValue.tasks} />
-          </ListItem>
-        ))}
-      </List>
-      </DialogContent>
+          <List>
+            {members.map((member, index) => (
+              <ListItem key={index}>
+                <ListItemAvatar>
+                  <Avatar className={classes.avatar}>
+                    <PersonIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <Typography>{member.name}</Typography>
+                <ProgressStepper tasks={selectedValue.tasks} />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
 
-      <DialogActions>
+        <DialogActions>
           <Button autoFocus onClick={openAlert} color="secondary">
             Delete Badge
           </Button>
         </DialogActions>
-    </Dialog>
+      </Dialog>
     </div>
 
   );

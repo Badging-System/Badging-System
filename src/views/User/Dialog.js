@@ -1,14 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import PersonIcon from "@material-ui/icons/Person";
 import Typography from "@material-ui/core/Typography";
@@ -38,10 +36,8 @@ const useStyles = makeStyles({
  */
 export default function SimpleDialog(props) {
   const classes = useStyles();
-  const {onClose, open} = props;
-  const [selectedValue, setSelectedValue] = React.useState(props.selectedValue);
+  const {onClose, selectedValue, open} = props;
   const [openDialog, setDialog] = React.useState(false);
-
   const handleClose = () => {
 
     onClose(selectedValue);
@@ -54,10 +50,6 @@ export default function SimpleDialog(props) {
     } else {
       setDialog(false);
     }
-  };
-
-  const openAlert = () => {
-    setDialog(true);
   };
 
   return (
@@ -90,7 +82,7 @@ export default function SimpleDialog(props) {
                   </Avatar>
                 </ListItemAvatar>
                 <Typography>{member.name}</Typography>
-                <ProgressStepper tasks={selectedValue.tasks} />
+                <ProgressStepper badgeID={selectedValue.id} tasks={selectedValue.tasks} tasks_completed={selectedValue.completed} />
               </ListItem>
             ))}
           </List>

@@ -7,7 +7,6 @@ import Link from '@material-ui/core/Link';
 import UserTeamMember from './UserTeamMembers';
 import UserBadges from './UserBadges';
 import UserHeader from '../../components/Header/UserHeader';
-import ProgressStepper from './ProgressStepper';
 
 
 function Copyright() {

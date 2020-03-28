@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import API from "../../utils/API";
+import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -9,7 +8,6 @@ import CardHeader from "../../components/Card/CardHeader";
 import CardIcon from "../../components/Card/CardIcon";
 import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
-import ProgressStepperMapper from "./ProgressStepperMapper";
 import Dialog from "./Dialog";
 import {
     getUserBadgesById,
@@ -68,7 +66,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: "10px !important",
         marginBottom: "0",
         wordWrap: "normal"
-    }
+    },
 }));
 
 export default function FolderList() {
@@ -77,9 +75,11 @@ export default function FolderList() {
     const [openDialog, setDialog] = React.useState(false);
     const userID = '5e73f58f111ae80bfceaa35f';
     const [progress, setProgress] = React.useState([]);
-    const [selectedValue, setSelectedValue] = React.useState({
+    const [currentValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
+        completed: 0,
+        tasks: [{id: null, desc: ""}]
     });
     const [badges, setBadges] = React.useState([]);
     useEffect(() => {
@@ -90,22 +90,23 @@ export default function FolderList() {
         }
         fetchData();
     }, [userID]);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleSave = badge => {
         //Handles the additions of new badges
+        let tempArray = [];
+        for (var i = 0; i < badge.Badge.Tasks.length; i++) {
+            tempArray.push([{id: badge.Badge.Tasks[i]._id, desc: badge.Badge.Tasks[i].Description}]);
+        }
+
         badges.push({
             id: badge.Badge._id,
-            badge_name: badge.Badge.Name
+            badge_name: badge.Badge.Name,
+            completed: badge.Tasks_Completed.length,
+            tasks: tempArray
         });
+
         setBadges(badges);
-        setOpen(true);
+        setOpen(false);
     };
 
     const openBadgeDetails = badge_info => {
@@ -133,11 +134,10 @@ export default function FolderList() {
     return (
         <div>
             <Dialog
-                selectedValue={selectedValue}
+                selectedValue={currentValue}
                 open={openDialog}
                 onClose={handleDialog}
             />
-            <ProgressStepperMapper progressData={progress} />
             <main className={classes.main}>
                 <Grid container className={classes.top} spacing={4}>
                     {badges.map((badge, index) => (

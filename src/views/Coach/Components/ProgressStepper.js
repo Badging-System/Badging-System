@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -27,17 +27,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   const classes = useStyles();
-  const [user, setUser] = React.useState(props.user);
-  const [progress, setProgress] = React.useState(props.progress);
+  // const [user, setUser] = React.useState(props.user);
+  // const [progress, setProgress] = React.useState(props.progress);
   const [activeStep, setActiveStep] = React.useState(0);
   const completed = getCompleted(props.tasks_completed);
-  const [skipped, setSkipped] = React.useState(new Set());
+  // const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps(props.tasks);
 
-  useEffect(() => {
-    setProgress(props.progress);
-    setUser(props.user);
-  }, [props.user, props.progress]);
+  // useEffect(() => {
+  //   setProgress(props.progress);
+  //   setUser(props.user);
+  // }, [props.user, props.progress]);
 
   function getSteps(tasks) {
     let strippedDescriptionString = [];
