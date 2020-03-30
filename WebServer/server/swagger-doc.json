@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "API Specification for the Badging System API"
   },
-  "host": "localhost:8080",
+  "host": "localhost:4000",
   "basePath": "/api/",
   "swagger": "2.0",
   "paths": {

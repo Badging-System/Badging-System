@@ -5,7 +5,7 @@ const axios = require('axios');
  */
 export const getTeams = (table_data = false) => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:8080/api/teams', { params: {
+        axios.get('http://localhost:4000/api/teams', { params: {
             table_data: table_data}
         })
         .then((response) => {
@@ -30,7 +30,7 @@ export const getTeams = (table_data = false) => {
 
 export const getTeamCount = () => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:8080/api/teams/count', {})
+        axios.get('http://localhost:4000/api/teams/count', {})
         .then((response) => {
             resolve(response.data.payload.data);
         })

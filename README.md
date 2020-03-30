@@ -21,7 +21,7 @@ Add a .env file to the Webserver folder and place the following environmental va
 
 ```
 ENV=DEV
-PORT=8080
+PORT=4000
 HOST=mongodb://mongo:27017/
 DBNAME=badging-system
 ```
