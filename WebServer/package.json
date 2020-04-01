@@ -6,7 +6,7 @@
     "start": "node server/bin/www",
     "test": "mocha --recursive 'server/test' --exit",
     "dev": "nodemon server/bin/www",
-    "seed": "node server/Seed/seed"
+    "seed": "node --no-deprecation -e 'require(\"./server/Seed/seed\").seedDB()'"
   },
   "dependencies": {
     "axios": "^0.19.0",

@@ -33,11 +33,6 @@ services:
             - app-network
         expose:
             - 3000
-    mongo:
-        image: mongo
-        restart: always
-        networks:
-            - app-network
     mongo-seed:
         build:
             context: ./mongo-seed
@@ -46,6 +41,15 @@ services:
             - mongo
         networks:
             - app-network
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - "27017:27017"
+        networks:
+            - app-network
+        expose:
+            - 27017
     nginx:
         depends_on: 
             - api
