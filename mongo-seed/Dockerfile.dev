@@ -1,7 +1,9 @@
-FROM mongo
+FROM node:alpine
 
-COPY ./data /
-COPY ./import.sh /import.sh
-RUN ["chmod", "+x", "/import.sh"]
+WORKDIR /var/www
 
-CMD /import.sh
+COPY ./package.json ./
+RUN npm install
+
+COPY . .
+CMD ["npm", "run", "seed"]

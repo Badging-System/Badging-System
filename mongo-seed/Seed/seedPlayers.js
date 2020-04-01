@@ -5,20 +5,16 @@ require("dotenv").config({
   path: path.join(__dirname, "../.env")
 });
 
-async function seedAdmins(insertData) {
-  console.log(process.env.HOST + process.env.DBNAME);
-  
+async function seedUsers(insertData) {
   await mongoose.connect(process.env.HOST + process.env.DBNAME, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
   //delete first
-  console.log("Connected");
-  
-  await User.deleteMany({Role: "Admin"});
+  await User.deleteMany({ Role: "User" });
   let result = await User.collection.insertMany(insertData);
   await mongoose.connection.close();
   return result;
 }
 
-module.exports.seedAdmins = seedAdmins;
+module.exports.seedUsers = seedUsers;
