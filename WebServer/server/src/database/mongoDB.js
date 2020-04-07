@@ -163,6 +163,30 @@ class Mongo {
     });
   }
 
+  getTopTeams(admin_id) {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        Team.find({ Admin: admin_id })
+          .populate("Coach")
+          .populate("Members")
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
+
   /**
    * This function returns data based off of username and/or email exists in database
    * @param {*} user [Represents model of users collection]
