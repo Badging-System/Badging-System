@@ -270,60 +270,23 @@ function Paperbase(props) {
   const [user_count, setUser_count] = React.useState(false);
   const [coach_count, setCoach_count] = React.useState(false);
   const [team_count, setTeam_count] = React.useState(false);
-  const [columns, set_columns] = React.useState();
+  const [team_data, set_teamData] = React.useState([]);
+  const teams_columns = [
+    "Rank",
+    "Team Name",
+    "Coach",
+    "Active Memebers",
+    "Badges Awarded",
+  ];
 
-    // settable_data(props.table_data);
+  const player_columns = [
+    "Rank",
+    "User Name",
+    "Team Name",
+    "Coach",
+    "Badges Awarded",
+  ];
 
-  const team_data = {
-    header: "",
-    body: {
-      columns: [
-        "Rank",
-        "Team Name",
-        "Coach",
-        "Active Memebers",
-        "Badges Awarded",
-      ],
-      rowdata: [
-        {
-          rank: "1",
-          team: "Paw Patrol",
-          coach: "Alex Zhou",
-          active_user: 5,
-          badges_awarded: 60,
-        },
-        {
-          rank: "2",
-          team: "Power Puff Girls",
-          coach: "Garuav Deshpande",
-          active_user: 15,
-          badges_awarded: 50,
-        },
-        {
-          rank: "3",
-          team: "Edward",
-          coach: "	David Maitha",
-          active_user: 10,
-          badges_awarded: 21,
-        },
-        {
-          rank: "4",
-          team: "Power Rangers",
-          coach: "Mitchell Roberts",
-          active_user: 5,
-          badges_awarded: 7,
-        },
-        {
-          rank: "5",
-          team: "Badger",
-          coach: "John Doe",
-          active_user: 1,
-          badges_awarded: 5,
-        },
-      ],
-    },
-    footer: "",
-  };
 
   const player_data = {
     header: "",
@@ -396,75 +359,25 @@ function Paperbase(props) {
       console.log(err);
     });
 
-  getTopTeams()
-    .then((table) => {
-      console.log(table);
-      let returnCells = null;
-      if (table.columns) {
-        returnCells = table.columns.map((val, index) => (
-          <TableCell key={index}> {val} </TableCell>
-        ));
-        table.columns = returnCells;
-      }
-      console.log(table);
-
-      if (returnCells) {
-        set_columns(returnCells);
-        console.log(returnCells);
-        
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const getColumns = () => {
-    let returnCells = null;
-    getTopTeams()
+  useEffect(() => {    
+    getTopTeams(true, "5e8f5e47a4d5940018d5f2e1")
       .then((table) => {
-        console.log(table);
-        
-        if (table.columns) {
-          returnCells = table.columns.map((val, index) => (
-            <TableCell key={index}> {val} </TableCell>
-          ));
-        }
-        console.log(returnCells);
-        
-        if (table.columns) {
-          return returnCells;
-        } else {
-          return;
-        }
+        set_teamData(table.data);
       })
       .catch((err) => {
         console.log(err);
       });
-      console.log(returnCells);
-
-  };
-
-  const getDataRow = (table) => {
-    if (table.body.rowdata) {
-      return table.body.rowdata.map((elm, index) => (
-        <TableRow key={index}>
-          {Object.keys(elm).map((key, index) => (
-            <TableCell key={index}> {elm[key]} </TableCell>
-          ))}
-        </TableRow>
-      ));
-    } else {
-      return;
-    }
-  };
+    // Update the document title using the browser API
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
+        ``
         <CssBaseline />
         <nav className={classes.drawer}>
           <Hidden smUp implementation="js">
@@ -553,9 +466,21 @@ function Paperbase(props) {
                     >
                       <Table aria-label="simple table">
                         <TableHead>
-                          <TableRow>{getColumns()}</TableRow>
+                          <TableRow>
+                            {teams_columns.map((val, index) => (
+                              <TableCell key={index}> {val} </TableCell>
+                            ))}
+                          </TableRow>
                         </TableHead>
-                        <TableBody>{getDataRow(team_data)}</TableBody>
+                        <TableBody>
+                          {team_data.map((elm, index) => (
+                            <TableRow key={index}>
+                              {Object.keys(elm).map((key, index) => (
+                                <TableCell key={index}> {elm[key]} </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}
+                        </TableBody>
                       </Table>
                     </TableContainer>
                   </CardBody>
@@ -581,9 +506,13 @@ function Paperbase(props) {
                     >
                       <Table aria-label="simple table">
                         <TableHead>
-                          <TableRow>{table_data.columns}</TableRow>
+                          <TableRow>
+                            {player_columns.map((val, index) => (
+                              <TableCell key={index}> {val} </TableCell>
+                            ))}
+                          </TableRow>
                         </TableHead>
-                        <TableBody>{getDataRow(player_data)}</TableBody>
+                        <TableBody>{}</TableBody>
                       </Table>
                     </TableContainer>
                   </CardBody>

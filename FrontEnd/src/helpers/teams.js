@@ -37,6 +37,8 @@ export const getTopTeams = (table_data = false, id) => {
             table_data: table_data, admin_id: id}
         })
         .then((response) => {
+            console.log(response);
+            
             const results = {
                 data: response.data.payload.data,
                 columns: [

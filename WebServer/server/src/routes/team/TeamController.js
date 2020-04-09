@@ -113,13 +113,19 @@ exports.addTeamMember = async (req, res) => {
   );
 };
 
-exports.topPerforming = async (req, res) => {
+exports.topPerforming = async (req, res) => {  
+  console.log("Requested");
+  
   mongoDB
     .getTopTeams(req.query.admin_id)
     .then((data) => {
-      if (req.query.table_data) {
+      console.log(data);
+      
+      if (req.query.table_data) {        
         table_format_topTeams(data)
           .then((formatted_data) => {
+            console.log(formatted_data);
+            
             //format the data to table data if requested
             JSONResponse(
               res,
