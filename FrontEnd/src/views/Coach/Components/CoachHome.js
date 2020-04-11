@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import API from "../../../utils/API";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import SpringModal from "./Modal";
 import Grid from "@material-ui/core/Grid";
 import GridItem from "../../../components/Grid/GridItem";
 import Card from "../../../components/Card/Card";
@@ -10,7 +9,9 @@ import CardHeader from "../../../components/Card/CardHeader";
 import CardIcon from "../../../components/Card/CardIcon";
 import CardBody from "../../../components/Card/CardBody";
 import CardFooter from "../../../components/Card/CardFooter";
-import Dialog from "./Dialog";
+import Dialog from "./DetailsDialog";
+import AssignDialog from "./AssignDialog";
+import BadgeForm from "./BadgeForm";
 
 const title = {
   color: "#3C4858",
@@ -42,7 +43,8 @@ const useStyles = makeStyles(theme => ({
   },
   top: {
     flexGrow: 3,
-    display: "flex"
+    display: "flex",
+    marginTop: "100px"
     // minHeight: '30vh',
   },
   cardTitle: {
@@ -70,40 +72,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function FolderList() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [openDialog, setDialog] = React.useState(false);
-  //add back setter for selectedValue, setSelectedValue
-  const selectedValue = React.useState({
-    id: null,
-    badge_name: "",
-    desc: "",
-    tasks: [{ id: null, desc: "", tableData: {} }]
-  });
+  const [refresh, setRefresh] = React.useState(0);
+  const [openDetailsDialog, setDialog] = React.useState(false);
+  const [openAssignDialog, setAssignDialog] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState({});
   const [badges, setBadges] = React.useState([]);
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSave = badge => {
+  const handleSave = async badge => {
     //Handles the additions of new badges
-    badges.push({
-      id: badge.id,
-      badge_name: badge.badge_name,
-      desc: badge.desc,
-      tasks: badge.table_data
-    });
-    setBadges(badges);
-    setOpen(false);
+    let newBadge = {
+      Name: badge.badge_name,
+      Description: badge.Description,
+      Tasks: badge.table_data,
+      Recipients: [],
+      Team: "5e82afe9bef80bbc899c7f55"
+    };
+    let res = await API.post("/badges/insert", newBadge);
+    let newBadges = badges;
+    newBadges.push(res.data.payload.data[0]);
+    setBadges(newBadges);
+    setRefresh(refresh + 1);
   };
 
-  //   const openBadgeDetails = badge_info => {
-  //     setSelectedValue(badge_info);
-  //     setDialog(true);
-  //   };
+  const openSelectedDialog = (dialog, badge_info) => {
+    setSelectedValue(badge_info);
+    dialog ? setDialog(true) : setAssignDialog(true);
+  };
 
   const handleDialog = (item, event) => {
     if (event) {
@@ -112,7 +106,6 @@ export default function FolderList() {
         if (item.id === badges[index].id) {
           let updated_badges = badges;
           updated_badges.splice(index, 1);
-
           setBadges(updated_badges);
         }
       }
@@ -120,35 +113,32 @@ export default function FolderList() {
     setDialog(false);
   };
 
+  const handleAssignDialog = () => {
+    setAssignDialog(false);
+  };
+
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/");
+      let res = await API.get("/badges/5e82afe9bef80bbc899c7f55");
       setBadges(res.data.payload.data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <div>
-      <Button
-        className={classes.buttonStyle}
-        variant='contained'
-        color='primary'
-        onClick={handleOpen}
-      >
-        Create Badge
-      </Button>
-      <SpringModal
-        open={open}
-        handleClose={handleClose}
-        handleSave={handleSave}
-      />
       <Dialog
         selectedValue={selectedValue}
-        open={openDialog}
+        open={openDetailsDialog}
         onClose={handleDialog}
       />
+      <AssignDialog
+        open={openAssignDialog}
+        onClose={handleAssignDialog}
+        selectedBadge={selectedValue}
+      />
       <main className={classes.main}>
+        <BadgeForm handleSave={handleSave} />
         <Grid container className={classes.top} spacing={4}>
           {badges.map((badge, index) => (
             <GridItem key={index} xs={12} sm={3}>
@@ -166,9 +156,17 @@ export default function FolderList() {
                     className={classes.badgeBtn}
                     variant='contained'
                     color='secondary'
-                    // onClick={() => openBadgeDetails(badge)}
+                    onClick={() => openSelectedDialog(true, badge)}
                   >
                     View Details
+                  </Button>
+                  <Button
+                    className={classes.badgeBtn}
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => openSelectedDialog(false, badge)}
+                  >
+                    Assign Badge
                   </Button>
                 </CardFooter>
               </Card>
