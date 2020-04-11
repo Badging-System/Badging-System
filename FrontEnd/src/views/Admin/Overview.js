@@ -1,9 +1,10 @@
 import React from "react";
+import {useEffect} from "react";
 import PropTypes from "prop-types";
 import {
   createMuiTheme,
   ThemeProvider,
-  withStyles
+  withStyles,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Hidden from "@material-ui/core/Hidden";
@@ -31,12 +32,11 @@ import {
   PersonOutline,
   SupervisedUserCircle,
   TurnedIn,
-  GroupWork
+  GroupWork,
 } from "@material-ui/icons";
 
 import {getUserCount, getCoachCount} from "../../helpers/users";
-import {getTeamCount} from "../../helpers/teams";
-
+import {getTeamCount, getTopTeams} from "../../helpers/teams";
 
 import Header from "../../components/Header/AdminHeader";
 
@@ -58,29 +58,29 @@ let theme = createMuiTheme({
     primary: {
       light: "#63ccff",
       main: "#009be5",
-      dark: "#006db3"
-    }
+      dark: "#006db3",
+    },
   },
   typography: {
     h5: {
       fontWeight: 500,
       fontSize: 15,
-      letterSpacing: 0.5
-    }
+      letterSpacing: 0.5,
+    },
   },
   shape: {
-    borderRadius: 8
+    borderRadius: 8,
   },
   props: {
     MuiTab: {
-      disableRipple: true
-    }
+      disableRipple: true,
+    },
   },
   mixins: {
     toolbar: {
-      minHeight: 48
-    }
-  }
+      minHeight: 48,
+    },
+  },
 });
 
 theme = {
@@ -88,30 +88,30 @@ theme = {
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: "#002C40"
-      }
+        backgroundColor: "#002C40",
+      },
     },
     MuiButton: {
       label: {
-        textTransform: "none"
+        textTransform: "none",
       },
       contained: {
         boxShadow: "none",
         "&:active": {
-          boxShadow: "none"
-        }
-      }
+          boxShadow: "none",
+        },
+      },
     },
     MuiTabs: {
       root: {
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
       },
       indicator: {
         height: 3,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
-        backgroundColor: theme.palette.common.white
-      }
+        backgroundColor: theme.palette.common.white,
+      },
     },
     MuiTab: {
       root: {
@@ -121,46 +121,46 @@ theme = {
         padding: 0,
         [theme.breakpoints.up("md")]: {
           padding: 0,
-          minWidth: 0
-        }
-      }
+          minWidth: 0,
+        },
+      },
     },
     MuiIconButton: {
       root: {
-        padding: theme.spacing(1)
-      }
+        padding: theme.spacing(1),
+      },
     },
     MuiTooltip: {
       tooltip: {
-        borderRadius: 4
-      }
+        borderRadius: 4,
+      },
     },
     MuiDivider: {
       root: {
-        backgroundColor: "#404854"
-      }
+        backgroundColor: "#404854",
+      },
     },
     MuiListItemText: {
       primary: {
-        fontWeight: theme.typography.fontWeightMedium
-      }
+        fontWeight: theme.typography.fontWeightMedium,
+      },
     },
     MuiListItemIcon: {
       root: {
         color: "inherit",
         marginRight: 0,
         "& svg": {
-          fontSize: 20
-        }
-      }
+          fontSize: 20,
+        },
+      },
     },
     MuiAvatar: {
       root: {
         width: 32,
-        height: 32
-      }
-    }
-  }
+        height: 32,
+      },
+    },
+  },
 };
 
 const drawerWidth = 256;
@@ -177,8 +177,8 @@ const title = {
   "& small": {
     color: "#777",
     fontWeight: "400",
-    lineHeight: "1"
-  }
+    lineHeight: "1",
+  },
 };
 
 const styles = {
@@ -186,46 +186,46 @@ const styles = {
     flexGrow: 1,
     display: "flex",
     minHeight: "100vh",
-    "justify-content": "center"
+    "justify-content": "center",
   },
   top: {
     flexGrow: 3,
-    display: "flex"
+    display: "flex",
     // minHeight: '30vh',
   },
   bottom: {
     flexGrow: 1,
     display: "flex",
-    "align-items": "stretch"
+    "align-items": "stretch",
     // minHeight: '50vh',
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
   paper: {
     height: "100%",
     width: "100%",
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   app: {
     flex: 1,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   main: {
     flex: 1,
     padding: theme.spacing(6, 4),
-    background: "#eaeff1"
+    background: "#eaeff1",
   },
   dataList: {
-    maxHeight: "250px"
+    maxHeight: "250px",
   },
   footer: {
     padding: theme.spacing(2),
-    background: "#eaeff1"
+    background: "#eaeff1",
   },
   title: {
     color: "#3C4858",
@@ -238,8 +238,8 @@ const styles = {
     "& small": {
       color: "#777",
       fontWeight: "400",
-      lineHeight: "1"
-    }
+      lineHeight: "1",
+    },
   },
   cardTitle: {
     ...title,
@@ -250,8 +250,8 @@ const styles = {
       ...title,
       marginTop: ".625rem",
       marginBottom: "0.75rem",
-      minHeight: "auto"
-    }
+      minHeight: "auto",
+    },
   },
   cardCategory: {
     color: "#999",
@@ -260,8 +260,8 @@ const styles = {
     marginTop: "0",
     paddingTop: "10px !important",
     marginBottom: "0",
-    wordWrap: "normal"
-  }
+    wordWrap: "normal",
+  },
 };
 
 function Paperbase(props) {
@@ -270,57 +270,23 @@ function Paperbase(props) {
   const [user_count, setUser_count] = React.useState(false);
   const [coach_count, setCoach_count] = React.useState(false);
   const [team_count, setTeam_count] = React.useState(false);
+  const [team_data, set_teamData] = React.useState([]);
+  const teams_columns = [
+    "Rank",
+    "Team Name",
+    "Coach",
+    "Active Memebers",
+    "Badges Awarded",
+  ];
 
-  const team_data = {
-    header: "",
-    body: {
-      columns: [
-        "Rank",
-        "Team Name",
-        "Coach",
-        "Active Memebers",
-        "Badges Awarded"
-      ],
-      rowdata: [
-        {
-          rank: "1",
-          team: "Paw Patrol",
-          coach: "Alex Zhou",
-          active_user: 5,
-          badges_awarded: 60
-        },
-        {
-          rank: "2",
-          team: "Power Puff Girls",
-          coach: "Garuav Deshpande",
-          active_user: 15,
-          badges_awarded: 50
-        },
-        {
-          rank: "3",
-          team: "Edward",
-          coach: "	David Maitha",
-          active_user: 10,
-          badges_awarded: 21
-        },
-        {
-          rank: "4",
-          team: "Power Rangers",
-          coach: "Mitchell Roberts",
-          active_user: 5,
-          badges_awarded: 7
-        },
-        {
-          rank: "5",
-          team: "Badger",
-          coach: "John Doe",
-          active_user: 1,
-          badges_awarded: 5
-        }
-      ]
-    },
-    footer: ""
-  };
+  const player_columns = [
+    "Rank",
+    "User Name",
+    "Team Name",
+    "Coach",
+    "Badges Awarded",
+  ];
+
 
   const player_data = {
     header: "",
@@ -332,64 +298,64 @@ function Paperbase(props) {
           name: "Ryan Tonthat",
           team: "Power Puff Girls",
           coach: "Garuav Deshpande",
-          badges_awarded: 30
+          badges_awarded: 30,
         },
         {
           rank: "2",
           name: "David Burr",
           team: "Power Puff Girls",
           coach: "Garuav Deshpande",
-          badges_awarded: 29
+          badges_awarded: 29,
         },
         {
           rank: "3",
           name: "	Mitchell Roberts",
           team: "Paw Patrol",
           coach: "Alex Zhou",
-          badges_awarded: 23
+          badges_awarded: 23,
         },
         {
           rank: "4",
           name: "John Snow",
           team: "Edward",
           coach: "David Maitha",
-          badges_awarded: 10
+          badges_awarded: 10,
         },
         {
           rank: "5",
           name: "David Maitha",
           team: "Power Puff Girls",
           coach: "Garuav Deshpande",
-          badges_awarded: 2
-        }
-      ]
+          badges_awarded: 2,
+        },
+      ],
     },
-    footer: ""
+    footer: "",
   };
   //get the user count
   getUserCount()
-    .then(count => {
+    .then((count) => {
       setUser_count(count);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 
   //get the coach count
   getCoachCount()
-    .then(count => {
+    .then((count) => {
       setCoach_count(count);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 
   //get the team count
   getTeamCount()
-    .then(count => {
+    .then((count) => {
       setTeam_count(count);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 
@@ -397,38 +363,21 @@ function Paperbase(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const getColumns = table => {
-    let returnCells = null;
-    if (table.body.columns) {
-      returnCells = team_data.body.columns.map((val, index) => (
-        <TableCell key={index}> {val} </TableCell>
-      ));
-    }
-
-    if (table.body.columns) {
-      return returnCells;
-    } else {
-      return;
-    }
-  };
-
-  const getDataRow = table => {
-    if (table.body.rowdata) {
-      return table.body.rowdata.map((elm, index) => (
-        <TableRow key={index}>
-          {Object.keys(elm).map((key, index) => (
-            <TableCell key={index}> {elm[key]} </TableCell>
-          ))}
-        </TableRow>
-      ));
-    } else {
-      return;
-    }
-  };
+  useEffect(() => {    
+    getTopTeams(true, "5e8f5e47a4d5940018d5f2e1")
+      .then((table) => {
+        set_teamData(table.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // Update the document title using the browser API
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
+        ``
         <CssBaseline />
         <nav className={classes.drawer}>
           <Hidden smUp implementation="js">
@@ -517,9 +466,21 @@ function Paperbase(props) {
                     >
                       <Table aria-label="simple table">
                         <TableHead>
-                          <TableRow>{getColumns(team_data)}</TableRow>
+                          <TableRow>
+                            {teams_columns.map((val, index) => (
+                              <TableCell key={index}> {val} </TableCell>
+                            ))}
+                          </TableRow>
                         </TableHead>
-                        <TableBody>{getDataRow(team_data)}</TableBody>
+                        <TableBody>
+                          {team_data.map((elm, index) => (
+                            <TableRow key={index}>
+                              {Object.keys(elm).map((key, index) => (
+                                <TableCell key={index}> {elm[key]} </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}
+                        </TableBody>
                       </Table>
                     </TableContainer>
                   </CardBody>
@@ -545,9 +506,13 @@ function Paperbase(props) {
                     >
                       <Table aria-label="simple table">
                         <TableHead>
-                          <TableRow>{getColumns(player_data)}</TableRow>
+                          <TableRow>
+                            {player_columns.map((val, index) => (
+                              <TableCell key={index}> {val} </TableCell>
+                            ))}
+                          </TableRow>
                         </TableHead>
-                        <TableBody>{getDataRow(player_data)}</TableBody>
+                        <TableBody>{}</TableBody>
                       </Table>
                     </TableContainer>
                   </CardBody>
@@ -570,7 +535,7 @@ function Paperbase(props) {
 }
 
 Paperbase.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Paperbase);

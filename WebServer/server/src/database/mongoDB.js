@@ -92,10 +92,6 @@ class Mongo {
    * @return {Promise}
    */
   async getCollectionData(model, filter = {}) {
-    console.log("HERE");
-    console.log(process.env.HOST);
-    console.log(process.env.DBNAME);
-
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -149,6 +145,32 @@ class Mongo {
         Team.find({})
           .populate("Coach")
           .populate("Members")
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
+
+  getTopTeams(admin_id) {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        Team.find({ Admin: admin_id })
+          .populate("Coach")
+          .populate("Badges") 
+          .populate("Members")
+          .sort([['Badges', 'descending']])
           .exec((err, team) => {
             if (err) {
               reject(err);
