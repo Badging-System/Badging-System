@@ -24,13 +24,13 @@ export default function SimpleDialog(props) {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e82afe9bef80bbc899c7f54");
+      let res = await API.get("/users/coach/5e924aea0732230011c755e1");
       setAssignees(res.data.payload.data.Members);
     }
     fetchData();
   }, []);
 
-  const handleAlert = event => {
+  const handleAlert = (event) => {
     if (event) {
       setDialog(false);
       onClose(selectedValue, true);
@@ -39,21 +39,17 @@ export default function SimpleDialog(props) {
     }
   };
 
-  const openAlert = () => {
-    setDialog(true);
-  };
-
   const handleAssign = async () => {
     let request = {
       Badge: props.selectedBadge._id,
       Users: assigned,
-      Team: assigned[0].Team
+      Team: assigned[0].Team,
     };
     let res = await API.post("/badges/assign", request);
     handleClose();
   };
 
-  const addAssignees = user => {
+  const addAssignees = (user) => {
     assigned.push(user);
   };
 
@@ -97,5 +93,5 @@ export default function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.object.isRequired
+  selectedValue: PropTypes.object.isRequired,
 };

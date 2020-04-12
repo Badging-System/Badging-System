@@ -12,25 +12,25 @@ export default function ManageTeam() {
       {
         field: "roles",
         title: "Roles",
-        lookup: { Admin: "Admin", Coach: "Coach", User: "User" }
+        lookup: { Admin: "Admin", Coach: "Coach", User: "User" },
       },
       { field: "createdOn", title: "Created On", editable: "false" },
       { field: "lastActivity", title: "Last Activity", editable: "false" },
       {
         field: "active",
         title: "Active",
-        lookup: { true: "true", false: "false" }
-      }
+        lookup: { true: "true", false: "false" },
+      },
     ],
-    data: []
+    data: [],
   });
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e82afe9bef80bbc899c7f54");
+      let res = await API.get("/users/coach/5e924aea0732230011c755e1");
       setData({
         columns: table_data.columns,
-        data: TableMapper(res.data.payload.data.Members)
+        data: TableMapper(res.data.payload.data.Members),
       });
     }
     fetchData();

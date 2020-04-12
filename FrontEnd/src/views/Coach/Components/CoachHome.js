@@ -25,26 +25,26 @@ const title = {
   "& small": {
     color: "#777",
     fontWeight: "400",
-    lineHeight: "1"
-  }
+    lineHeight: "1",
+  },
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: "100%",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   buttonStyle: {
-    marginBottom: "3em"
+    marginBottom: "3em",
   },
   badgeBtn: {
-    margin: "auto"
+    margin: "auto",
   },
   top: {
     flexGrow: 3,
     display: "flex",
-    marginTop: "100px"
+    marginTop: "100px",
     // minHeight: '30vh',
   },
   cardTitle: {
@@ -56,8 +56,8 @@ const useStyles = makeStyles(theme => ({
       ...title,
       marginTop: ".625rem",
       marginBottom: "0.75rem",
-      minHeight: "auto"
-    }
+      minHeight: "auto",
+    },
   },
   badgeName: {
     color: "#FFFF",
@@ -66,8 +66,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: "0",
     paddingTop: "10px !important",
     marginBottom: "0",
-    wordWrap: "normal"
-  }
+    wordWrap: "normal",
+  },
 }));
 
 export default function FolderList() {
@@ -78,14 +78,14 @@ export default function FolderList() {
   const [selectedValue, setSelectedValue] = React.useState({});
   const [badges, setBadges] = React.useState([]);
 
-  const handleSave = async badge => {
+  const handleSave = async (badge) => {
     //Handles the additions of new badges
     let newBadge = {
       Name: badge.badge_name,
       Description: badge.Description,
       Tasks: badge.table_data,
       Recipients: [],
-      Team: "5e82afe9bef80bbc899c7f55"
+      Team: "5e924aea0732230011c755e2",
     };
     let res = await API.post("/badges/insert", newBadge);
     let newBadges = badges;
@@ -119,7 +119,7 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e82afe9bef80bbc899c7f55");
+      let res = await API.get("/badges/5e924aea0732230011c755e2");
       setBadges(res.data.payload.data);
     }
     fetchData();

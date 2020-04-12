@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import { Button } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  }
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 export default function SelectedListItem(props) {
@@ -32,7 +30,7 @@ export default function SelectedListItem(props) {
               key={index}
               button
               selected={selectedIndex === index}
-              onClick={event => handleListItemClick(event, index)}
+              onClick={(event) => handleListItemClick(event, index)}
             >
               <ListItemText primary={user.Username} />
 
