@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 export default function FolderList() {
     const classes = useStyles();
     const [openDialog, setDialog] = React.useState(false);
-    const userID = '5e73f58f111ae80bfceaa35f';
+    const userID = '5e92654cdb1e96001109ea38';
     const [currentValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
@@ -90,15 +90,20 @@ export default function FolderList() {
                     tempArray.push([{id: badge.Badge.Tasks[i]._id, desc: badge.Badge.Tasks[i].Description}]);
                 }
 
+                let tasksArray = singleArray(tempArray);
                 badges.push({
                     id: badge.Badge._id,
                     badge_name: badge.Badge.Name,
                     completed: badge.Tasks_Completed.length,
-                    tasks: tempArray
+                    tasks: tasksArray
                 });
+
+
+
 
                 setBadges(badges);
             };
+
             handleSave(res);
             setSelectedValue(res);
         }
@@ -108,6 +113,18 @@ export default function FolderList() {
     const openBadgeDetails = badge_info => {
         setSelectedValue(badge_info);
         setDialog(true);
+    };
+
+    const singleArray = doubleArray => {
+        var convertedArray = [];
+        if (doubleArray !== undefined) {
+            for (var i = 0; i < doubleArray.length; i++) {
+                convertedArray = convertedArray.concat(doubleArray[i]);
+            }
+            // console.log(convertedArray);
+            return convertedArray;
+        }
+
     };
 
     const handleDialog = (item, event) => {
@@ -145,7 +162,7 @@ export default function FolderList() {
                                     </CardIcon>
                                 </CardHeader>
                                 <CardBody>
-                                    <p>Badge Description</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere morbi leo urna molestie.</p>
                                 </CardBody>
                                 <CardFooter chart>
                                     <Button
