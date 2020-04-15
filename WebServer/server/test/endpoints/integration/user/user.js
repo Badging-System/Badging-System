@@ -29,56 +29,6 @@ describe("Integration Testing", function () {
         .catch(done);
     });
 
-    /* This tests that the user cannot retrieve its team name based off of username due to incorrect username inputted */
-    it("Should fail retrieving user team name based off of the username due to incorrect username inputted", function (done) {
-      this.timeout(15000);
-      request(`http://api:8080/users/getUserTeamName/testerror`)
-        .then(response => {
-          let parsedRes = JSON.parse(response);
-          expect(parsedRes.status).to.equal(400);
-          done();
-        })
-        .catch(done);
-    });
-
-    /* This tests that the user can retrieve its team name based off of username due to correct username inputted */
-    it("Should succesfully retrieve user team name based off of the username due to correct username inputted", function (done) {
-      this.timeout(15000);
-      request(`http://api:8080/users/getUserTeamName/gdeshpande`)
-        .then(response => {
-          let parsedRes = JSON.parse(response);
-          expect(parsedRes.status).to.equal(200);
-          done();
-        })
-        .catch(done);
-    });
-
-    /* This test should fail to retrieve team members by username due to the username being invalid*/
-    it("Should fail to retrieve team members by username due to an invalid username given", function (done) {
-      this.timeout(15000);
-      request(`http://api:8080/users/getUserTeamMembers/invalidname`)
-        .then(response => {
-          let parsedRes = JSON.parse(response);
-          expect(parsedRes.status).to.equal(400);
-          done();
-        })
-        .catch(done);
-    });
-
-    /* This test should pass for retrieving team members by username due to the username being valid*/
-    it("Should pass to retrieve team members by username due to a valid username given", function (done) {
-      this.timeout(15000);
-      request(`http://api:8080/users/getUserTeamMembers/gdeshpande`)
-        .then(response => {
-          let parsedRes = JSON.parse(response);
-          expect(parsedRes.status).to.equal(200);
-          done();
-        })
-        .catch(done);
-
-    });
-
-
     /* This test the user endpoint testing if the api sends the correct response if it fails */
     it("should fail posting a user to the database", function (done) {
       this.timeout(15000);
@@ -134,12 +84,12 @@ describe("Integration Testing", function () {
 
       axios
         .post(`http://api:8080/users/adduser`, {
-          Username: "dbooker",
-          First_name: "devin",
-          Last_name: "booker",
+          Username: "skerr",
+          First_name: "steve",
+          Last_name: "ker",
           Role: "User",
           Active: false,
-          Email: "dbook@suns.com"
+          Email: "skerr@hotmail.com"
         })
         .then(function (response) {
           expect(response.data.status).to.equal(201);
@@ -364,28 +314,28 @@ describe("Integration Testing", function () {
       axios
         .post(`http://api:8080/users/addedusers`, [
           {
-            Username: "dbook",
-            First_name: "Devin",
-            Last_name: "Booker",
+            Username: "mtyson",
+            First_name: "Mike",
+            Last_name: "Tyson",
             Role: "User",
             Active: false,
-            Email: "dbook@gmail.com"
+            Email: "mtyson@gmail.com"
           },
           {
-            Username: "dayton",
-            First_name: "Deandre",
-            Last_name: "Ayton",
+            Username: "mali",
+            First_name: "Muhammad",
+            Last_name: "Ali",
             Role: "User",
             Active: false,
-            Email: "dayton@suns.com"
+            Email: "mali@yahoo.com"
           },
           {
-            Username: "mwilliams",
-            First_name: "Monty",
-            Last_name: "Williams",
+            Username: "fmayweather",
+            First_name: "Floyd",
+            Last_name: "Mayweather",
             Role: "User",
             Active: false,
-            Email: "mwilliams@suns.com"
+            Email: "fmayweather@gmail.com"
           }
         ])
         .then(function (response) {
@@ -397,6 +347,80 @@ describe("Integration Testing", function () {
           done();
         });
     });
+
+    /* This tests that the user can retrieve its team name based off of username due to correct username inputted */
+    it("Should succesfully retrieve user team name based off of the username due to correct username inputted", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserTeamName/gdeshpande`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(200);
+          done();
+        })
+        .catch(done);
+    });
+
+    /* This tests that the user cannot retrieve its team name based off of username due to incorrect username inputted */
+    it("Should fail retrieving user team name based off of the username due to incorrect username inputted", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserTeamName/testerror`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(400);
+          done();
+        })
+        .catch(done);
+    });
+
+    /* This test should pass for retrieving team members by username due to the username being valid*/
+    it("Should pass to retrieve team members by username due to a valid username given", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserTeamMembers/gdeshpande`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(200);
+          done();
+        })
+        .catch(done);
+
+    });
+
+    /* This test should fail to retrieve team members by username due to the username being invalid*/
+    it("Should fail to retrieve team members by username due to an invalid username given", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserTeamMembers/invalidname`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(400);
+          done();
+        })
+        .catch(done);
+    });
+
+    /* This test should succesfully retrieve a specific users badge based off of their username*/
+    it("Should succesfully retrieve user badges by username due to a valid username given", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserBadges/gdeshpande`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(200);
+          done();
+        })
+        .catch(done);
+    });
+
+    /* This test should fail to retrieve a specific users badge based off of their username*/
+    it("Should fail to retrieve user badges by username due to an invalid username given", function (done) {
+      this.timeout(15000);
+      request(`http://api:8080/users/getUserBadges/invalidname`)
+        .then(response => {
+          let parsedRes = JSON.parse(response);
+          expect(parsedRes.status).to.equal(400);
+          done();
+        })
+        .catch(done);
+    });
+
 
     //Only run this test if the enviroment is DEV
     (process.env.ENV === "DEV" ? it : it.skip)(
@@ -454,9 +478,5 @@ describe("Integration Testing", function () {
         });
       }
     );
-  });
-  //After the test completes close the server
-  after(done => {
-    server.close(done);
   });
 });

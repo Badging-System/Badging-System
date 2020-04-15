@@ -314,24 +314,31 @@ exports.getUserTeamMembers = async (req, res) => {
 exports.getUserBadges = async (req, res) => {
   let username = req.params.username;
   let user = await mongoDB.findOne(User, {Username: username});
-  mongoDB.mongooseConnect();
-  BadgeUserJoin.findOne({User: user[0]._id}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
-    .populate("Badge")
-    .exec((err, badgeObj) => {
-      if (err) {
-        console.log(err);
-      } else {
-        mongoDB.mongoogeDisconnect();
-        JSONResponse(
-          res,
-          {
-            data: badgeObj
-          },
-          200
-        );
-      }
-    });
-
+  if (user.length === 0) {
+    JSONResponse(res, {
+      message: "Username does not exist"
+    },
+      400
+    );
+  } else {
+    mongoDB.mongooseConnect();
+    BadgeUserJoin.findOne({User: user[0]._id}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
+      .populate("Badge")
+      .exec((err, badgeObj) => {
+        if (err) {
+          console.log(err);
+        } else {
+          mongoDB.mongoogeDisconnect();
+          JSONResponse(
+            res,
+            {
+              data: badgeObj
+            },
+            200
+          );
+        }
+      });
+  }
 };
 
 /**
