@@ -311,10 +311,11 @@ exports.getUserTeamMembers = async (req, res) => {
   }
 };
 
-exports.getUserBadgesByID = async (req, res) => {
-  let userID = req.params.id;
+exports.getUserBadges = async (req, res) => {
+  let username = req.params.username;
+  let user = await mongoDB.findOne(User, {Username: username});
   mongoDB.mongooseConnect();
-  BadgeUserJoin.findOne({User: userID}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
+  BadgeUserJoin.findOne({User: user[0]._id}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
     .populate("Badge")
     .exec((err, badgeObj) => {
       if (err) {

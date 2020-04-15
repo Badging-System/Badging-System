@@ -10,7 +10,7 @@ import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
 import Dialog from "./Dialog";
 import {
-    getUserBadgesById,
+    getUserBadges,
 } from "../../helpers/users";
 
 const title = {
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 export default function FolderList() {
     const classes = useStyles();
     const [openDialog, setDialog] = React.useState(false);
-    const userID = '5e92654cdb1e96001109ea38';
+    const username = 'bobbo';
     const [currentValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
@@ -82,7 +82,7 @@ export default function FolderList() {
     const [badges, setBadges] = React.useState([]);
     useEffect(() => {
         async function fetchData() {
-            let res = await getUserBadgesById(userID);
+            let res = await getUserBadges(username);
             const handleSave = badge => {
                 //Handles the additions of new badges
                 let tempArray = [];
@@ -103,12 +103,12 @@ export default function FolderList() {
 
                 setBadges(badges);
             };
-
+            console.log(res);
             handleSave(res);
             setSelectedValue(res);
         }
         fetchData();
-    }, [badges, userID]);
+    }, [badges, username]);
 
     const openBadgeDetails = badge_info => {
         setSelectedValue(badge_info);

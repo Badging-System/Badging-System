@@ -15,12 +15,12 @@ require("dotenv").config({path: path.join(__dirname, "./.env")});
 describe("Integration Testing", function () {
   this.timeout(15000);
   before(done => {
-    var port = parseInt(process.env.PORT || "3000", 10);
+    var port = parseInt(process.env.PORT || "4000", 10);
     app.set("port", port);
     server = http.createServer(app);
     server.listen(port, "localhost", function () {
-      // done();
-      seed(done);
+      done();
+      // seed(done);
     });
   });
 

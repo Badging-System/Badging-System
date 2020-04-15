@@ -111,9 +111,9 @@ export const getUserName = user_name => {
 
     });
 };
-export const getUserBadgesById = user_id => {
+export const getUserBadges = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserBadgesByID/${user_id}`, {
+        axios.get(`http://localhost:4000/api/users/getUserBadges/${username}`, {
         })
             .then(response => {
                 resolve(response.data.payload.data);
