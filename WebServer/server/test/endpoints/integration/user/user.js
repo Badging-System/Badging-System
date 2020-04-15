@@ -13,23 +13,14 @@ const path = require("path");
 require("dotenv").config({path: path.join(__dirname, "./.env")});
 
 describe("Integration Testing", function () {
-  this.timeout(15000);
-  before(done => {
-    var port = parseInt(process.env.PORT || "4000", 10);
-    app.set("port", port);
-    server = http.createServer(app);
-    server.listen(port, "localhost", function () {
-      done();
-      // seed(done);
-    });
-  });
+
 
   /* This test that the endpoint returns the correct type of object */
   describe("User Endpoints", function () {
     /* This test the user endpoint testing if the it recieve the id poarameter */
     it("User Query Param", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/msrober`)
+      request(`http://api:8080/users/msrober`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -41,7 +32,7 @@ describe("Integration Testing", function () {
     /* This tests that the user cannot retrieve its team name based off of username due to incorrect username inputted */
     it("Should fail retrieving user team name based off of the username due to incorrect username inputted", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamName/testerror`)
+      request(`http://api:8080/users/getUserTeamName/testerror`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(400);
@@ -53,7 +44,7 @@ describe("Integration Testing", function () {
     /* This tests that the user can retrieve its team name based off of username due to correct username inputted */
     it("Should succesfully retrieve user team name based off of the username due to correct username inputted", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamName/gdeshpande`)
+      request(`http://api:8080/users/getUserTeamName/gdeshpande`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -65,7 +56,7 @@ describe("Integration Testing", function () {
     /* This test should fail to retrieve team members by username due to the username being invalid*/
     it("Should fail to retrieve team members by username due to an invalid username given", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamMembers/invalidname`)
+      request(`http://api:8080/users/getUserTeamMembers/invalidname`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(400);
@@ -77,7 +68,7 @@ describe("Integration Testing", function () {
     /* This test should pass for retrieving team members by username due to the username being valid*/
     it("Should pass to retrieve team members by username due to a valid username given", function (done) {
       this.timeout(15000);
-      request(`http://localhost:${process.env.PORT}/api/users/getUserTeamMembers/gdeshpande`)
+      request(`http://api:8080/users/getUserTeamMembers/gdeshpande`)
         .then(response => {
           let parsedRes = JSON.parse(response);
           expect(parsedRes.status).to.equal(200);
@@ -94,7 +85,7 @@ describe("Integration Testing", function () {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -118,7 +109,7 @@ describe("Integration Testing", function () {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -142,7 +133,7 @@ describe("Integration Testing", function () {
       // Post a user object to the database
 
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/adduser`, {
+        .post(`http://api:8080/users/adduser`, {
           Username: "dbooker",
           First_name: "devin",
           Last_name: "booker",
@@ -165,7 +156,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -206,7 +197,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -247,7 +238,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -289,7 +280,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -330,7 +321,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbooker",
             First_name: "Devin",
@@ -371,7 +362,7 @@ describe("Integration Testing", function () {
       this.timeout(15000);
       // Post a user object to the database
       axios
-        .post(`http://localhost:${process.env.PORT}/api/users/addedusers`, [
+        .post(`http://api:8080/users/addedusers`, [
           {
             Username: "dbook",
             First_name: "Devin",
@@ -414,7 +405,7 @@ describe("Integration Testing", function () {
         /* This test that the database is seeded with the correct amount of users in the development enviroment */
         it("should list the seeded database", function (done) {
           this.timeout(15000);
-          request(`http://localhost:${process.env.PORT}/api/users/`)
+          request(`http://api:8080/users/`)
             .then(response => {
               let parsedRes = JSON.parse(response);
               expect(parsedRes.status).to.equal(200);
@@ -433,7 +424,7 @@ describe("Integration Testing", function () {
         /* This test that the endpoint returns the correct type of object */
         it("should return the correct type of object (User)", function (done) {
           this.timeout(15000);
-          request(`http://localhost:${process.env.PORT}/api/users/msrober`)
+          request(`http://api:8080/users/msrober`)
             .then(response => {
               let parsedRes = JSON.parse(response); //parse payload
               expect(parsedRes.status).to.equal(200);
