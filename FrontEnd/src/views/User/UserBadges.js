@@ -10,7 +10,7 @@ import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
 import Dialog from "./Dialog";
 import {
-    getUserBadgesById,
+    getUserBadges,
 } from "../../helpers/users";
 
 const title = {
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 export default function FolderList() {
     const classes = useStyles();
     const [openDialog, setDialog] = React.useState(false);
-    const userID = '5e73f58f111ae80bfceaa35f';
+    const username = 'bobbo';
     const [currentValue, setSelectedValue] = React.useState({
         id: null,
         badge_name: "",
@@ -82,7 +82,7 @@ export default function FolderList() {
     const [badges, setBadges] = React.useState([]);
     useEffect(() => {
         async function fetchData() {
-            let res = await getUserBadgesById(userID);
+            let res = await getUserBadges(username);
             const handleSave = badge => {
                 //Handles the additions of new badges
                 let tempArray = [];
@@ -90,24 +90,41 @@ export default function FolderList() {
                     tempArray.push([{id: badge.Badge.Tasks[i]._id, desc: badge.Badge.Tasks[i].Description}]);
                 }
 
+                let tasksArray = singleArray(tempArray);
                 badges.push({
                     id: badge.Badge._id,
                     badge_name: badge.Badge.Name,
                     completed: badge.Tasks_Completed.length,
-                    tasks: tempArray
+                    tasks: tasksArray
                 });
+
+
+
 
                 setBadges(badges);
             };
+            console.log(res);
             handleSave(res);
             setSelectedValue(res);
         }
         fetchData();
-    }, [badges, userID]);
+    }, [badges, username]);
 
     const openBadgeDetails = badge_info => {
         setSelectedValue(badge_info);
         setDialog(true);
+    };
+
+    const singleArray = doubleArray => {
+        var convertedArray = [];
+        if (doubleArray !== undefined) {
+            for (var i = 0; i < doubleArray.length; i++) {
+                convertedArray = convertedArray.concat(doubleArray[i]);
+            }
+            // console.log(convertedArray);
+            return convertedArray;
+        }
+
     };
 
     const handleDialog = (item, event) => {
@@ -145,7 +162,7 @@ export default function FolderList() {
                                     </CardIcon>
                                 </CardHeader>
                                 <CardBody>
-                                    <p>Badge Description</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere morbi leo urna molestie.</p>
                                 </CardBody>
                                 <CardFooter chart>
                                     <Button

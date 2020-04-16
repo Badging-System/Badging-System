@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, {bindTrigger, bindMenu} from 'material-ui-popup-state';
+import TeamName from '../../views/User/UserTeamName';
 
 export default function MenuPopupState() {
     return (
@@ -13,8 +14,7 @@ export default function MenuPopupState() {
                         Teams
           </Button>
                     <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}>Team 1</MenuItem>
-                        <MenuItem onClick={popupState.close}>Team 2</MenuItem>
+                        <MenuItem onClick={popupState.close}><TeamName fetch={true} /></MenuItem>
                     </Menu>
                 </React.Fragment>
             )}
