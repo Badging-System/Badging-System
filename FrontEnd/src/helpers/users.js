@@ -7,7 +7,7 @@ const moment = require('moment');
 export const getUsers = (id) => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:4000/api/users', {admin_id:id})
-            .then(response => {                
+            .then(response => {
                 const results = {
                     data: response.data.payload.data.map(user => ({
                         username: user.Username,
@@ -41,12 +41,12 @@ export const getUsers = (id) => {
     });
 };
 
-export const getTopUsers = (table_data = false, id) => {    
+export const getTopUsers = (table_data = false, id) => {
     return new Promise((resolve, reject) => {
         axios.get('http://localhost:4000/api/users/topperforming', { params: {
             table_data: table_data, team_id: id}
         })
-        .then((response) => {            
+        .then((response) => {
             const results = {
                 data: response.data.payload.data,
                 columns: [
@@ -94,9 +94,9 @@ export const getCoachCount = () => {
     });
 };
 
-export const getUserTeamName = user_id => {
+export const getUserTeamName = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserTeamName/${user_id}`, {
+        axios.get(`http://localhost:4000/api/users/getUserTeamName/${username}`, {
         })
             .then((response) => {
                 resolve(response.data.payload.message);
@@ -108,9 +108,9 @@ export const getUserTeamName = user_id => {
     });
 };
 
-export const getUserTeamMembersByID = team_id => {
+export const getUserTeamMembers = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserTeamMembers/${team_id}`, {
+        axios.get(`http://localhost:4000/api/users/getUserTeamMembers/${username}`, {
         })
             .then(response => {
                 resolve(response.data.payload.message);
@@ -136,9 +136,9 @@ export const getUserName = user_name => {
 
     });
 };
-export const getUserBadgesById = user_id => {
+export const getUserBadges = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserBadgesByID/${user_id}`, {
+        axios.get(`http://localhost:4000/api/users/getUserBadges/${username}`, {
         })
             .then(response => {
                 resolve(response.data.payload.data);

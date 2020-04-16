@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-const path = require('path')
-require('dotenv').config({path:path.join(__dirname, '../.env')})
+const path = require('path');
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
@@ -14,6 +14,8 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 var port = normalizePort(process.env.PORT || '3000');
+console.log(`below is the port:${port}`);
+console.log(port);
 app.set('port', port);
 
 /**
@@ -31,7 +33,7 @@ if (process.env.ENV === 'DEV') {
   server.on('listening', onListening);
 } else {
   console.log("Server did not start.");
-} 
+}
 
 /**
  * Normalize a port into a number, string, or false.

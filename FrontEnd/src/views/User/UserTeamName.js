@@ -6,18 +6,18 @@ import {
 
 export default function TeamName(props) {
     const {fetch} = props;
-    const userID = '5e73f58f111ae80bfceaa35e';
+    const username = 'bobbo';
     const [teamname, setTeamName] = React.useState('');
 
     React.useEffect(() => {
         if (fetch) {
             const fetchData = async () => {
-                const result = await getUserTeamName(userID);
+                const result = await getUserTeamName(username);
                 setTeamName(result);
             };
             fetchData();
         }
-    }, [fetch, userID]);
+    }, [fetch, username]);
     return (
         <React.Fragment>
             {teamname}

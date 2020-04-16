@@ -8,13 +8,13 @@ var server;
 var http = require('http');
 var debug = require('debug')('server:server');
 
-describe('Main Page content', function() {
+describe('Main Page content', function () {
   this.timeout(15000);
 
   /* This test the main page response to ensure the response is correct */
-  it('should return succesful status 200', function(done) {
+  it('should return succesful status 200', function (done) {
     request(`http://api:8080/`).then((response) => {
-      let parsedRes = JSON.parse(response)
+      let parsedRes = JSON.parse(response);
       expect(parsedRes.status).to.equal(200);
       expect(parsedRes.payload.message).to.equal('Welcome to the Badging System API');
       done();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import API from "../../../utils/API";
 import ProgressStepperMapper from "./ProgressStepperMapper";
 
@@ -7,7 +7,7 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e7e6411844637a6a6c6b4af");
+      let res = await API.get("/badges/5e94d12c31335d0018db6749");
       setProgress(res.data.payload.data);
     }
     fetchData();
