@@ -90,6 +90,40 @@ exports.user_id = (req, res) => {
   }
 };
 
+exports.topPerforming = async (req, res) => {      
+  mongoDB
+    .getTopUsers(req.query.team_ids)
+    .then((data) => {      
+      if (req.query.table_data) {        
+        table_format_topUsers(data)
+          .then((formatted_data) => {            
+            //format the data to table data if requested
+            JSONResponse(
+              res,
+              {
+                data: formatted_data,
+              },
+              200
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        JSONResponse(
+          res,
+          {
+            data: data,
+          },
+          200
+        );
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.addUser = async (req, res) => {
   let addedUser = new User(req.body);
   let collection = "users";
@@ -361,4 +395,18 @@ function validEmail(email) {
     validate = false;
   }
   return validate;
+}
+
+//format data to match table
+function table_format_topUsers(data) {
+  return new Promise((resolve, reject) => {
+    const table_data = data.map((user, index) => ({
+      rank: index + 1,
+      username: user.Username,
+      teamname: user.Team.Name,
+      coach: user.Team.Coach.Username,
+      badgesCompleted: 2,
+    }));
+    resolve(table_data);
+  });
 }

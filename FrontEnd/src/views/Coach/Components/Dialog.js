@@ -40,7 +40,6 @@ export default function SimpleDialog(props) {
   const classes = useStyles();
   const {onClose, selectedValue, open} = props;
   const [openDialog, setDialog] = React.useState(false);
-  console.log(selectedValue);
   const handleClose = () => {
 
     onClose(selectedValue);

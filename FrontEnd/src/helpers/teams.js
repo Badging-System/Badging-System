@@ -36,9 +36,7 @@ export const getTopTeams = (table_data = false, id) => {
         axios.get('http://localhost:4000/api/teams/topperforming', { params: {
             table_data: table_data, admin_id: id}
         })
-        .then((response) => {
-            console.log(response);
-            
+        .then((response) => {            
             const results = {
                 data: response.data.payload.data,
                 columns: [
