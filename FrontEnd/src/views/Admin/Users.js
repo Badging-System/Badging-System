@@ -185,7 +185,6 @@ function Paperbase(props) {
     columns: [{}],
     data: [{}]
   });
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

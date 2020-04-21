@@ -113,19 +113,13 @@ exports.addTeamMember = async (req, res) => {
   );
 };
 
-exports.topPerforming = async (req, res) => {  
-  console.log("Requested");
-  
+exports.topPerforming = async (req, res) => {    
   mongoDB
     .getTopTeams(req.query.admin_id)
-    .then((data) => {
-      console.log(data);
-      
+    .then((data) => {      
       if (req.query.table_data) {        
         table_format_topTeams(data)
-          .then((formatted_data) => {
-            console.log(formatted_data);
-            
+          .then((formatted_data) => {            
             //format the data to table data if requested
             JSONResponse(
               res,
@@ -169,14 +163,14 @@ function table_format(data) {
 
 //format data to match table
 function table_format_topTeams(data) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {    
     const table_data = data.map((team, index) => ({
       rank: index + 1,
       name: team.Name,
-      coach: team.Coach,
+      coach: team.Coach.Username,
       playerCount: team.Members.length,
       badgesCompleted: 2,
-    }));
+    }));    
     resolve(table_data);
   });
 }

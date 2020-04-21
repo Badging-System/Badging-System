@@ -89,7 +89,6 @@ exports.deleteTask = async (req, res) => {
 exports.completedTasksById = async (req, res) => {
   let userId = req.query.user_id;
   let badgeId = req.query.badge_id;
-  console.log("user id: " + userId);
   mongoDB.mongooseConnect();
   let doc = await BadgeUserJoin.findOne(
     { Badge: badgeId, User: userId },

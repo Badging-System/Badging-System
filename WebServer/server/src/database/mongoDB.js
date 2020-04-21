@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const test = require("assert");
 var Promise = require("promise");
 const Team = require("../../models/Team");
+const User = require("../../models/User");
+
 require("dotenv").config();
 
 class Mongo {
@@ -11,7 +13,6 @@ class Mongo {
   }
 
   async mongooseConnect() {
-    console.log(process.env.HOST + process.env.DBNAME);
     await mongoose.connect(process.env.HOST + process.env.DBNAME, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -171,6 +172,40 @@ class Mongo {
           .populate("Badges") 
           .populate("Members")
           .sort([['Badges', 'descending']])
+          .exec((err, team) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(team);
+            }
+          });
+      } catch (e) {
+        console.error(e);
+        reject(e);
+      }
+    });
+  }
+
+  getTopUsers(team_ids) {
+    team_ids = ["5e95f4489d0e4d0018e44a8b"]
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(process.env.HOST + process.env.DBNAME, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
+        User.find({ 
+          Team: {
+              $in: [team_ids]
+          }
+          })
+          .populate({ 
+            path: 'Team',
+            populate: {
+              path: 'Coach',
+              model: User
+            } 
+         })
           .exec((err, team) => {
             if (err) {
               reject(err);

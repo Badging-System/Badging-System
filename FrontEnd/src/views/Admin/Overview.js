@@ -35,7 +35,7 @@ import {
   GroupWork,
 } from "@material-ui/icons";
 
-import {getUserCount, getCoachCount} from "../../helpers/users";
+import {getUserCount, getCoachCount, getTopUsers} from "../../helpers/users";
 import {getTeamCount, getTopTeams} from "../../helpers/teams";
 
 import Header from "../../components/Header/AdminHeader";
@@ -271,6 +271,8 @@ function Paperbase(props) {
   const [coach_count, setCoach_count] = React.useState(false);
   const [team_count, setTeam_count] = React.useState(false);
   const [team_data, set_teamData] = React.useState([]);
+  const [player_data, set_playerData] = React.useState([]);
+
   const teams_columns = [
     "Rank",
     "Team Name",
@@ -287,51 +289,6 @@ function Paperbase(props) {
     "Badges Awarded",
   ];
 
-
-  const player_data = {
-    header: "",
-    body: {
-      columns: ["Rank", "User Name", "Team Name", "Coach", "Badges Awarded"],
-      rowdata: [
-        {
-          rank: "1",
-          name: "Ryan Tonthat",
-          team: "Power Puff Girls",
-          coach: "Garuav Deshpande",
-          badges_awarded: 30,
-        },
-        {
-          rank: "2",
-          name: "David Burr",
-          team: "Power Puff Girls",
-          coach: "Garuav Deshpande",
-          badges_awarded: 29,
-        },
-        {
-          rank: "3",
-          name: "	Mitchell Roberts",
-          team: "Paw Patrol",
-          coach: "Alex Zhou",
-          badges_awarded: 23,
-        },
-        {
-          rank: "4",
-          name: "John Snow",
-          team: "Edward",
-          coach: "David Maitha",
-          badges_awarded: 10,
-        },
-        {
-          rank: "5",
-          name: "David Maitha",
-          team: "Power Puff Girls",
-          coach: "Garuav Deshpande",
-          badges_awarded: 2,
-        },
-      ],
-    },
-    footer: "",
-  };
   //get the user count
   getUserCount()
     .then((count) => {
@@ -364,13 +321,20 @@ function Paperbase(props) {
   };
 
   useEffect(() => {    
-    getTopTeams(true, "5e8f5e47a4d5940018d5f2e1")
-      .then((table) => {
+    getTopTeams(true, "5e95f4489d0e4d0018e44a89")
+      .then((table) => {        
         set_teamData(table.data);
       })
       .catch((err) => {
         console.log(err);
       });
+    getTopUsers(true, "5e95f4489d0e4d0018e44a89")
+    .then((table) => {      
+      set_playerData(table.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     // Update the document title using the browser API
   }, []);
 
@@ -512,7 +476,13 @@ function Paperbase(props) {
                             ))}
                           </TableRow>
                         </TableHead>
-                        <TableBody>{}</TableBody>
+                        <TableBody>{player_data.map((elm, index) => (
+                            <TableRow key={index}>
+                              {Object.keys(elm).map((key, index) => (
+                                <TableCell key={index}> {elm[key]} </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}</TableBody>
                       </Table>
                     </TableContainer>
                   </CardBody>
