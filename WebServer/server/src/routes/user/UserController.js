@@ -348,7 +348,6 @@ exports.getUserTeamMembers = async (req, res) => {
 exports.getUserBadges = async (req, res) => {
   let username = req.params.username;
   let user = await mongoDB.findOne(User, {Username: username});
-  console.log(user);
   if (user.length === 0) {
     JSONResponse(res, {
       message: "Username does not exist"
