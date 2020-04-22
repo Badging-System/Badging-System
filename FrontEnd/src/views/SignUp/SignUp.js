@@ -10,8 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 
 function Copyright() {
   return (
@@ -46,9 +47,34 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+var roleValue;
+var formArray;
+const checkBoxValue = event => {
+  console.log(event.target.value);
+  roleValue = event.target.value;
+  console.log(formArray);
+  let result = formArray.every(e => {
+    return e = "";
+  });
+  console.log(result);
+  // if (formArray[1] !== "" && formArray[3] != "" && formArray[4] !==) {
+  //   formArray.push(roleValue);
+  //   console.log(formArray);
+  // }
+};
+
 export default function SignUp() {
   const classes = useStyles();
-
+  console.log(window.location.href);
+  if (window.location.href.includes("&")) {
+    console.log(window.location.href.split("&").join(", ").split("=").join(', ').split(', '));
+    formArray = window.location.href.split("&").join(", ").split("=").join(', ').split(', ');
+    console.log(formArray[5].replace("%", "@"));
+    let email = formArray[5].replace("%", "@");
+    console.log(email);
+    formArray[5] = email;
+    console.log(formArray);
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -114,22 +140,22 @@ export default function SignUp() {
                 fullWidth
                 name="password_confirm"
                 label="Please Confirm Password"
-                type="password_confirm"
+                type="password"
                 id="password_confirm"
                 autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="User" color="primary" />}
+                control={<Checkbox value="User" color="primary" onChange={checkBoxValue} />}
                 label="User"
               />
               <FormControlLabel
-                control={<Checkbox value="Coach" color="primary" />}
+                control={<Checkbox value="Coach" color="primary" onChange={checkBoxValue} />}
                 label="Coach"
               />
               <FormControlLabel
-                control={<Checkbox value="Admin" color="primary" />}
+                control={<Checkbox value="Admin" color="primary" onChange={checkBoxValue} />}
                 label="Admin"
               />
             </Grid>
