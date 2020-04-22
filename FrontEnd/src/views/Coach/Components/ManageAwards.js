@@ -7,7 +7,7 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e9fc5e97dbd71001821dd58");
+      let res = await API.get("/badges/5e91706738ab6f0c6556abae");
       setProgress(res.data.payload.data);
     }
     fetchData();

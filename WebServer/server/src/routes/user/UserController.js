@@ -90,13 +90,13 @@ exports.user_id = (req, res) => {
   }
 };
 
-exports.topPerforming = async (req, res) => {      
+exports.topPerforming = async (req, res) => {
   mongoDB
     .getTopUsers(req.query.team_ids)
-    .then((data) => {      
-      if (req.query.table_data) {        
+    .then((data) => {
+      if (req.query.table_data) {
         table_format_topUsers(data)
-          .then((formatted_data) => {            
+          .then((formatted_data) => {
             //format the data to table data if requested
             JSONResponse(
               res,
