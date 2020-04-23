@@ -26,16 +26,12 @@ export default function SelectedListItem(props) {
       <List component='nav'>
         {assignees.map((user, index) => {
           return (
-            <ListItem
-              key={index}
-              button
-              selected={selectedIndex === index}
-              onClick={(event) => handleListItemClick(event, index)}
-            >
+            <ListItem key={index} button selected={selectedIndex === index}>
               <ListItemText primary={user.Username} />
 
               <Checkbox
-                onChange={() => props.addAssignees(assignees[selectedIndex])}
+                onChange={() => props.addAssignees(assignees[index])}
+                onClick={(event) => handleListItemClick(event, index)}
                 color='primary'
                 inputProps={{ "aria-label": "secondary checkbox" }}
               />

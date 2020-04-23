@@ -24,7 +24,7 @@ export default function SimpleDialog(props) {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/users/coach/5e924aea0732230011c755e1");
+      let res = await API.get("/users/coach/5e91706738ab6f0c6556abc6");
       setAssignees(res.data.payload.data.Members);
     }
     fetchData();
@@ -45,12 +45,13 @@ export default function SimpleDialog(props) {
       Users: assigned,
       Team: assigned[0].Team,
     };
-    let res = await API.post("/badges/assign", request);
+    await API.post("/badges/assign", request);
     handleClose();
   };
 
   const addAssignees = (user) => {
     assigned.push(user);
+    console.log(assigned);
   };
 
   return (

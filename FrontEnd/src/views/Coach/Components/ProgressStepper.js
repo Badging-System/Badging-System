@@ -12,23 +12,23 @@ import CardBody from "../../../components/Card/CardBody";
 import CardFooter from "../../../components/Card/CardFooter";
 import Card from "../../../components/Card/Card";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   backButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   completed: {
-    display: "inline-block"
+    display: "inline-block",
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 export default function HorizontalNonLinearAlternativeLabelStepper(props) {
@@ -51,26 +51,11 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     return completedSteps() === totalSteps();
   };
 
-  // const isLastStep = () => {
-  //   return activeStep === totalSteps() - 1;
-  // };
-
-  // const handleNext = () => {
-  //   const newActiveStep =
-  //     isLastStep() && !allStepsCompleted()
-  //       ? // It's the last step, but not all steps have been completed
-  //         // find the first step that has been completed
-  //         steps.findIndex((step, i) => !completed.includes(i))
-  //       : activeStep + 1;
-
-  //   setActiveStep(newActiveStep);
-  // };
-
   const handleRemove = () => {
     let taskRemove = {
       user_id: user._id,
       badge_id: badgeId,
-      task_id: steps[activeStep]._id
+      task_id: steps[activeStep]._id,
     };
     API.put("/badges/task/delete", taskRemove);
     updateRemoved(steps[activeStep]._id);
@@ -80,33 +65,36 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
     let request = {
       params: {
         user_id: user._id,
-        badge_id: badgeId
-      }
+        badge_id: badgeId,
+      },
     };
     let res = await API.get("/badges/tasks/completed", request);
     setCompleted(res.data.payload.data.Tasks_Completed);
   }
 
-  const handleStep = step => () => {
+  const handleStep = (step) => () => {
     console.log(step);
     setActiveStep(step);
   };
 
   const handleComplete = () => {
     if (completed.length === totalSteps() - 1) {
+      let awardBadgeData = {
+        user_id: user._id,
+        badge_id: badgeId,
+      };
+      API.post("/badges/award", awardBadgeData);
     } else {
       let taskComplete = {
         user_id: user._id,
         badge_id: badgeId,
-        task_id: steps[activeStep]._id
+        task_id: steps[activeStep]._id,
       };
-
       const newCompleted = completed;
       newCompleted.push(steps[activeStep]._id);
       setCompleted(newCompleted);
       API.put("/badges/task", taskComplete);
       updateRemoved(steps[activeStep]._id);
-      // handleNext();
     }
   };
 

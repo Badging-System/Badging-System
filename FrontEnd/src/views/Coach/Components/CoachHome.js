@@ -85,7 +85,7 @@ export default function FolderList() {
       Description: badge.Description,
       Tasks: badge.table_data,
       Recipients: [],
-      Team: "5e924aea0732230011c755e2",
+      Team: "5e9a9bb2a500f109ea48a6ae",
     };
     let res = await API.post("/badges/insert", newBadge);
     let newBadges = badges;
@@ -119,7 +119,7 @@ export default function FolderList() {
 
   useEffect(() => {
     async function fetchData() {
-      let res = await API.get("/badges/5e924aea0732230011c755e2");
+      let res = await API.get("/badges/5e91706738ab6f0c6556abae");
       setBadges(res.data.payload.data);
     }
     fetchData();
