@@ -321,14 +321,14 @@ function Paperbase(props) {
   };
 
   useEffect(() => {    
-    getTopTeams(true, "5e95f4489d0e4d0018e44a89")
+    getTopTeams(true, "5e91706738ab6f0c6556abaa")
       .then((table) => {        
         set_teamData(table.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    getTopUsers(true, "5e95f4489d0e4d0018e44a89")
+    getTopUsers(true, "5e91706738ab6f0c6556abaa")
     .then((table) => {      
       set_playerData(table.data);
     })
