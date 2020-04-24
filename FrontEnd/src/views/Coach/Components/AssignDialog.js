@@ -16,19 +16,20 @@ import API from "../../../utils/API";
 export default function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
   const [openDialog, setDialog] = React.useState(false);
-  const [assignees, setAssignees] = React.useState([]);
+  // const [assignees, setAssignees] = React.useState([]);
+  const assignees = props.assignees;
   const assigned = [];
   const handleClose = () => {
     onClose(selectedValue);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      let res = await API.get("/users/coach/5e91706738ab6f0c6556abc6");
-      setAssignees(res.data.payload.data.Members);
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // let res = await API.get("/users/coach/5e91706738ab6f0c6556abc6");
+  //     // setAssignees(res.data.payload.data.Members);
+  //   }
+  //   fetchData();
+  // }, []);
 
   const handleAlert = (event) => {
     if (event) {

@@ -48,6 +48,7 @@ exports.badgeManageByTeamId = async (req, res) => {
 
     JSONResponse(res, { data: docs }, 200);
   } catch (e) {
+    console.log(e);
     InvalidInput(res, "could not retreive data for badges by team");
   } finally {
     mongoDB.mongoogeDisconnect();

@@ -77,6 +77,7 @@ export default function FolderList() {
   const [openAssignDialog, setAssignDialog] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState({});
   const [badges, setBadges] = React.useState([]);
+  const [assignees, setAssignees] = React.useState([]);
 
   const handleSave = async (badge) => {
     //Handles the additions of new badges
@@ -121,6 +122,9 @@ export default function FolderList() {
     async function fetchData() {
       let res = await API.get("/badges/5e91706738ab6f0c6556abae");
       setBadges(res.data.payload.data);
+
+      let res1 = await API.get("/users/coach/5e91706738ab6f0c6556abc6");
+      setAssignees(res1.data.payload.data.Members);
     }
     fetchData();
   }, [refresh]);
@@ -136,6 +140,7 @@ export default function FolderList() {
         open={openAssignDialog}
         onClose={handleAssignDialog}
         selectedBadge={selectedValue}
+        assignees={assignees}
       />
       <main className={classes.main}>
         <BadgeForm handleSave={handleSave} />
