@@ -4,12 +4,10 @@ const moment = require('moment');
 /**
  * This function returns users
  */
-export const getUsers = () => {
+export const getUsers = (id) => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:4000/api/users', {})
+        axios.get('/api/users', {admin_id:id})
             .then(response => {
-                console.log(response);
-                
                 const results = {
                     data: response.data.payload.data.map(user => ({
                         username: user.Username,
@@ -43,10 +41,35 @@ export const getUsers = () => {
     });
 };
 
+export const getTopUsers = (table_data = false, id) => {
+    return new Promise((resolve, reject) => {
+        axios.get('/api/users/topperforming', { params: {
+            table_data: table_data, team_id: id}
+        })
+        .then((response) => {
+            const results = {
+                data: response.data.payload.data,
+                columns: [
+                    { field: 'rank', title: 'Rank', editable:'false'},
+                    { field: 'username', title: 'Username', editable:'false'},
+                    { field: 'teamname', title: 'Team Name', editable:'false'},
+                    { field: 'coach', title: 'Coach', editable:'false'},
+                    { field: 'badgesCompleted', title: 'Badges Awarded', editable:'false'}
+                  ]
+            };
+            resolve(results);
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error);
+        })
+    });
+}
+
 
 export const getUserCount = () => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:4000/api/users/count', {})
+        axios.get('/api/users/count', {})
             .then(response => {
                 resolve(response.data.payload.data);
             })
@@ -60,7 +83,7 @@ export const getUserCount = () => {
 
 export const getCoachCount = () => {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:4000/api/coaches/count', {})
+        axios.get('/api/coaches/count', {})
             .then(response => {
                 resolve(response.data.payload.data);
             })
@@ -71,9 +94,9 @@ export const getCoachCount = () => {
     });
 };
 
-export const getUserTeamName = user_id => {
+export const getUserTeamName = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserTeamName/${user_id}`, {
+        axios.get(`/api/users/getUserTeamName/${username}`, {
         })
             .then((response) => {
                 resolve(response.data.payload.message);
@@ -85,9 +108,9 @@ export const getUserTeamName = user_id => {
     });
 };
 
-export const getUserTeamMembersByID = team_id => {
+export const getUserTeamMembers = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserTeamMembers/${team_id}`, {
+        axios.get(`/api/users/getUserTeamMembers/${username}`, {
         })
             .then(response => {
                 resolve(response.data.payload.message);
@@ -101,7 +124,7 @@ export const getUserTeamMembersByID = team_id => {
 
 export const getUserName = user_name => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/${user_name}`, {
+        axios.get(`/api/users/${user_name}`, {
         })
             .then(response => {
                 resolve(response.data.payload.data);
@@ -113,9 +136,9 @@ export const getUserName = user_name => {
 
     });
 };
-export const getUserBadgesById = user_id => {
+export const getUserBadges = username => {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/users/getUserBadgesByID/${user_id}`, {
+        axios.get(`/api/users/getUserBadges/${username}`, {
         })
             .then(response => {
                 resolve(response.data.payload.data);

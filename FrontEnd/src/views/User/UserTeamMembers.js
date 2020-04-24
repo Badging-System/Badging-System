@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import TeamName from '../../views/User/UserTeamName';
 import {
-    getUserTeamMembersByID,
+    getUserTeamMembers,
 } from "../../helpers/users";
 
 const useStyles = makeStyles({
@@ -27,25 +27,21 @@ function createData(name, username, role, email) {
 
 export default function SimpleTable() {
     const classes = useStyles();
-    const teamID = '5e73f58f111ae80bfceaa35c';
+    const username = 'bobbo';
     const [team_members, setTeamMembers] = React.useState([]);
     const rows = [];
 
     React.useEffect(() => {
         const fetchData = async () => {
-            const result = await getUserTeamMembersByID(teamID);
+            const result = await getUserTeamMembers(username);
             setTeamMembers(result);
         };
         fetchData();
-    }, [teamID]);
-
+    }, [username]);
 
     if (team_members[0] !== undefined || team_members.length !== 0) {
-        rows.push(createData(`${team_members[0][0].First_name} ${team_members[0][0].Last_name}`, team_members[0][0].Username, team_members[0][0].Role, team_members[0][0].Email));
-        rows.push(createData(`${team_members[1][0].First_name} ${team_members[1][0].Last_name}`, team_members[1][0].Username, team_members[1][0].Role, team_members[1][0].Email));
-
-        for (let j = 0; j < team_members[2].Members.length; j++) {
-            rows.push(createData(`${team_members[2].Members[j].First_name} ${team_members[2].Members[j].Last_name}`, team_members[2].Members[j].Username, team_members[2].Members[j].Role, team_members[2].Members[j].Email));
+        for (let i = 0; i < team_members.length; i++) {
+            rows.push(createData(`${team_members[i].First_name} ${team_members[i].Last_name}`, team_members[i].Username, team_members[i].Role, team_members[i].Email));
         }
     }
 

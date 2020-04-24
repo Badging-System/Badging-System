@@ -73,7 +73,6 @@ export default function HorizontalNonLinearAlternativeLabelStepper(props) {
   }
 
   const handleStep = (step) => () => {
-    console.log(step);
     setActiveStep(step);
   };
 

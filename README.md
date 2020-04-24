@@ -61,6 +61,17 @@ Window users use the command:
 net stop MongoDB
 ```
 
+## Running tests from Web Server
+
+Need to spin up the docker container with the command
+```
+docker-compose up
+```
+Then to execute the tests 
+```
+docker exec WebServer npm run test
+```
+
 ## Access Logs
 
 You can access the logs to each of the containers by typing the following command:

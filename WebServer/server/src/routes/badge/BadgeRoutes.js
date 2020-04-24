@@ -11,5 +11,6 @@ router.put("/task", BadgeController.completeTask);
 router.put("/task/delete", BadgeController.deleteTask);
 router.post("/insert", BadgeController.insertBadge);
 router.post("/assign", BadgeController.insertAssignedBadge);
+router.post("/award", BadgeController.insertRecipient);
 
 module.exports = router;

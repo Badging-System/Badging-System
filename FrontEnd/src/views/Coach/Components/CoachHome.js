@@ -86,7 +86,7 @@ export default function FolderList() {
       Description: badge.Description,
       Tasks: badge.table_data,
       Recipients: [],
-      Team: "5e9a9bb2a500f109ea48a6ae",
+      Team: "5e91706738ab6f0c6556abae",
     };
     let res = await API.post("/badges/insert", newBadge);
     let newBadges = badges;

@@ -1,0 +1,30 @@
+{
+    "AWSEBDockerrunVersion": 3,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "msrober3/badging-client",
+            "hostname":"client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "msrober3/badging-server",
+            "hostname":"api",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "msrober3/badging-nginx",
+            "hostname":"nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                "hostPort": 80,
+                "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]        
+        }
+    ]
+}

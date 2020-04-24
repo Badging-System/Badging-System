@@ -155,3 +155,22 @@ exports.insertAssignedBadge = async (req, res) => {
     mongoDB.mongoogeDisconnect();
   }
 };
+
+exports.insertRecipient = async (req, res) => {
+  let userId = req.body.user_id;
+  let badgeId = req.body.badge_id;
+  mongoDB.mongooseConnect();
+  try {
+    let doc = await Badge.findOneAndUpdate(
+      { _id: badgeId },
+      { $push: { Recipients: userId } }
+    );
+    await BadgeUserJoin.findOneAndDelete({ User: userId });
+    JSONResponse(res, { data: [doc] }, 200);
+  } catch (e) {
+    console.log(e);
+    InvalidInput(res, "Could not award badge.");
+  } finally {
+    mongoDB.mongoogeDisconnect();
+  }
+};

@@ -19,7 +19,7 @@ export default function SimpleDialog(props) {
     onClose(selectedValue);
   };
 
-  const handleAlert = event => {
+  const handleAlert = (event) => {
     if (event) {
       setDialog(false);
       onClose(selectedValue, true);
@@ -68,5 +68,5 @@ export default function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.object.isRequired
+  selectedValue: PropTypes.object.isRequired,
 };
