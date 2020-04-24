@@ -26,3 +26,13 @@ after_success:
   - docker push msrober3/badging-server
 env:
   - ENV=$ENVIRONMENT PORT=$PORT HOST=$HOST DBNAME=$DBNAME
+######DEPLOYMENT NEEDS AWS SECRET KEYS
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-1"
+#   app: "Badging System"
+#   env: "BadgingSystem-env"
+#   bucket_name: "capstone-asu-sf-student-bucket"
+#   bucket_path: "Badging System"
+#   on: 
+#     branch: master

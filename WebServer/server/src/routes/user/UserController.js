@@ -90,6 +90,40 @@ exports.user_id = (req, res) => {
   }
 };
 
+exports.topPerforming = async (req, res) => {
+  mongoDB
+    .getTopUsers(req.query.team_ids)
+    .then((data) => {
+      if (req.query.table_data) {
+        table_format_topUsers(data)
+          .then((formatted_data) => {
+            //format the data to table data if requested
+            JSONResponse(
+              res,
+              {
+                data: formatted_data,
+              },
+              200
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        JSONResponse(
+          res,
+          {
+            data: data,
+          },
+          200
+        );
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.addUser = async (req, res) => {
   let addedUser = new User(req.body);
   let collection = "users";
@@ -97,7 +131,8 @@ exports.addUser = async (req, res) => {
     addedUser.hasOwnProperty("Username") &&
     addedUser.hasOwnProperty("First_name") &&
     addedUser.hasOwnProperty("Last_name") &&
-    addedUser.hasOwnProperty("Status") &&
+    addedUser.hasOwnProperty("Role") &&
+    addedUser.hasOwnProperty("Active") &&
     addedUser.hasOwnProperty("Email")
   ) {
     JSONResponse(
@@ -107,7 +142,7 @@ exports.addUser = async (req, res) => {
       },
       400
     );
-  } else if (addedUser.Status !== "User") {
+  } else if (addedUser.Role !== "User") {
     JSONResponse(
       res,
       {
@@ -167,7 +202,8 @@ exports.addedUsers = async (req, res) => {
     addedUsers.hasOwnProperty("Username") &&
     addedUsers.hasOwnProperty("First_name") &&
     addedUsers.hasOwnProperty("Last_name") &&
-    addedUsers.hasOwnProperty("Status") &&
+    addedUsers.hasOwnProperty("Role") &&
+    addedUsers.hasOwnProperty("Active") &&
     addedUsers.hasOwnProperty("Email")
   ) {
     JSONResponse(
@@ -179,7 +215,7 @@ exports.addedUsers = async (req, res) => {
     );
   } else {
     for (index in addedUsers) {
-      if (addedUsers[index].Status !== "User") {
+      if (addedUsers[index].Role !== "User") {
         JSONResponse(
           res,
           {
@@ -241,16 +277,13 @@ exports.addedUsers = async (req, res) => {
 };
 
 exports.getUserTeamName = async (req, res) => {
-  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
-    InvalidInput(res, 'ObjectId of user is invalid');
-    return;
-  }
-  let userID = req.params.id;
-  var userObj = await mongoDB.findOne(User, {_id: userID});
+
+  let username = req.params.username;
+  var userObj = await mongoDB.findOne(User, {Username: username});
 
   if (userObj.length === 0) {
     JSONResponse(res, {
-      message: 'User id does not exist '
+      message: 'Username does not exist '
     },
       400
     );
@@ -292,61 +325,54 @@ exports.usersByCoach = async (req, res) => {
   }
 };
 
-exports.getUserTeamMembersByID = async (req, res) => {
-  if (mongoose.Types.ObjectId.isValid(req.params.id) === false) {
-    InvalidInput(res, 'ObjectId of team is invalid');
-    return;
-  }
-  let teamArray = [];
-  let teamID = req.params.id;
+exports.getUserTeamMembers = async (req, res) => {
 
-
-
-  var admin = await mongoDB.findOne(User, {Team: teamID, Role: "Admin"});
-  if (admin.length === 0) {
+  let username = req.params.username;
+  var user = await mongoDB.findOne(User, {Username: username});
+  if (user.length === 0) {
     JSONResponse(res, {
-      message: 'Team id does not exist '
+      message: "Username does not exist"
     },
       400
     );
   } else {
-    teamArray.push(admin);
-    var coach = await mongoDB.findOne(User, {Team: teamID, Role: "Coach"});
-    teamArray.push(coach);
-    var users = await mongoDB.getUserTeamMembers(Team, teamID);
-    teamArray.push(users);
-
-    JSONResponse(
-      res,
-      {
-        message: teamArray
-      },
+    var members = await User.find({Team: user[0].Team});
+    JSONResponse(res, {
+      message: members
+    },
       200
     );
   }
-
 };
 
-exports.getUserBadgesByID = async (req, res) => {
-  let userID = req.params.id;
-  mongoDB.mongooseConnect();
-  BadgeUserJoin.findOne({User: userID}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
-    .populate("Badge")
-    .exec((err, badgeObj) => {
-      if (err) {
-        console.log(err);
-      } else {
-        mongoDB.mongoogeDisconnect();
-        JSONResponse(
-          res,
-          {
-            data: badgeObj
-          },
-          200
-        );
-      }
-    });
-
+exports.getUserBadges = async (req, res) => {
+  let username = req.params.username;
+  let user = await mongoDB.findOne(User, {Username: username});
+  if (user.length === 0) {
+    JSONResponse(res, {
+      message: "Username does not exist"
+    },
+      400
+    );
+  } else {
+    mongoDB.mongooseConnect();
+    BadgeUserJoin.findOne({User: user[0]._id}, {Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0})
+      .populate("Badge")
+      .exec((err, badgeObj) => {
+        if (err) {
+          console.log(err);
+        } else {
+          mongoDB.mongoogeDisconnect();
+          JSONResponse(
+            res,
+            {
+              data: badgeObj
+            },
+            200
+          );
+        }
+      });
+  }
 };
 
 /**
@@ -361,4 +387,18 @@ function validEmail(email) {
     validate = false;
   }
   return validate;
+}
+
+//format data to match table
+function table_format_topUsers(data) {
+  return new Promise((resolve, reject) => {
+    const table_data = data.map((user, index) => ({
+      rank: index + 1,
+      username: user.Username,
+      teamname: user.Team.Name,
+      coach: user.Team.Coach.Username,
+      badgesCompleted: 2,
+    }));
+    resolve(table_data);
+  });
 }

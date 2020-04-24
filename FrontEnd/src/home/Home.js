@@ -123,7 +123,6 @@ export default function Dashboard() {
     API.get("/users")
       .then(res => setUsers(res.data.payload.data))
       .catch(error => console.log(error));
-    console.log();
   }, []);
   return (
     <div className={classes.root}>
