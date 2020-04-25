@@ -6,7 +6,7 @@ const moment = require('moment');
  */
 export const getUsers = (id) => {
     return new Promise((resolve, reject) => {
-        axios.get('/api/users', {admin_id:id})
+        axios.get('/api/users', {admin_id: id})
             .then(response => {
                 const results = {
                     data: response.data.payload.data.map(user => ({
@@ -43,28 +43,30 @@ export const getUsers = (id) => {
 
 export const getTopUsers = (table_data = false, id) => {
     return new Promise((resolve, reject) => {
-        axios.get('/api/users/topperforming', { params: {
-            table_data: table_data, team_id: id}
+        axios.get('/api/users/topperforming', {
+            params: {
+                table_data: table_data, team_id: id
+            }
         })
-        .then((response) => {
-            const results = {
-                data: response.data.payload.data,
-                columns: [
-                    { field: 'rank', title: 'Rank', editable:'false'},
-                    { field: 'username', title: 'Username', editable:'false'},
-                    { field: 'teamname', title: 'Team Name', editable:'false'},
-                    { field: 'coach', title: 'Coach', editable:'false'},
-                    { field: 'badgesCompleted', title: 'Badges Awarded', editable:'false'}
-                  ]
-            };
-            resolve(results);
-        })
-        .catch((error) => {
-            console.log(error)
-            reject(error);
-        })
+            .then((response) => {
+                const results = {
+                    data: response.data.payload.data,
+                    columns: [
+                        {field: 'rank', title: 'Rank', editable: 'false'},
+                        {field: 'username', title: 'Username', editable: 'false'},
+                        {field: 'teamname', title: 'Team Name', editable: 'false'},
+                        {field: 'coach', title: 'Coach', editable: 'false'},
+                        {field: 'badgesCompleted', title: 'Badges Awarded', editable: 'false'}
+                    ]
+                };
+                resolve(results);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
     });
-}
+};
 
 
 export const getUserCount = () => {
@@ -150,3 +152,4 @@ export const getUserBadges = username => {
     });
 
 };
+

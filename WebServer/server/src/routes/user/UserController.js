@@ -5,6 +5,7 @@ const Team = require("../../../models/Team");
 const BadgeUserJoin = require("../../../models/BadgeUserJoin");
 const Badge = require("../../../models/Badge");
 const {Mongo} = require("../../database/mongoDB");
+ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
 
 const mongoDB = new Mongo();
@@ -373,6 +374,29 @@ exports.getUserBadges = async (req, res) => {
         }
       });
   }
+};
+
+exports.postSignedUpUser = async (req, res) => {
+  console.log(req.body);
+  console.log(req.body.formArray[0]);
+  signedUpUser = req.body.formArray[0];
+  console.log('BELOW IS SIGNED UP USER');
+  console.log(signedUpUser);
+  signerId = mongoose.Types.ObjectId();
+  teamId = mongoose.Types.ObjectId();
+
+  fullUser = new User({_id: signerId, Username: signedUpUser.Username, First_name: signedUpUser.First_name, Last_name: signedUpUser.Last_name, Role: signedUpUser.Role, Active: signedUpUser.Active, Email: signedUpUser.Email, Team: teamId});
+  var result = await mongoDB.validateUserNameEmail(User, fullUser);
+  console.log('I AM HERE BRO');
+  console.log(result);
+  if (result === null) {
+    fullUser.save(function (err, fullUser) {
+      if (err) return console.error(err);
+      console.log(`${fullUser.First_name} is signed up and entered in the database`);
+    });
+  }
+
+
 };
 
 /**

@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import API from "../../utils/API";
 
 function Copyright() {
   return (
@@ -47,34 +47,42 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-var roleValue;
-var formArray;
-const checkBoxValue = event => {
-  console.log(event.target.value);
-  roleValue = event.target.value;
-  console.log(formArray);
-  let result = formArray.every(e => {
-    return e = "";
-  });
-  console.log(result);
-  // if (formArray[1] !== "" && formArray[3] != "" && formArray[4] !==) {
-  //   formArray.push(roleValue);
-  //   console.log(formArray);
-  // }
-};
-
 export default function SignUp() {
   const classes = useStyles();
-  console.log(window.location.href);
-  if (window.location.href.includes("&")) {
-    console.log(window.location.href.split("&").join(", ").split("=").join(', ').split(', '));
-    formArray = window.location.href.split("&").join(", ").split("=").join(', ').split(', ');
-    console.log(formArray[5].replace("%", "@"));
-    let email = formArray[5].replace("%", "@");
-    console.log(email);
-    formArray[5] = email;
+  // const [fetch, setFetch] = React.useState(false);
+  const [formArray, setFormArray] = React.useState([]);
+  const [newUser, setNewUser] = React.useState({Username: "", First_name: "", Last_name: "", Role: "", Active: "", Email: ""});
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [emailAddress, setEmailAddress] = React.useState("");
+  const [roleValue, setRoleValue] = React.useState("");
+
+
+
+
+  const submittedForm = event => {
+    console.log(firstName);
+    console.log(lastName);
+    console.log(emailAddress);
+    console.log(roleValue);
+    formArray.push({Username: "testUserName", First_name: firstName, Last_name: lastName, Role: roleValue, Active: true, Email: emailAddress});
+    setFormArray(formArray);
+    setNewUser(formArray);
     console.log(formArray);
-  }
+    return new Promise((resolve, reject) => {
+      API.post('/users/addSignUpUser', {formArray})
+        .then(res => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -85,10 +93,12 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submittedForm}>
+
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={e => {setFirstName(e.target.value);}}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -101,6 +111,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={e => {setLastName(e.target.value);}}
                 variant="outlined"
                 required
                 fullWidth
@@ -112,6 +123,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={e => {setEmailAddress(e.target.value);}}
                 variant="outlined"
                 required
                 fullWidth
@@ -147,21 +159,22 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="User" color="primary" onChange={checkBoxValue} />}
+                control={<Checkbox value="User" color="primary" onChange={e => (setRoleValue(e.target.value))} />}
                 label="User"
               />
               <FormControlLabel
-                control={<Checkbox value="Coach" color="primary" onChange={checkBoxValue} />}
+                control={<Checkbox value="Coach" color="primary" onChange={e => (setRoleValue(e.target.value))} />}
                 label="Coach"
               />
               <FormControlLabel
-                control={<Checkbox value="Admin" color="primary" onChange={checkBoxValue} />}
+                control={<Checkbox value="Admin" color="primary" onChange={e => (setRoleValue(e.target.value))} />}
                 label="Admin"
               />
             </Grid>
           </Grid>
           <Button
             type="submit"
+            // onClick={testFunction}
             fullWidth
             variant="contained"
             color="primary"
@@ -169,6 +182,10 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
+          {/* <Link href="/confirmation" variant="body2">
+            Sign Up
+            
+          </Link> */}
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
@@ -183,4 +200,4 @@ export default function SignUp() {
       </Box>
     </Container>
   );
-}
+};
