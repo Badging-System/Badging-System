@@ -6,7 +6,8 @@ const UserController = require("./UserController");
 /* This handles all routes ssociated with the endpoint api/user/ */
 router.get("", UserController.index);
 router.get("/count", UserController.count);
-router.get('/topperforming', UserController.topPerforming); 
+router.get("/topperforming", UserController.topPerforming);
+router.get("/recipients", UserController.getRecipients);
 router.get("/coach/:id", UserController.usersByCoach); //get users by coach id.  Query param coach id.
 router.get("/getUserTeamName/:username", UserController.getUserTeamName); // takes username of a specific user and gets all team information related to the user
 router.get("/getUserTeamMembers/:username", UserController.getUserTeamMembers); // takes username and returns all user, admin and coach members

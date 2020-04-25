@@ -54,7 +54,7 @@ export default function SearchableTable(props) {
     ThirdStateCheck: forwardRef((props, ref) => (
       <Remove {...props} ref={ref} />
     )),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
 
   return (
@@ -65,11 +65,11 @@ export default function SearchableTable(props) {
       data={state.data}
       editable={{
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve();
               if (oldData) {
-                setState(prevState => {
+                setState((prevState) => {
                   const data = [...prevState.data];
                   data[data.indexOf(oldData)] = newData;
                   return { ...prevState, data };
@@ -77,17 +77,17 @@ export default function SearchableTable(props) {
               }
             }, 600);
           }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              setState(prevState => {
+              setState((prevState) => {
                 const data = [...prevState.data];
                 data.splice(data.indexOf(oldData), 1);
                 return { ...prevState, data };
               });
             }, 600);
-          })
+          }),
       }}
     />
   );

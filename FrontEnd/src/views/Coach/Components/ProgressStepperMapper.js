@@ -3,7 +3,7 @@ import ProgressStepper from "./ProgressStepper";
 import List from "@material-ui/core/List";
 
 export default function ProgressStepperMapper(props) {
-  return props.progressData.map(function(data) {
+  return props.progressData.map(function (data) {
     return (
       <List>
         <ProgressStepper
