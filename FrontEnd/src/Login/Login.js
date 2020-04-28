@@ -12,8 +12,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import {useHistory} from "react-router-dom";
-import Link from '@material-ui/core/Link';
+import {useHistory, Link} from "react-router-dom";
+// import Link from '@material-ui/core/Link';
 
 function Copyright() {
   return (
@@ -112,11 +112,11 @@ export default function SignIn() {
             className={classes.submit}
             onClick={navigateHome}
           >
-           Sign In
+            Sign In
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href = "/signup" variant = "body 2"> 
+              <Link to="/signup" variant="body 2">
                 Don't have an account? Sign Up
               </Link>
             </Grid>

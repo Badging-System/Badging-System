@@ -5,7 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import {Link, useHistory} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,12 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import API from "../../utils/API";
+import ConfirmationPage from './ConfirmationPage';
+// import ConfirmationPage from "./ConfirmationPage";
+// import {useHistory} from 'react-router-dom';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -49,30 +53,29 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  let history = useHistory();
   // const [fetch, setFetch] = React.useState(false);
   const [formArray, setFormArray] = React.useState([]);
   const [newUser, setNewUser] = React.useState({Username: "", First_name: "", Last_name: "", Role: "", Active: "", Email: ""});
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [emailAddress, setEmailAddress] = React.useState("");
+  const [signedUp, setSignedUp] = React.useState(false);
   const [roleValue, setRoleValue] = React.useState("");
 
 
 
-
   const submittedForm = event => {
-    console.log(firstName);
-    console.log(lastName);
-    console.log(emailAddress);
-    console.log(roleValue);
+
     formArray.push({Username: "testUserName", First_name: firstName, Last_name: lastName, Role: roleValue, Active: true, Email: emailAddress});
     setFormArray(formArray);
     setNewUser(formArray);
-    console.log(formArray);
     return new Promise((resolve, reject) => {
-      API.post('/users/addSignUpUser', {formArray})
+      API.post('/users/addSignUpUser', {newUser})
         .then(res => {
           console.log(res);
+
+          setSignedUp(true);
           resolve(res.data);
         })
         .catch(error => {
@@ -81,6 +84,7 @@ export default function SignUp() {
         });
 
     });
+
   };
 
   return (
@@ -93,7 +97,8 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={submittedForm}>
+        <ConfirmationPage signedUp={signedUp} />
+        <form className={classes.form}>
 
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -173,8 +178,10 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
+            component={Link}
+            to="/confirmation"
             type="submit"
-            // onClick={testFunction}
+            onClick={submittedForm}
             fullWidth
             variant="contained"
             color="primary"
@@ -182,13 +189,9 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
-          {/* <Link href="/confirmation" variant="body2">
-            Sign Up
-            
-          </Link> */}
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link to="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

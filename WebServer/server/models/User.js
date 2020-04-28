@@ -29,7 +29,7 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "teams"
   }
-});
+}, {versionKey: false});
 
 // Creating the user model
 const userModel = mongoose.model("users", userSchema, "users");

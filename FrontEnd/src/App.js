@@ -29,7 +29,7 @@ class App extends React.Component {
           <Route exact path='/user' component={User} />
           <Route exact path='/coach' component={Coach} />
           <Route exact path='/signup' component={SignUp} />
-          <Route exact path='/confirmation' component={ConfirmationPage} />
+          {<Route exact path='/confirmation' component={ConfirmationPage} />}
           <Redirect from='/admin' to='/admin/overview' />
           <Redirect from='/' to='/login' />
           <Redirect from='/signup?' to='/signup' />

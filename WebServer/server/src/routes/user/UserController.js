@@ -378,8 +378,8 @@ exports.getUserBadges = async (req, res) => {
 
 exports.postSignedUpUser = async (req, res) => {
   console.log(req.body);
-  console.log(req.body.formArray[0]);
-  signedUpUser = req.body.formArray[0];
+  console.log(req.body.formArray);
+  signedUpUser = req.body.formArray;
   console.log('BELOW IS SIGNED UP USER');
   console.log(signedUpUser);
   signerId = mongoose.Types.ObjectId();
@@ -387,8 +387,6 @@ exports.postSignedUpUser = async (req, res) => {
 
   fullUser = new User({_id: signerId, Username: signedUpUser.Username, First_name: signedUpUser.First_name, Last_name: signedUpUser.Last_name, Role: signedUpUser.Role, Active: signedUpUser.Active, Email: signedUpUser.Email, Team: teamId});
   var result = await mongoDB.validateUserNameEmail(User, fullUser);
-  console.log('I AM HERE BRO');
-  console.log(result);
   if (result === null) {
     fullUser.save(function (err, fullUser) {
       if (err) return console.error(err);
