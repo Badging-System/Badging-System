@@ -353,7 +353,7 @@ exports.getUserBadges = async (req, res) => {
     );
   } else {
     mongoDB.mongooseConnect();
-    BadgeUserJoin.findOne(
+    BadgeUserJoin.find(
       { User: user[0]._id },
       { Badge: 1, Tasks_Completed: 1, Award: 1, _id: 0 }
     )
