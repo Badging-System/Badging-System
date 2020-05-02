@@ -98,12 +98,8 @@ export default function FolderList() {
                     tasks: tasksArray
                 });
 
-
-
-
                 setBadges(badges);
             };
-            console.log(res);
             handleSave(res);
             setSelectedValue(res);
         }

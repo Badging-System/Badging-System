@@ -378,8 +378,8 @@ exports.getUserBadges = async (req, res) => {
 
 exports.postSignedUpUser = async (req, res) => {
   console.log(req.body);
-  console.log(req.body.formArray);
-  signedUpUser = req.body.formArray;
+  console.log(req.body.newUser);
+  signedUpUser = req.body.newUser;
   console.log('BELOW IS SIGNED UP USER');
   console.log(signedUpUser);
   signerId = mongoose.Types.ObjectId();

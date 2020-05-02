@@ -51,32 +51,70 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function validate(name, email) {
+  // we are going to store errors for all fields
+  // in a signle array
+  const errors = [];
+
+  if (name.length === 0) {
+    errors.push("Name can't be empty");
+  }
+
+  if (email.length < 5) {
+    errors.push("Email should be at least 5 charcters long");
+  }
+  if (email.split("").filter(x => x === "@").length !== 1) {
+    errors.push("Email should contain a @");
+  }
+  if (email.indexOf(".") === -1) {
+    errors.push("Email should contain at least one dot");
+  }
+
+  // if (password.length < 6) {
+  //   errors.push("Password should be at least 6 characters long");
+  // }
+
+  return errors;
+}
+
 export default function SignUp() {
   const classes = useStyles();
   let history = useHistory();
-  // const [fetch, setFetch] = React.useState(false);
+  console.log(history);
   const [formArray, setFormArray] = React.useState([]);
-  const [newUser, setNewUser] = React.useState({Username: "", First_name: "", Last_name: "", Role: "", Active: "", Email: ""});
+  // const [newUser, setNewUser] = React.useState({Username: "", First_name: "", Last_name: "", Role: "", Active: "", Email: ""});
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [emailAddress, setEmailAddress] = React.useState("");
-  const [signedUp, setSignedUp] = React.useState(false);
+  const [errors, setError] = React.useState([]);
+
   const [roleValue, setRoleValue] = React.useState("");
 
-
+  // renderPage() {
+  //   if(firstName === "" || lastName === "" || emailAddress === "" || roleValue === "") return 
+  // }
 
   const submittedForm = event => {
-
+    // event.preventDefault();
+    console.log(firstName);
+    console.log(emailAddress);
+    const errors = validate(firstName, emailAddress);
+    if (errors.length > 0) {
+      setError(errors);
+      return;
+    }
+    console.log(firstName);
+    console.log(emailAddress);
     formArray.push({Username: "testUserName", First_name: firstName, Last_name: lastName, Role: roleValue, Active: true, Email: emailAddress});
     setFormArray(formArray);
-    setNewUser(formArray);
+    let newUser = formArray[0];
     return new Promise((resolve, reject) => {
       API.post('/users/addSignUpUser', {newUser})
         .then(res => {
           console.log(res);
-
-          setSignedUp(true);
           resolve(res.data);
+          history.push('/confirmation');
+
         })
         .catch(error => {
           console.log(error);
@@ -97,9 +135,10 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <ConfirmationPage signedUp={signedUp} />
         <form className={classes.form}>
-
+          {errors.map(error => (
+            <p key={error}>Error: {error}</p>
+          ))}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -178,8 +217,8 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
-            component={Link}
-            to="/confirmation"
+            // component={Link}
+            // to="/confirmation"
             type="submit"
             onClick={submittedForm}
             fullWidth
