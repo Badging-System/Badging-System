@@ -19,7 +19,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "minimist": "^1.2.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongodb": "^3.3.3",
     "mongoose": "^5.9.3",
     "morgan": "~1.9.1",
